@@ -6,24 +6,20 @@
 #include <windows.h>
 #include <iostream>
 
-void ShowWarningMessageBox(const std::string& message) {
-	MessageBoxA(NULL, message.c_str(), "Warning", MB_ICONWARNING | MB_OK);
-}
 
 
 
-
-
-
+PortBox* PortBox::Box = nullptr;
 PortBox::PortBox()
 {
+	Box = this;
 	Monitors = std::make_shared<SerialMonitor>();
 }
 PortBox::~PortBox()
 {
 
 }
-char inputString[64] = "";
+
 void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 {
 	ImGui::Begin("PortBox1");
@@ -32,18 +28,31 @@ void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 	ImGui::InputText("Input Comport Number", inputString, IM_ARRAYSIZE(inputString));
 	if (ImGui::Button("Button"))
 	{
+		PortBoxBool = true;
+		String=inputString;
+		//memset(inputString, 0, sizeof(inputString)); //얘는 disconnect만들었을때 넣자
+		if(!String.empty())
+			Number = stoi(String);
+		String = "COM" + String;
+	}
+	if (ImGui::Button("DisConnect"))
+	{
+		PortBoxBool = false;
+		String.clear();
+		Number = 0;
+	}
+		
+	if (PortBoxBool)
+	{
 		try
 		{
-			std::string String(inputString);
-			memset(inputString, 0, sizeof(inputString));
-			int Number = stoi(String);
 			if (Number <= 0 || Number > 255)
 			{
 				MsgBox::Msg->ShowWarningMessageBox("1에서 255사이의 숫자를 입력해주세요");
+				PortBoxBool = false;
 			}
 			else
 			{
-				String = "COM" + String;
 				Monitors->Instance(String);
 			}
 		}

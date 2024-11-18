@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 
 enum class SerialState
 {
@@ -14,7 +14,7 @@ public:
 	SerialMonitor();
 	~SerialMonitor();
 
-	void Instance(const std::string& _ComPort);
+	void Instance(const std::string _ComPort);
 protected:
 private:
 
