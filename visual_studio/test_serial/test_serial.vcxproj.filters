@@ -1,22 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Header">
+      <UniqueIdentifier>{2a2a36f4-f850-4e1d-b8b1-8dfe5b8e2931}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{171d8cb1-5875-4b7f-8113-fd089aa955aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Main">
+      <UniqueIdentifier>{f953ea03-25d9-42a1-9674-999a7d65422d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThridParty">
+      <UniqueIdentifier>{3049b405-6ffe-463b-9ae1-f2f3732c3b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThridParty\ImGui">
+      <UniqueIdentifier>{eb22031a-8f81-4ead-95de-b282d03b4cab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\examples\serial_example.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ThirdParty\ImGui\imgui_tables.cpp">
+      <Filter>ThridParty\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui_widgets.cpp">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\backends\imgui_impl_win32.cpp">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\backends\imgui_impl_dx11.cpp">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="SerialMain.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MyImGui.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="PortBox.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SerialMonitor.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ThirdParty\ImGui\imgui.h">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\imgui_internal.h">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\backends\imgui_impl_dx11.h">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\backends\imgui_impl_win32.h">
+      <Filter>ThridParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyImGui.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PortBox.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialMonitor.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
