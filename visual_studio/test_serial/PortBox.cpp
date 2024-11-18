@@ -23,6 +23,7 @@ PortBox::~PortBox()
 void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 {
 	ImGui::Begin("PortBox1");
+	ImGui::SetWindowSize(ImVec2(250, 150));
 	ImGui::Text("Set Port Number");
 	ImGui::PushItemWidth(50);
 	ImGui::InputText("Input Comport Number", inputString, IM_ARRAYSIZE(inputString));
@@ -30,7 +31,6 @@ void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 	{
 		PortBoxBool = true;
 		String=inputString;
-		//memset(inputString, 0, sizeof(inputString)); //얘는 disconnect만들었을때 넣자
 		if(!String.empty())
 			Number = stoi(String);
 		String = "COM" + String;

@@ -54,6 +54,9 @@
     <ClCompile Include="SerialMonitor.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="MyTime.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -81,6 +84,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="SerialMonitor.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTime.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

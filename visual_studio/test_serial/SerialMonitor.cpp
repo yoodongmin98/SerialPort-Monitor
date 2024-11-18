@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "MessageBox.h"
 #include "Portbox.h"
+#include "MyTime.h"
 
 SerialMonitor::SerialMonitor()
 {
@@ -24,13 +25,13 @@ void SerialMonitor::Instance(const std::string _ComPort)
 	try
 	{
 		serial::Serial my_serial(_ComPort, 921600, serial::Timeout::simpleTimeout(1000));
-		std::string Dataline;
-
 		try {
 			Dataline = my_serial.readline();
 		}
 		catch (const std::exception& e) {
-			std::cout << _ComPort + "의 시리얼 통신이 끊겼습니다. " <<std::endl;
+			std::cout << _ComPort + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			PortBox::Box->SetBoxBoolFalse();
+			return;
 		}
 
 		if (!Dataline.empty())
@@ -47,7 +48,8 @@ void SerialMonitor::Instance(const std::string _ComPort)
 		}
 		else
 		{
-			std::cout << _ComPort + "의 데이터가 수신되지 않았습니다. " << std::endl;
+			std::cout <<  _ComPort + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			std::cout << "수신안되었다고 처리된 데이터 : " << Dataline << std::endl;
 		}
 	}
 	catch (const serial::IOException& e)
