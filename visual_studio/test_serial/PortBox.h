@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <serial/serial.h>
 
 
 
@@ -15,7 +15,7 @@ public:
 	void Instance();
 	void SerialMonitor(const std::string _ComPort);
 protected:
-
+	void PortCheck();
 private:
 	bool PortBoxBool = false;
 	char inputString[64] = "";
@@ -32,4 +32,5 @@ private:
 	int X = 0;
 	int Y = 0;
 	std::string BoxName = "";
+	serial::Serial my_serial;
 };
