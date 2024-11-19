@@ -22,7 +22,7 @@ PortBox::PortBox()
 PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X) , Y(_Y) , BoxName(_Name)
 {
-	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Appearing);
+	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_FirstUseEver);
 	ImGui::SetWindowSize(ImVec2(250, 120));
 
 }

@@ -148,7 +148,6 @@ void MyImGui::Instance()
         delete obj;
         obj = nullptr;
     }
-
 }
 
 
