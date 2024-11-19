@@ -148,6 +148,7 @@ void PortBox::SerialMonitor()
 			PortBoxBool = false;
 			Selections = -1; //누르면 초기화
 			String.clear();
+			logFile.close();
 			my_serial.close();
 			return;
 		}
