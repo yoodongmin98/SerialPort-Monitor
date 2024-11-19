@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <iostream>
 #include "MyTime.h"
-#include <serial/serial.h>
+#include <Windows.h>
 
 
 
@@ -22,34 +22,89 @@ PortBox::PortBox()
 PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X) , Y(_Y) , BoxName(_Name)
 {
-	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_FirstUseEver);
-	ImGui::SetWindowSize(ImVec2(250, 120));
 
 }
 
+	
 PortBox::~PortBox()
 {
 
 }
 
-void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
+
+void PortBox::Instance()
 {
+	//포트 탐색
+
 	
+
+
 	ImGui::Begin(BoxName.c_str());
-	
+	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(250, 130));
 	ImGui::PushItemWidth(50);
-	ImGui::InputText("Input Comport Number", inputString, IM_ARRAYSIZE(inputString));
-	bool isConnectClicked = ImGui::Button("Connect");
-	if (isConnectClicked) 
+
+
+
+
+
+
+	if (ImGui::Button("Show Available Ports")) {
+		Selections = -1; //누르면 초기화
+		ComboClick = true;
+		//포트 탐색
+		PortName.clear();
+		PortInfo = serial::list_ports();
+		for (auto i = 0; i < PortInfo.size(); ++i)
+		{
+			PortName.push_back(PortInfo[i].port.c_str());
+		}
+		isListVisible = !isListVisible;
+	}
+
+	if (isListVisible) 
 	{
-		PortBoxBool = true;
-		String = inputString;
-		if (!String.empty())
-			Number = stoi(String);
-		String = "COM" + String;
-		my_serial.setPort(String);
-		my_serial.setBaudrate(921600);
-		PortCheck();
+		
+		if (ImGui::CollapsingHeader("Available Ports", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			for (int i = 0; i < PortName.size(); ++i)
+			{
+				if (ImGui::Selectable(PortName[i], Selections == i))
+				{
+					Selections = i;
+				}
+			}
+		}
+	}
+
+
+	if (Selections >= 0)
+	{
+		IsLost = false; //선택되었으면 Lost는 안뜨게끔
+		String = PortName[Selections];
+		if (ComboClick)
+		{
+			isListVisible = false;
+			ComboClick = false;
+		}
+	}
+	if (!isListVisible && !String.empty())
+	{
+		ImGui::Text("%s", String);
+	}
+
+
+	bool isConnectClicked = ImGui::Button("Connect");
+	if (isConnectClicked)
+	{
+		if (!my_serial.isOpen())
+		{
+			PortBoxBool = true;
+			my_serial.setPort(String);
+			my_serial.setBaudrate(921600);
+			my_serial.setTimeout(timeout);
+			PortCheck();
+		}
 	}
 	ImGui::SameLine();
 	bool isDisconnectClicked = ImGui::Button("DisConnect");
@@ -57,7 +112,6 @@ void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 	{
 		PortBoxBool = false;
 		String.clear();
-		Number = 0;
 		my_serial.close();
 	}
 	if (IsLost)
@@ -67,13 +121,13 @@ void PortBox::Instance() //위치정보를 인자로 받아서 위치 세팅해야함
 		
 	if (PortBoxBool)
 	{
-		SerialMonitor(String);
+		SerialMonitor();
 	}
 	ImGui::End();
 }
 
 
-void PortBox::SerialMonitor(const std::string _ComPort)
+void PortBox::SerialMonitor()
 {
 	//baudrate물어보기 ㅇㅇ
 	try
@@ -83,10 +137,14 @@ void PortBox::SerialMonitor(const std::string _ComPort)
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
-			std::cout << _ComPort + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			std::cout << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			PortBoxBool = false;
+			Selections = -1; //누르면 초기화
+			String.clear();
+			my_serial.close();
 			return;
 		}
+
 
 		if (!Dataline.empty())
 		{
@@ -103,7 +161,7 @@ void PortBox::SerialMonitor(const std::string _ComPort)
 		else
 		{
 			ImGui::TextColored(yellowColor, "Missing");
-			std::cout << _ComPort + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 		}
 	}
 	catch (const serial::IOException& e)
@@ -130,15 +188,6 @@ void PortBox::PortCheck()
 	try
 	{
 		my_serial.open();
-		if (Number <= 0 || Number > 255)
-		{
-			MsgBox::Msg->ShowWarningMessageBox("1에서 255사이의 숫자를 입력해주세요");
-			PortBoxBool = false;
-		}
-		else
-		{
-			IsLost = false;
-		}
 	}
 	catch (const std::exception e)
 	{

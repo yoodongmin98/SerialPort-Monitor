@@ -6,8 +6,6 @@
 
 
 
-
-
 MyImGui::MyImGui()
 {
    
@@ -83,21 +81,25 @@ void MyImGui::Instance()
         ImGui::NewFrame();
 
         //PortBoxCreate
-        int Xpos = 0;
-        int Ypos = 0;
+        int Xpos = 1;
+        int Ypos = 1;
+        int Count = 0;
         std::string Name = "PortBox";
+        
         if (CreateBool)
         {
-            for (auto i = 0; i < 5; ++i)
+            for (auto i = 0; i < 20; ++i)
             {
                 std::string SetName = Name + std::to_string(i);
-                Xpos += 150;
-                if (!(i % 3))
+                Count++;
+                if (Count == 5)
                 {
                     Xpos = 0;
-                    Ypos += 150;
+                    Ypos += 130;
+                    Count = 0;
                 }
                 ObjectBox.push_back(new PortBox(Xpos, Ypos, SetName));
+                Xpos += 250;
             }
             CreateBool = false;
         }

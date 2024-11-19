@@ -96,7 +96,7 @@
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib
 ;user32.lib
 ;gdi32.lib
-;winmm.lib</AdditionalDependencies>
+;winmm.lib;Advapi32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,7 @@
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib
 ;user32.lib
 ;gdi32.lib
-;winmm.lib</AdditionalDependencies>
+;winmm.lib;Advapi32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
