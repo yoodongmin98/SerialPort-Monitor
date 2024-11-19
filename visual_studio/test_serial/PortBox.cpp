@@ -163,8 +163,8 @@ void PortBox::SerialMonitor()
 		catch (const std::exception& e) {
 			IsLost = true;
 			IsFirst = true;
-			logFile << "\r" << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::flush;
-			std::cout << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " <<  std::flush;
+			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
 			Selections = -1; //누르면 초기화
 			String.clear();
@@ -172,7 +172,7 @@ void PortBox::SerialMonitor()
 			my_serial.close();
 			return;
 		}
-		//한 15번정도 검수해야징
+		//한 20번정도 검수해야징
 		if (Dataline.empty())
 		{
 			for (auto i = 0; i < 20; ++i)
@@ -207,8 +207,8 @@ void PortBox::SerialMonitor()
 		{
 				// 데이터가 비었을 때
 				ImGui::TextColored(yellowColor, "Missing");
-				logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::flush;
-				std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+				logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::flush;
+				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
 		}
 	}
 	catch (const serial::IOException& e) {

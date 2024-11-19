@@ -31,6 +31,6 @@ std::string MyTime::GetLocalDay()
 {
 	now2 = _time64(nullptr);
 	localtime_s(&tm_2, &now2);
-	std::string LocalDay = std::to_string((tm_2.tm_year + 1900)) + "³â" + std::to_string((tm_2.tm_mon + 1)) + "¿ù" + std::to_string((tm_2.tm_mday)) + "ÀÏ";
+	std::string LocalDay = std::to_string((tm_2.tm_year + 1900)) + "-" + std::to_string((tm_2.tm_mon + 1)) + "-" + std::to_string((tm_2.tm_mday)) + "-";
 	return LocalDay;
 }
