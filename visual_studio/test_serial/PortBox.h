@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <serial/serial.h>
 
@@ -29,9 +30,12 @@ private:
 
 	int Selections = -1; //Combo선택 index
 	int DotCount = 1; //Working ...뜨는거
+	
 	std::string String; //Combo누르면 포트번호가 담길 string
 	std::string Dataline; //Serial Data를 읽을 string
 	std::string Dots = "."; //Working ...그거 ㅇㅇ
+	std::ofstream logFile;
+	std::string LogFileName; //로그파일로 남길 이름
 
 	
 

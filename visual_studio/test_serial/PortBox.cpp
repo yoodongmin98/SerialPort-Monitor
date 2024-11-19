@@ -28,7 +28,10 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 	
 PortBox::~PortBox()
 {
-
+	if (logFile.is_open()) 
+	{
+		logFile.close(); 
+	}
 }
 
 
@@ -80,10 +83,11 @@ void PortBox::Instance()
 
 	if (Selections >= 0)
 	{
-		IsLost = false; //선택되었으면 Lost는 안뜨게끔
+		IsLost = false; //선택되었으면 Lost는 안뜨게
 		String = PortName[Selections];
 		if (ComboClick)
 		{
+			LogFileName = String + "Log.txt";
 			isListVisible = false;
 			ComboClick = false;
 		}
@@ -99,6 +103,8 @@ void PortBox::Instance()
 	{
 		if (!my_serial.isOpen())
 		{
+			//로그파일 생성
+			logFile.open(LogFileName, std::ios::app);
 			PortBoxBool = true;
 			my_serial.setPort(String);
 			my_serial.setBaudrate(921600);
@@ -137,6 +143,7 @@ void PortBox::SerialMonitor()
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
+			logFile << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			std::cout << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			PortBoxBool = false;
 			Selections = -1; //누르면 초기화
@@ -161,6 +168,7 @@ void PortBox::SerialMonitor()
 		else
 		{
 			ImGui::TextColored(yellowColor, "Missing");
+			logFile << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 		}
 	}
@@ -192,16 +200,19 @@ void PortBox::PortCheck()
 	catch (const std::exception e)
 	{
 		MsgBox::Msg->ShowWarningMessageBox("연결할 수 없는 포트 입니다.");
+		PortBoxBool = false;
 		return;
 	}
 	catch (const std::invalid_argument& e)
 	{
 		MsgBox::Msg->ShowWarningMessageBox("숫자 형식이 잘못되었습니다.");
+		PortBoxBool = false;
 		return;
 	}
 	catch (const std::out_of_range& e)
 	{
 		MsgBox::Msg->ShowWarningMessageBox("입력한 숫자가 너무 큽니다.");
+		PortBoxBool = false;
 		return;
 	}
 }
