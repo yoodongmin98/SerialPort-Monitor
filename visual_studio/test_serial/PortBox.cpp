@@ -11,6 +11,7 @@
 
 ImVec4 redColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // 빨강
 ImVec4 yellowColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f); // 노랑
+ImVec4 Colors = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 하늘색
 
 
 
@@ -106,6 +107,7 @@ void PortBox::Instance()
 			//로그파일 생성
 			logFile.open(LogFileName, std::ios::app);
 			PortBoxBool = true;
+			IsFirst = true;
 			my_serial.setPort(String);
 			my_serial.setBaudrate(921600);
 			my_serial.setTimeout(timeout);
@@ -135,20 +137,27 @@ void PortBox::Instance()
 
 void PortBox::SerialMonitor()
 {
-	try {
-		try {
-			if (IsFirst) {
-				while (true) {
+	try 
+	{
+		try 
+		{
+			if (IsFirst) 
+			{
+				while (true) 
+				{
 					Dataline = my_serial.readline();
-					if (!Dataline.empty()) {
+					if (!Dataline.empty()) 
+					{
 						IsFirst = false;
 						break;
 					}
-					Sleep(100);
+					Sleep(300);
 				}
 			}
 			else {
 				Dataline = my_serial.readline();
+				if(Dataline =="START" || Dataline == "REBOOT")
+					logFile << "\r" << String + "를 재시작합니다 " << MyTime::Time->GetLocalTime() << std::flush;
 			}
 		}
 		catch (const std::exception& e) {
@@ -163,10 +172,21 @@ void PortBox::SerialMonitor()
 			my_serial.close();
 			return;
 		}
-		
+		//한 15번정도 검수해야징
+		if (Dataline.empty())
+		{
+			for (auto i = 0; i < 20; ++i)
+			{
+				Dataline = my_serial.readline();
+				if (!Dataline.empty())
+					break;
+			}
+			
+		}
 
 		// 데이터가 비어있지 않을 때
-		if (!Dataline.empty()) {
+		if (!Dataline.empty() && Dataline[0]=='#')
+		{
 			DotCount++;
 			if (DotCount > 7) {
 				DotCount = 1;
@@ -177,11 +197,18 @@ void PortBox::SerialMonitor()
 			}
 			ImGui::Text("Working%s", Dots.c_str());
 		}
-		else {
-			// 데이터가 비었을 때
-			ImGui::TextColored(yellowColor, "Missing");
-			logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. "<< MyTime::Time->GetLocalTime() << std::flush;
-			std::cout << String + "의 데이터가 수신되지 않았습니다. "<< MyTime::Time->GetLocalTime() << std::endl;
+		else if (!Dataline.empty() && Dataline[0] != '#')
+		{
+			ImGui::TextColored(Colors, "Booting");
+			logFile << "\r" << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::flush;
+			std::cout << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
+		}
+		else
+		{
+				// 데이터가 비었을 때
+				ImGui::TextColored(yellowColor, "Missing");
+				logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::flush;
+				std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 		}
 	}
 	catch (const serial::IOException& e) {
