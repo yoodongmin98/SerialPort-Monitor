@@ -143,7 +143,7 @@ void PortBox::SerialMonitor()
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
-			logFile << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			logFile << "\r" << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::flush;
 			std::cout << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			PortBoxBool = false;
 			Selections = -1; //누르면 초기화
@@ -168,7 +168,7 @@ void PortBox::SerialMonitor()
 		else
 		{
 			ImGui::TextColored(yellowColor, "Missing");
-			logFile << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::flush;
 			std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 		}
 	}
