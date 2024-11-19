@@ -1,6 +1,7 @@
 #include "MyImGui.h"
 #include <iostream>
 #include "PortBox.h"
+#include <string>
 
 
 
@@ -9,13 +10,14 @@
 
 MyImGui::MyImGui()
 {
-    PBox = std::make_shared<PortBox>();
+   
 }
 MyImGui::~MyImGui()
 {
 
 }
 
+     
 void MyImGui::Instance()
 {
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
@@ -81,29 +83,33 @@ void MyImGui::Instance()
         ImGui::NewFrame();
 
         //PortBoxCreate
-        PBox->Instance();
-        //여기서 대충 50개정도 생성해서 위치정보를 나눠주기 ㅇㅇ
-        //그리고 그 머냐 창 크기도 수정해야함 ㅇㅇ
-        //Test
+        int Xpos = 0;
+        int Ypos = 0;
+        std::string Name = "PortBox";
+        if (CreateBool)
+        {
+            for (auto i = 0; i < 5; ++i)
+            {
+                std::string SetName = Name + std::to_string(i);
+                Xpos += 150;
+                if (!(i % 3))
+                {
+                    Xpos = 0;
+                    Ypos += 150;
+                }
+                ObjectBox.push_back(new PortBox(Xpos, Ypos, SetName));
+            }
+            CreateBool = false;
+        }
+         //Instancing   
+        for (PortBox* obj : ObjectBox)
+        {
+            obj->Instance();
+        }
+       
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         {
-            static float f = 0.0f;
-            static int counter = 0;
-
             ImGui::Begin("Hello, world!");                          
-
-            ImGui::Text("This is some useful text.");               
-            ImGui::Checkbox("Demo Window", &show_demo_window);      
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); 
-
-            if (ImGui::Button("Button"))                            
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
             ImGui::End();
         }
@@ -135,6 +141,14 @@ void MyImGui::Instance()
     CleanupDeviceD3D();
     ::DestroyWindow(hwnd);
     ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+
+    //메모리 지워주기
+    for (PortBox* obj : ObjectBox) 
+    {
+        delete obj;
+        obj = nullptr;
+    }
+
 }
 
 

@@ -17,5 +17,5 @@ public:
 	void Instance(const std::string _ComPort);
 protected:
 private:
-	std::string Dataline;
+	
 };

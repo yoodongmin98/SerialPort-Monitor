@@ -4,6 +4,7 @@
 #include <d3d11.h>
 #include <tchar.h>
 #include <iostream>
+#include <vector>
 
 // Data
 static ID3D11Device* g_pd3dDevice = nullptr;
@@ -30,5 +31,7 @@ private:
     void CleanupDeviceD3D();
     void CreateRenderTarget();
     void CleanupRenderTarget();
-    std::shared_ptr<PortBox> PBox = nullptr;
+    
+    bool CreateBool = true;
+    std::vector<PortBox*> ObjectBox;
 };
