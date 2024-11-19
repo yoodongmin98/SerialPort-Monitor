@@ -135,14 +135,25 @@ void PortBox::Instance()
 
 void PortBox::SerialMonitor()
 {
-	//baudrate물어보기 ㅇㅇ
-	try
-	{
+	try {
 		try {
-			Dataline = my_serial.readline();
+			if (IsFirst) {
+				while (true) {
+					Dataline = my_serial.readline();
+					if (!Dataline.empty()) {
+						IsFirst = false;
+						break;
+					}
+					Sleep(100);
+				}
+			}
+			else {
+				Dataline = my_serial.readline();
+			}
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
+			IsFirst = true;
 			logFile << "\r" << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::flush;
 			std::cout << String + "의 시리얼 통신이 끊겼습니다. " << MyTime::Time->GetLocalTime() << std::endl;
 			PortBoxBool = false;
@@ -152,10 +163,10 @@ void PortBox::SerialMonitor()
 			my_serial.close();
 			return;
 		}
+		
 
-
-		if (!Dataline.empty())
-		{
+		// 데이터가 비어있지 않을 때
+		if (!Dataline.empty()) {
 			DotCount++;
 			if (DotCount > 7) {
 				DotCount = 1;
@@ -166,30 +177,28 @@ void PortBox::SerialMonitor()
 			}
 			ImGui::Text("Working%s", Dots.c_str());
 		}
-		else
-		{
+		else {
+			// 데이터가 비었을 때
 			ImGui::TextColored(yellowColor, "Missing");
-			logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::flush;
-			std::cout << String + "의 데이터가 수신되지 않았습니다. " << MyTime::Time->GetLocalTime() << std::endl;
+			logFile << "\r" << String + "의 데이터가 수신되지 않았습니다. "<< MyTime::Time->GetLocalTime() << std::flush;
+			std::cout << String + "의 데이터가 수신되지 않았습니다. "<< MyTime::Time->GetLocalTime() << std::endl;
 		}
 	}
-	catch (const serial::IOException& e)
-	{
+	catch (const serial::IOException& e) {
 		MsgBox::Msg->ShowWarningMessageBox("올바른 포트번호가 입력되지 않았습니다.");
 		PortBoxBool = false;
 	}
-	catch (const std::exception& e)
-	{
+	catch (const std::exception& e) {
 		MsgBox::Msg->ShowWarningMessageBox("알 수 없는 오류가 발생했습니다.");
 		PortBoxBool = false;
 	}
-	catch (...)
-	{
+	catch (...) {
 		MsgBox::Msg->ShowWarningMessageBox("알 수 없는 오류가 발생했습니다.");
 		PortBoxBool = false;
 	}
-
 }
+
+
 
 
 void PortBox::PortCheck()
