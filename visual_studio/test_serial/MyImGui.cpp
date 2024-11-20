@@ -81,14 +81,11 @@ void MyImGui::Instance()
         ImGui::NewFrame();
 
         //PortBoxCreate
-        int Xpos = 1;
-        int Ypos = 1;
-        int Count = 0;
+        int Xpos = 1, Ypos = 1, Count = 0;
         std::string Name = "PortBox";
-        
         if (CreateBool)
         {
-            for (auto i = 0; i < 20; ++i)
+            for (auto i = 0; i < 30; ++i)
             {
                 std::string SetName = Name + std::to_string(i);
                 Count++;
@@ -108,21 +105,24 @@ void MyImGui::Instance()
         {
             obj->Instance();
         }
+        ImGui::Begin("All Check");
+        if (ImGui::Button("All Connect"))
+        {
+            for (PortBox* obj : ObjectBox)
+            {
+                obj->Connect();
+            }
+        }
+        if (ImGui::Button("All DisConnect"))
+        {
+
+        }
+        ImGui::End();
        
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         {
             ImGui::Begin("Hello, world!");                          
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
-        }
-
-        
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
             ImGui::End();
         }
 

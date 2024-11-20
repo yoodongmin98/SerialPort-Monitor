@@ -14,6 +14,8 @@ public:
 	PortBox(int _X,int _Y, std::string _Name);
 	~PortBox();
 	void Instance();
+	void Connect();
+	void DisConnect();
 protected:
 	void PortCheck();
 	void SerialMonitor();

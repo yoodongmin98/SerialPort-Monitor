@@ -38,17 +38,10 @@ PortBox::~PortBox()
 
 void PortBox::Instance()
 {
-	//포트 탐색
-
-	
-
-
 	ImGui::Begin(BoxName.c_str());
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::SetWindowSize(ImVec2(250, 130));
 	ImGui::PushItemWidth(50);
-
-
 
 
 
@@ -95,42 +88,15 @@ void PortBox::Instance()
 	}
 	if (!isListVisible && !String.empty())
 	{
-		ImGui::Text("%s", String);
+		ImGui::Text("%s", String.c_str());
 	}
-
-
 	bool isConnectClicked = ImGui::Button("Connect");
 	if (isConnectClicked)
 	{
-		if (!my_serial.isOpen())
-		{
-			//로그파일 생성
-			logFile.open(LogFileName, std::ios::app);
-			PortBoxBool = true;
-			IsFirst = true;
-			my_serial.setPort(String);
-			my_serial.setBaudrate(921600);
-			my_serial.setTimeout(timeout);
-			PortCheck();
-		}
+		Connect();
 	}
 	ImGui::SameLine();
-	bool isDisconnectClicked = ImGui::Button("DisConnect");
-	if (isDisconnectClicked)
-	{
-		PortBoxBool = false;
-		String.clear();
-		my_serial.close();
-	}
-	if (IsLost)
-	{
-		ImGui::TextColored(redColor, "Connection Lost");
-	}
-		
-	if (PortBoxBool)
-	{
-		SerialMonitor();
-	}
+	DisConnect();
 	ImGui::End();
 }
 
@@ -251,5 +217,40 @@ void PortBox::PortCheck()
 		MsgBox::Msg->ShowWarningMessageBox("입력한 숫자가 너무 큽니다.");
 		PortBoxBool = false;
 		return;
+	}
+}
+
+void PortBox::Connect()
+{
+	if (!my_serial.isOpen())
+	{
+		//로그파일 생성
+		logFile.open(LogFileName, std::ios::app);
+		PortBoxBool = true;
+		IsFirst = true;
+		my_serial.setPort(String);
+		my_serial.setBaudrate(921600);
+		my_serial.setTimeout(timeout);
+		PortCheck();
+	}
+}
+
+void PortBox::DisConnect()
+{
+	bool isDisconnectClicked = ImGui::Button("DisConnect");
+	if (isDisconnectClicked)
+	{
+		PortBoxBool = false;
+		String.clear();
+		my_serial.close();
+	}
+	if (IsLost)
+	{
+		ImGui::TextColored(redColor, "Connection Lost");
+	}
+
+	if (PortBoxBool)
+	{
+		SerialMonitor();
 	}
 }
