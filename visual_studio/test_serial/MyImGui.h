@@ -5,6 +5,8 @@
 #include <tchar.h>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <serial/serial.h>
 
 // Data
 static ID3D11Device* g_pd3dDevice = nullptr;
@@ -20,9 +22,15 @@ class PortBox;
 class MyImGui
 {
 public:
+
+    static MyImGui* MyImGuis;
     MyImGui();
     ~MyImGui();
     void Instance();
+    const std::vector<std::string> GetPortName()
+    {
+        return PortName;
+    }
 protected:
 
 
@@ -34,4 +42,7 @@ private:
     
     bool CreateBool = true;
     std::vector<PortBox*> ObjectBox;
+
+    std::vector<serial::PortInfo> PortInfo;
+    std::vector<std::string> PortName;
 };

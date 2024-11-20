@@ -13,25 +13,27 @@ public:
 	PortBox();
 	PortBox(int _X,int _Y, std::string _Name);
 	~PortBox();
-	void Instance();
+	void Instance(std::string& _PortName);
 	void Connect();
 	void DisConnect();
+
+	bool IsStringNull()
+	{
+		return String.empty();
+	}
 protected:
 	void PortCheck();
 	void SerialMonitor();
 private:
-	std::vector<serial::PortInfo> PortInfo;
+	
 	std::vector<const char*> PortName;
 	serial::Timeout timeout = serial::Timeout::simpleTimeout(100);
 
 	bool PortBoxBool = false;
-	bool isListVisible = false; //Combo보이는거/안보이는거
 	bool IsLost = false; //통신 끊겼을때 판별
-	bool initialized = false; // 창이 초기화되었는지 확인하는 플래그
-	bool ComboClick = false; //Combo창이 눌렸음을 판단하는것
-	bool IsFirst = true;
+	bool IsFirst = true; //부팅 판별
+	bool LogFileSet = true; //로그파일 이름설정할것
 
-	int Selections = -1; //Combo선택 index
 	int DotCount = 1; //Working ...뜨는거
 	
 	std::string String; //Combo누르면 포트번호가 담길 string

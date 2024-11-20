@@ -36,67 +36,82 @@ PortBox::~PortBox()
 }
 
 
-void PortBox::Instance()
+void PortBox::Instance(std::string& _PortName)
 {
-	ImGui::Begin(BoxName.c_str());
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
-	ImGui::SetWindowSize(ImVec2(250, 130));
+	ImGui::Begin(BoxName.c_str());
+	ImGui::SetWindowSize(ImVec2(200, 100));
 	ImGui::PushItemWidth(50);
 
-
-
-
-	if (ImGui::Button("Show Available Ports")) {
-		Selections = -1; //누르면 초기화
-		ComboClick = true;
-		//포트 탐색
-		PortName.clear();
-		PortInfo = serial::list_ports();
-		for (auto i = 0; i < PortInfo.size(); ++i)
-		{
-			PortName.push_back(PortInfo[i].port.c_str());
-		}
-		isListVisible = !isListVisible;
-	}
-
-	if (isListVisible) 
+	String = _PortName;
+	ImGui::Text("%s", String.c_str());
+	if (LogFileSet)
 	{
-		
-		if (ImGui::CollapsingHeader("Available Ports", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			for (int i = 0; i < PortName.size(); ++i)
-			{
-				if (ImGui::Selectable(PortName[i], Selections == i))
-				{
-					Selections = i;
-				}
-			}
-		}
+		LogFileName = String + "Log.txt";
+		LogFileSet = false;
 	}
+	
+	//if (ImGui::Button("Show Available Ports")) {
+	//	Selections = -1; //누르면 초기화
+	//	ComboClick = true;
+	//	//포트 탐색
+	//	PortName.clear();
+	//	PortInfo = serial::list_ports();
+	//	for (auto i = 0; i < PortInfo.size(); ++i)
+	//	{
+	//		PortName.push_back(PortInfo[i].port.c_str());
+	//	}
+	//	isListVisible = !isListVisible;
+	//}
 
+	//if (isListVisible) 
+	//{
+	//	if (ImGui::CollapsingHeader("Available Ports", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen))
+	//	{
+	//		for (int i = 0; i < PortName.size(); ++i)
+	//		{
+	//			if (ImGui::Selectable(PortName[i], Selections == i))
+	//			{
+	//				Selections = i;
+	//			}
+	//		}
+	//	}
+	//}
 
-	if (Selections >= 0)
-	{
-		IsLost = false; //선택되었으면 Lost는 안뜨게
-		String = PortName[Selections];
-		if (ComboClick)
-		{
-			LogFileName = String + "Log.txt";
-			isListVisible = false;
-			ComboClick = false;
-		}
-	}
-	if (!isListVisible && !String.empty())
-	{
-		ImGui::Text("%s", String.c_str());
-	}
+	//if (Selections >= 0)
+	//{
+	//	IsLost = false; //선택되었으면 Lost는 안뜨게
+	//	String = PortName[Selections];
+	//	if (ComboClick)
+	//	{
+	//		
+	//		isListVisible = false;
+	//		ComboClick = false;
+	//	}
+	//}
+	//if (!isListVisible && !String.empty())
+	//{
+	//	ImGui::Text("%s", String.c_str());
+	//}
 	bool isConnectClicked = ImGui::Button("Connect");
 	if (isConnectClicked)
 	{
 		Connect();
 	}
 	ImGui::SameLine();
-	DisConnect();
+	bool isDisconnectClicked = ImGui::Button("DisConnect");
+	if (isDisconnectClicked)
+	{
+		DisConnect();
+	}
+	if (IsLost)
+	{
+		ImGui::TextColored(redColor, "Connection Lost");
+	}
+	if (PortBoxBool)
+	{
+		SerialMonitor();
+	}
 	ImGui::End();
 }
 
@@ -128,11 +143,10 @@ void PortBox::SerialMonitor()
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
-			IsFirst = true;
+			IsFirst = true; //어차피 한번 끊기면 끝이긴한데
 			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " <<  std::flush;
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
-			Selections = -1; //누르면 초기화
 			String.clear();
 			logFile.close();
 			my_serial.close();
@@ -237,20 +251,10 @@ void PortBox::Connect()
 
 void PortBox::DisConnect()
 {
-	bool isDisconnectClicked = ImGui::Button("DisConnect");
-	if (isDisconnectClicked)
+	if (my_serial.isOpen())
 	{
 		PortBoxBool = false;
 		String.clear();
 		my_serial.close();
-	}
-	if (IsLost)
-	{
-		ImGui::TextColored(redColor, "Connection Lost");
-	}
-
-	if (PortBoxBool)
-	{
-		SerialMonitor();
 	}
 }
