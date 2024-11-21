@@ -19,7 +19,7 @@ void MyImGui::Instance()
 {
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX11 Example", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
+	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Test Program ¤·w¤·", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
 
 	if (!CreateDeviceD3D(hwnd))
 	{
@@ -85,12 +85,14 @@ void MyImGui::Instance()
 		//PortBoxCreate
 		int Xpos = 0, Ypos = 0, Count = 0;
 		std::string Name = "PortBox";
+		std::string target = "USB";
 		if (CreateBool)
 		{
 			PortInfo = serial::list_ports();
 			for (auto i = 0; i < PortInfo.size(); ++i)
 			{
-				PortName.push_back(PortInfo[i].port.c_str());
+				if(PortInfo[i].description.find(target) != std::string::npos)
+					PortName.push_back(PortInfo[i].port.c_str());
 			}
 			for (auto i = 0; i < 20; ++i)
 			{

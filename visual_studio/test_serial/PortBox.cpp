@@ -9,6 +9,8 @@
 
 
 
+
+
 ImVec4 redColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // 빨강
 ImVec4 yellowColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f); // 노랑
 ImVec4 Colors = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 하늘색
@@ -51,48 +53,6 @@ void PortBox::Instance(std::string& _PortName)
 		LogFileSet = false;
 	}
 	
-	//if (ImGui::Button("Show Available Ports")) {
-	//	Selections = -1; //누르면 초기화
-	//	ComboClick = true;
-	//	//포트 탐색
-	//	PortName.clear();
-	//	PortInfo = serial::list_ports();
-	//	for (auto i = 0; i < PortInfo.size(); ++i)
-	//	{
-	//		PortName.push_back(PortInfo[i].port.c_str());
-	//	}
-	//	isListVisible = !isListVisible;
-	//}
-
-	//if (isListVisible) 
-	//{
-	//	if (ImGui::CollapsingHeader("Available Ports", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen))
-	//	{
-	//		for (int i = 0; i < PortName.size(); ++i)
-	//		{
-	//			if (ImGui::Selectable(PortName[i], Selections == i))
-	//			{
-	//				Selections = i;
-	//			}
-	//		}
-	//	}
-	//}
-
-	//if (Selections >= 0)
-	//{
-	//	IsLost = false; //선택되었으면 Lost는 안뜨게
-	//	String = PortName[Selections];
-	//	if (ComboClick)
-	//	{
-	//		
-	//		isListVisible = false;
-	//		ComboClick = false;
-	//	}
-	//}
-	//if (!isListVisible && !String.empty())
-	//{
-	//	ImGui::Text("%s", String.c_str());
-	//}
 	bool isConnectClicked = ImGui::Button("Connect");
 	if (isConnectClicked)
 	{
@@ -155,7 +115,7 @@ void PortBox::SerialMonitor()
 		//한 20번정도 검수해야징
 		if (Dataline.empty())
 		{
-			for (auto i = 0; i < 20; ++i)
+			for (auto i = 0; i < 18; ++i)
 			{
 				Dataline = my_serial.readline();
 				if (!Dataline.empty())
@@ -192,7 +152,6 @@ void PortBox::SerialMonitor()
 		}
 	}
 	catch (const serial::IOException& e) {
-		MsgBox::Msg->ShowWarningMessageBox("올바른 포트번호가 입력되지 않았습니다.");
 		PortBoxBool = false;
 	}
 	catch (const std::exception& e) {

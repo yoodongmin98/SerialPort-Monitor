@@ -27,7 +27,7 @@ protected:
 private:
 	
 	std::vector<const char*> PortName;
-	serial::Timeout timeout = serial::Timeout::simpleTimeout(100);
+	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
 
 	bool PortBoxBool = false;
 	bool IsLost = false; //Ελ½Ε ²χ°εΐ»Ά§ ΖΗΊ°
