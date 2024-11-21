@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <serial/serial.h>
+#include <chrono>
 
 
 
@@ -27,12 +28,14 @@ protected:
 private:
 	
 	std::vector<const char*> PortName;
-	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
+	serial::Timeout timeout = serial::Timeout::simpleTimeout(500);
 
 	bool PortBoxBool = false;
 	bool IsLost = false; //통신 끊겼을때 판별
 	bool IsFirst = true; //부팅 판별
 	bool LogFileSet = true; //로그파일 이름설정할것
+	bool MissingBool; //시간 1프레임만 적용시킬때 쓸 변수
+	bool BootingBool; //시간 1프레임만 적용시킬때 쓸 변수
 
 	int DotCount = 1; //Working ...뜨는거
 	
@@ -42,8 +45,10 @@ private:
 	std::ofstream logFile;
 	std::string LogFileName; //로그파일로 남길 이름
 
-	
-
+	std::chrono::steady_clock::time_point MissingTime;
+	std::chrono::steady_clock::time_point currentMissingTime;
+	std::chrono::steady_clock::time_point BootingTime;
+	std::chrono::steady_clock::time_point currentBootingTime;
 	//initializer
 	int X = 0;
 	int Y = 0;

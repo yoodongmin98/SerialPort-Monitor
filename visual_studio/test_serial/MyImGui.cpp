@@ -128,6 +128,15 @@ void MyImGui::Instance()
 				obj->DisConnect();
 			}
 		}
+		if (ImGui::Button("ComPort Reset"))
+		{
+			for (PortBox* obj : ObjectBox)
+			{
+				obj->DisConnect();
+			}
+			CreateBool = true;
+			PortName.clear();
+		}
 		ImGui::End();
 
 

@@ -6,6 +6,7 @@
 #include <iostream>
 #include "MyTime.h"
 #include <Windows.h>
+#include <chrono>
 
 
 
@@ -23,17 +24,17 @@ PortBox::PortBox()
 }
 
 PortBox::PortBox(int _X, int _Y, std::string _Name)
-	: X(_X) , Y(_Y) , BoxName(_Name)
+	: X(_X), Y(_Y), BoxName(_Name)
 {
 
 }
 
-	
+
 PortBox::~PortBox()
 {
-	if (logFile.is_open()) 
+	if (logFile.is_open())
 	{
-		logFile.close(); 
+		logFile.close();
 	}
 }
 
@@ -52,7 +53,7 @@ void PortBox::Instance(std::string& _PortName)
 		LogFileName = String + "Log.txt";
 		LogFileSet = false;
 	}
-	
+
 	bool isConnectClicked = ImGui::Button("Connect");
 	if (isConnectClicked)
 	{
@@ -78,33 +79,32 @@ void PortBox::Instance(std::string& _PortName)
 
 void PortBox::SerialMonitor()
 {
-	try 
+	try
 	{
-		try 
+		try
 		{
-			if (IsFirst) 
+			if (IsFirst)
 			{
-				while (true) 
+				for (auto i = 0; i < 15; ++i)
 				{
 					Dataline = my_serial.readline();
-					if (!Dataline.empty()) 
+					if (!Dataline.empty())
 					{
 						IsFirst = false;
 						break;
 					}
-					Sleep(300);
 				}
 			}
 			else {
 				Dataline = my_serial.readline();
-				if(Dataline =="START" || Dataline == "REBOOT")
+				if (Dataline == "START" || Dataline == "REBOOT")
 					logFile << "\r" << String + "를 재시작합니다 " << MyTime::Time->GetLocalTime() << std::flush;
 			}
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
-			IsFirst = true; //어차피 한번 끊기면 끝이긴한데
-			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " <<  std::flush;
+			IsFirst = true; 
+			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::flush;
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
 			String.clear();
@@ -112,20 +112,10 @@ void PortBox::SerialMonitor()
 			my_serial.close();
 			return;
 		}
-		//한 20번정도 검수해야징
-		if (Dataline.empty())
-		{
-			for (auto i = 0; i < 18; ++i)
-			{
-				Dataline = my_serial.readline();
-				if (!Dataline.empty())
-					break;
-			}
-			
-		}
-
+	
+		
 		// 데이터가 비어있지 않을 때
-		if (!Dataline.empty() && Dataline[0]=='#')
+		if (!Dataline.empty() && Dataline[0] == '#')
 		{
 			DotCount++;
 			if (DotCount > 7) {
@@ -140,15 +130,35 @@ void PortBox::SerialMonitor()
 		else if (!Dataline.empty() && Dataline[0] != '#')
 		{
 			ImGui::TextColored(Colors, "Booting");
-			logFile << "\r" << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::flush;
-			std::cout << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
+			if (BootingBool)
+			{
+				BootingTime = std::chrono::steady_clock::now();
+				BootingBool = false;
+			}
+			currentBootingTime = std::chrono::steady_clock::now();
+			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5)
+			{
+				logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::flush;
+				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
+				BootingBool = true;
+			}
 		}
 		else
 		{
-				// 데이터가 비었을 때
-				ImGui::TextColored(yellowColor, "Missing");
+			ImGui::TextColored(yellowColor, "Missing");
+			if (MissingBool)
+			{
+				MissingTime = std::chrono::steady_clock::now();
+				MissingBool = false;
+			}
+			currentMissingTime = std::chrono::steady_clock::now();
+			// 데이터가 비었을 때
+			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 8)
+			{
 				logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::flush;
 				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
+				MissingBool = true;
+			}
 		}
 	}
 	catch (const serial::IOException& e) {
@@ -175,7 +185,6 @@ void PortBox::PortCheck()
 	}
 	catch (const std::exception e)
 	{
-		MsgBox::Msg->ShowWarningMessageBox("연결할 수 없는 포트 입니다.");
 		PortBoxBool = false;
 		return;
 	}
@@ -201,6 +210,7 @@ void PortBox::Connect()
 		logFile.open(LogFileName, std::ios::app);
 		PortBoxBool = true;
 		IsFirst = true;
+		IsLost = false;
 		my_serial.setPort(String);
 		my_serial.setBaudrate(921600);
 		my_serial.setTimeout(timeout);
