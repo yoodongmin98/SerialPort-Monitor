@@ -7,6 +7,7 @@
 #include "MyTime.h"
 #include <Windows.h>
 #include <chrono>
+#include "MyImGui.h"
 
 
 
@@ -32,10 +33,7 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 
 PortBox::~PortBox()
 {
-	if (logFile.is_open())
-	{
-		logFile.close();
-	}
+	
 }
 
 
@@ -48,11 +46,7 @@ void PortBox::Instance(std::string& _PortName)
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
-	if (LogFileSet)
-	{
-		LogFileName = String + "Log.txt";
-		LogFileSet = false;
-	}
+	
 
 	bool isConnectClicked = ImGui::Button("Connect");
 	if (isConnectClicked)
@@ -98,17 +92,16 @@ void PortBox::SerialMonitor()
 			else {
 				Dataline = my_serial.readline();
 				if (Dataline == "START" || Dataline == "REBOOT")
-					logFile << "\r" << String + "를 재시작합니다 " << MyTime::Time->GetLocalTime() << std::flush;
+					MyImGui::MyImGuis->LogFlash(String, "를 재시작합니다 ");
 			}
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
 			IsFirst = true; 
-			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::flush;
+			MyImGui::MyImGuis->LogFlash(String, " 의 시리얼 통신이 끊겼습니다. ");
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
 			String.clear();
-			logFile.close();
 			my_serial.close();
 			return;
 		}
@@ -138,7 +131,7 @@ void PortBox::SerialMonitor()
 			currentBootingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5)
 			{
-				logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::flush;
+				MyImGui::MyImGuis->LogFlash(String, "을 부팅중입니다 ");
 				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
 				BootingBool = true;
 			}
@@ -153,9 +146,9 @@ void PortBox::SerialMonitor()
 			}
 			currentMissingTime = std::chrono::steady_clock::now();
 			// 데이터가 비었을 때
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 8)
+			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 5)
 			{
-				logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::flush;
+				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
 				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
 				MissingBool = true;
 			}
@@ -206,8 +199,6 @@ void PortBox::Connect()
 {
 	if (!my_serial.isOpen())
 	{
-		//로그파일 생성
-		logFile.open(LogFileName, std::ios::app);
 		PortBoxBool = true;
 		IsFirst = true;
 		IsLost = false;

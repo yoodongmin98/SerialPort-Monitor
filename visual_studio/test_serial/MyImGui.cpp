@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PortBox.h"
 #include <string>
+#include "MyTime.h"
 
 
 MyImGui* MyImGui::MyImGuis = nullptr;
@@ -11,7 +12,10 @@ MyImGui::MyImGui()
 }
 MyImGui::~MyImGui()
 {
-
+	if (logFile.is_open())
+	{
+		logFile.close();
+	}
 }
 
 
@@ -81,6 +85,15 @@ void MyImGui::Instance()
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
+
+
+		if (LogFileSet)
+		{
+			LogFileName = "Log.txt";
+			LogFileOpen();
+			LogFileSet = false;
+		}
+
 
 		//PortBoxCreate
 		int Xpos = 0, Ypos = 0, Count = 0;
@@ -252,4 +265,19 @@ void MyImGui::CreateRenderTarget()
 void MyImGui::CleanupRenderTarget()
 {
 	if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; }
+}
+
+
+
+
+
+void MyImGui::LogFileOpen()
+{
+	//로그파일 생성
+	logFile.open(LogFileName, std::ios::app);
+}
+
+void MyImGui::LogFlash(std::string _PortName , std::string _Content)
+{
+	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
 }

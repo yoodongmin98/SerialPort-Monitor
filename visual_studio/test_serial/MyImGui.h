@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <serial/serial.h>
+#include <fstream>
 
 // Data
 static ID3D11Device* g_pd3dDevice = nullptr;
@@ -31,18 +32,30 @@ public:
     {
         return PortName;
     }
+    void LogFileOpen();
+    void LogFlash(std::string _PortName, std::string _Content);
 protected:
-
-
-private:
     bool CreateDeviceD3D(HWND hWnd);
     void CleanupDeviceD3D();
     void CreateRenderTarget();
     void CleanupRenderTarget();
-    
+
+private:
+  
+
+
+    bool LogFileSet = true; //로그파일 이름설정할것
     bool CreateBool = true;
+
+
+
     std::vector<PortBox*> ObjectBox;
+
 
     std::vector<serial::PortInfo> PortInfo;
     std::vector<std::string> PortName;
+
+
+    std::ofstream logFile;
+    std::string LogFileName; //로그파일로 남길 이름
 };
