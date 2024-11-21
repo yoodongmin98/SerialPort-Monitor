@@ -77,27 +77,12 @@ void PortBox::SerialMonitor()
 	{
 		try
 		{
-			if (IsFirst)
-			{
-				for (auto i = 0; i < 15; ++i)
-				{
-					Dataline = my_serial.readline();
-					if (!Dataline.empty())
-					{
-						IsFirst = false;
-						break;
-					}
-				}
-			}
-			else {
-				Dataline = my_serial.readline();
-				if (Dataline == "START" || Dataline == "REBOOT")
-					MyImGui::MyImGuis->LogFlash(String, "를 재시작합니다 ");
-			}
+			Dataline = my_serial.readline();
+			if (Dataline == "START" || Dataline == "REBOOT")
+				MyImGui::MyImGuis->LogFlash(String, "를 재시작합니다 ");
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
-			IsFirst = true; 
 			MyImGui::MyImGuis->LogFlash(String, " 의 시리얼 통신이 끊겼습니다. ");
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
@@ -200,7 +185,6 @@ void PortBox::Connect()
 	if (!my_serial.isOpen())
 	{
 		PortBoxBool = true;
-		IsFirst = true;
 		IsLost = false;
 		my_serial.setPort(String);
 		my_serial.setBaudrate(921600);

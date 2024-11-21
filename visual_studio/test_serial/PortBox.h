@@ -31,7 +31,6 @@ private:
 
 	bool PortBoxBool = false;
 	bool IsLost = false; //통신 끊겼을때 판별
-	bool IsFirst = true; //부팅 판별
 	bool MissingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
 	bool BootingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
 

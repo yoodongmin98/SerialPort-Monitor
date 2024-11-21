@@ -49,7 +49,7 @@ private:
 
 
 
-    std::vector<PortBox*> ObjectBox;
+    std::vector<std::shared_ptr<PortBox>> ObjectBox;
 
 
     std::vector<serial::PortInfo> PortInfo;

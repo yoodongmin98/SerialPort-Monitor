@@ -107,7 +107,7 @@ void MyImGui::Instance()
 				if(PortInfo[i].description.find(target) != std::string::npos)
 					PortName.push_back(PortInfo[i].port.c_str());
 			}
-			for (auto i = 0; i < 20; ++i)
+			for (auto i = 0; i < 50; ++i)
 			{
 				std::string SetName = Name + std::to_string(i);
 				Count++;
@@ -115,7 +115,7 @@ void MyImGui::Instance()
 				{
 					Xpos = 0; Ypos += 100; Count = 0;
 				}
-				ObjectBox.push_back(new PortBox(Xpos, Ypos, SetName));
+				ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
 				Xpos += 200;
 			}
 			CreateBool = false;
@@ -128,7 +128,7 @@ void MyImGui::Instance()
 		ImGui::Begin("All Check");
 		if (ImGui::Button("All Connect"))
 		{
-			for (PortBox* obj : ObjectBox)
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
 			{
 				if (!obj->IsStringNull())
 					obj->Connect();
@@ -136,17 +136,21 @@ void MyImGui::Instance()
 		}
 		if (ImGui::Button("All DisConnect"))
 		{
-			for (PortBox* obj : ObjectBox)
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
 			{
 				obj->DisConnect();
 			}
+			ObjectBox.clear();
+			CreateBool = true;
+			PortName.clear();
 		}
 		if (ImGui::Button("ComPort Reset"))
 		{
-			for (PortBox* obj : ObjectBox)
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
 			{
 				obj->DisConnect();
 			}
+			ObjectBox.clear();
 			CreateBool = true;
 			PortName.clear();
 		}
@@ -180,12 +184,7 @@ void MyImGui::Instance()
 	::DestroyWindow(hwnd);
 	::UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
-	//메모리 지워주기
-	for (PortBox* obj : ObjectBox)
-	{
-		delete obj;
-		obj = nullptr;
-	}
+	
 }
 
 
