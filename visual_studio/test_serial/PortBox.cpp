@@ -78,8 +78,10 @@ void PortBox::SerialMonitor()
 		try
 		{
 			Dataline = my_serial.readline();
-			if (Dataline == "START" || Dataline == "REBOOT")
-				MyImGui::MyImGuis->LogFlash(String, "를 재시작합니다 ");
+			if (Dataline.find("START") != std::string::npos && !BootStart)
+			{
+				BootStart = true;
+			}
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
@@ -95,6 +97,7 @@ void PortBox::SerialMonitor()
 		// 데이터가 비어있지 않을 때
 		if (!Dataline.empty() && Dataline[0] == '#')
 		{
+			BootStart = false;
 			DotCount++;
 			if (DotCount > 7) {
 				DotCount = 1;
@@ -105,7 +108,7 @@ void PortBox::SerialMonitor()
 			}
 			ImGui::Text("Working%s", Dots.c_str());
 		}
-		else if (!Dataline.empty() && Dataline[0] != '#')
+		else if (BootStart)
 		{
 			ImGui::TextColored(Colors, "Booting");
 			if (BootingBool)
@@ -114,7 +117,7 @@ void PortBox::SerialMonitor()
 				BootingBool = false;
 			}
 			currentBootingTime = std::chrono::steady_clock::now();
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5)
+			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 3)
 			{
 				MyImGui::MyImGuis->LogFlash(String, "을 부팅중입니다 ");
 				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
@@ -123,20 +126,24 @@ void PortBox::SerialMonitor()
 		}
 		else
 		{
-			ImGui::TextColored(yellowColor, "Missing");
-			if (MissingBool)
+			if (!BootStart)
 			{
-				MissingTime = std::chrono::steady_clock::now();
-				MissingBool = false;
+				ImGui::TextColored(yellowColor, "Missing");
+				if (MissingBool)
+				{
+					MissingTime = std::chrono::steady_clock::now();
+					MissingBool = false;
+				}
+				currentMissingTime = std::chrono::steady_clock::now();
+				// 데이터가 비었을 때
+				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 8)
+				{
+					MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
+					std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
+					MissingBool = true;
+				}
 			}
-			currentMissingTime = std::chrono::steady_clock::now();
-			// 데이터가 비었을 때
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 5)
-			{
-				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
-				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
-				MissingBool = true;
-			}
+			
 		}
 	}
 	catch (const serial::IOException& e) {
@@ -160,6 +167,8 @@ void PortBox::PortCheck()
 	try
 	{
 		my_serial.open();
+		my_serial.setRTS(false);
+		my_serial.setDTR(false);
 	}
 	catch (const std::exception e)
 	{

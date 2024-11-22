@@ -29,6 +29,7 @@ private:
 	std::vector<const char*> PortName;
 	serial::Timeout timeout = serial::Timeout::simpleTimeout(100);
 
+	bool BootStart = false;
 	bool PortBoxBool = false;
 	bool IsLost = false; //통신 끊겼을때 판별
 	bool MissingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
