@@ -21,7 +21,7 @@ ImVec4 Colors = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 하늘색
 
 PortBox::PortBox()
 {
-
+	
 }
 
 PortBox::PortBox(int _X, int _Y, std::string _Name)
@@ -39,6 +39,11 @@ PortBox::~PortBox()
 
 void PortBox::Instance(std::string& _PortName)
 {
+	if (LogFileBool)
+	{
+		logFile.open("ABB_Raw_"+_PortName, std::ios::app);
+		LogFileBool = false;
+	}
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str());
 	ImGui::SetWindowSize(ImVec2(200, 100));
@@ -78,6 +83,7 @@ void PortBox::SerialMonitor()
 		try
 		{
 			Dataline = my_serial.readline();
+			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << Dataline << std::flush;
 			if (Dataline.find("START") != std::string::npos && !BootStart)
 			{
 				BootStart = true;
@@ -120,7 +126,7 @@ void PortBox::SerialMonitor()
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 3)
 			{
 				MyImGui::MyImGuis->LogFlash(String, "을 부팅중입니다 ");
-				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << MyTime::Time->GetLocalTime() << std::endl;
+				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << std::endl;
 				BootingBool = true;
 			}
 		}

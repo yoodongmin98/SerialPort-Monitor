@@ -110,11 +110,11 @@ void MyImGui::Instance()
 			for (auto i = 0; i < 50; ++i)
 			{
 				std::string SetName = Name + std::to_string(i);
-				Count++;
-				if (Count == 5)
+				if (Count == 6)
 				{
 					Xpos = 0; Ypos += 100; Count = 0;
 				}
+				Count++;
 				ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
 				Xpos += 200;
 			}

@@ -3,7 +3,7 @@
 #include <string>
 #include <serial/serial.h>
 #include <chrono>
-
+#include <fstream>
 
 
 class PortBox
@@ -51,4 +51,10 @@ private:
 	int Y = 0;
 	std::string BoxName = "";
 	serial::Serial my_serial;
+
+
+
+	//File
+	std::ofstream logFile;
+	bool LogFileBool = true;
 };
