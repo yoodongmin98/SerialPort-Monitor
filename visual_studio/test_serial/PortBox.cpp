@@ -39,11 +39,7 @@ PortBox::~PortBox()
 
 void PortBox::Instance(std::string& _PortName)
 {
-	if (LogFileBool)
-	{
-		logFile.open("ABB_Raw_"+_PortName, std::ios::app);
-		LogFileBool = false;
-	}
+	
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str());
 	ImGui::SetWindowSize(ImVec2(200, 100));
@@ -70,6 +66,11 @@ void PortBox::Instance(std::string& _PortName)
 	}
 	if (PortBoxBool)
 	{
+		if (LogFileBool) //연결되었을때 생성
+		{
+			logFile.open("ABB_Raw_" + _PortName+ +".txt", std::ios::app);
+			LogFileBool = false;
+		}
 		SerialMonitor();
 	}
 	ImGui::End();
@@ -83,7 +84,10 @@ void PortBox::SerialMonitor()
 		try
 		{
 			Dataline = my_serial.readline();
-			logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << Dataline << std::flush;
+			if (!Dataline.find("\n") || Dataline.empty())
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+			else
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
 			if (Dataline.find("START") != std::string::npos && !BootStart)
 			{
 				BootStart = true;
