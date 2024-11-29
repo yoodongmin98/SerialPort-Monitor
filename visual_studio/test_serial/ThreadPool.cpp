@@ -7,49 +7,39 @@ ThreadPool::ThreadPool()
 
 }
 
-ThreadPool::ThreadPool(size_t numThreads) : stop(false)
+ThreadPool::ThreadPool(size_t numThreads)
 {
-	//어차피 복잡하게 쓸거아니니까 람다캡처
-	for (size_t i = 0; i < numThreads; ++i)
-	{
-		Worker.emplace_back([this]
-			{
-				while (true)
-				{
-					std::function<void()> task;
-					{
-						std::unique_lock<std::mutex> lock(QueueMutex);
-
-						condition.wait(lock, [this]
-							{
-								return stop || !tasks.empty();
-							});
-
-						if (stop && tasks.empty())
-							return;
-
-						task = std::move(tasks.front());
-						tasks.pop();
-					}
-					task();
-				}
-			});
-	}
+    for (size_t i = 0; i < numThreads; ++i)
+    {
+        Worker.push_back(std::thread(&ThreadPool::WorkerThread, this));
+    }
 }
 
 
 ThreadPool::~ThreadPool()
 {
-	std::unique_lock<std::mutex> lock(QueueMutex);
-	stop = true;
 	
-	condition.notify_all();
-	for (std::thread& worker : Worker)
-		worker.join();
 }
 
 
 
+void ThreadPool::WorkerThread()
+{
+    while (true)
+    {
+        std::unique_lock<std::mutex> lock(QueueMutex);
+        {
+
+        }
+    }
+}
 
 
-
+void ThreadPool::AddWork(std::function<void()> _function)
+{
+    if (stop) 
+    {
+        throw std::runtime_error("ThreadPool is stopped.");
+    }
+    tasks.push(_function);
+}

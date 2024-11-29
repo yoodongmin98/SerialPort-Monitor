@@ -4,6 +4,7 @@
 #include <string>
 #include "MyTime.h"
 #include "ThreadPool.h"
+#include <functional>
 
 
 
@@ -124,17 +125,16 @@ void MyImGui::Instance()
 			}
 			CreateBool = false;
 		}
-		//Instancing   
-	/*	for (auto i = 0; i < PortName.size(); ++i)
-		{
-			ThreadPools->enqueue([sp = ObjectBox[i], portName = std::string(PortName[i])]
-				{
-					sp->Instance(portName);
-				});
-		}*/
+		////Instancing   
+		//for (auto i = 0; i < PortName.size(); ++i)
+		//{
+		//	ObjectBox[i]->Instance(PortName[i]);
+		//}
+
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
-			ObjectBox[i]->Instance(PortName[i]);
+			auto k = std::bind(&PortBox::Instance, ObjectBox[i].get(), std::placeholders::_1);
+			
 		}
 		ImGui::Begin("All Check");
 		AllConnect();

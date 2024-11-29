@@ -37,7 +37,7 @@ PortBox::~PortBox()
 }
 
 
-void PortBox::Instance(std::string& _PortName)
+void PortBox::Instance(std::string _PortName)
 {
 	
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
