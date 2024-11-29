@@ -54,6 +54,9 @@
     <ClCompile Include="MyTime.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -81,6 +84,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="MyTime.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

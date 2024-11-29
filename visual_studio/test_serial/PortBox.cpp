@@ -49,14 +49,12 @@ void PortBox::Instance(std::string& _PortName)
 	ImGui::Text("%s", String.c_str());
 	
 
-	bool isConnectClicked = ImGui::Button("Connect");
-	if (isConnectClicked)
+	if (ImGui::Button("Connect"))
 	{
 		Connect();
 	}
 	ImGui::SameLine();
-	bool isDisconnectClicked = ImGui::Button("DisConnect");
-	if (isDisconnectClicked)
+	if (ImGui::Button("DisConnect"))
 	{
 		DisConnect();
 	}
@@ -83,7 +81,12 @@ void PortBox::SerialMonitor()
 	{
 		try
 		{
+			//데이터를 라인 기준으로 읽어옴
 			Dataline = my_serial.readline();
+			//데이터가 비어있지 않다면 MissingBool초기화(데이터를 읽고나서의 지났던 시간을 초기화)
+			if (!Dataline.empty())
+				MissingBool = true;
+			//읽
 			if (!Dataline.find("\n") || Dataline.empty())
 				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
 			else
@@ -134,7 +137,7 @@ void PortBox::SerialMonitor()
 				BootingBool = true;
 			}
 		}
-		else
+		else 
 		{
 			if (!BootStart)
 			{
@@ -146,7 +149,7 @@ void PortBox::SerialMonitor()
 				}
 				currentMissingTime = std::chrono::steady_clock::now();
 				// 데이터가 비었을 때
-				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 8)
+				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 6)
 				{
 					MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
 					std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
@@ -170,7 +173,10 @@ void PortBox::SerialMonitor()
 }
 
 
+void PortBox::CreatePortLogFile()
+{
 
+}
 
 void PortBox::PortCheck()
 {

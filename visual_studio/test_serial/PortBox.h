@@ -23,6 +23,7 @@ public:
 	}
 protected:
 	void PortCheck();
+	void CreatePortLogFile();
 	void SerialMonitor();
 private:
 	

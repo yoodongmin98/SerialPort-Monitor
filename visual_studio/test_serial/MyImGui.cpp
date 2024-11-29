@@ -5,6 +5,9 @@
 #include "MyTime.h"
 
 
+
+
+
 MyImGui* MyImGui::MyImGuis = nullptr;
 MyImGui::MyImGui()
 {
@@ -23,7 +26,7 @@ void MyImGui::Instance()
 {
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Test Program ¤·w¤·", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
+	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
 
 	if (!CreateDeviceD3D(hwnd))
 	{
@@ -126,34 +129,9 @@ void MyImGui::Instance()
 			ObjectBox[i]->Instance(PortName[i]);
 		}
 		ImGui::Begin("All Check");
-		if (ImGui::Button("All Connect"))
-		{
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-			{
-				if (!obj->IsStringNull())
-					obj->Connect();
-			}
-		}
-		if (ImGui::Button("All DisConnect"))
-		{
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-			{
-				obj->DisConnect();
-			}
-			ObjectBox.clear();
-			CreateBool = true;
-			PortName.clear();
-		}
-		if (ImGui::Button("ComPort Reset"))
-		{
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-			{
-				obj->DisConnect();
-			}
-			ObjectBox.clear();
-			CreateBool = true;
-			PortName.clear();
-		}
+		AllConnect();
+		AllDisConnect();
+		ComportReset();
 		ImGui::End();
 
 
@@ -161,7 +139,7 @@ void MyImGui::Instance()
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		{
-			ImGui::Begin("Hello, world!");
+			ImGui::Begin("Frame / FPS");
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 			ImGui::End();
 		}
@@ -279,4 +257,45 @@ void MyImGui::LogFileOpen()
 void MyImGui::LogFlash(std::string _PortName , std::string _Content)
 {
 	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
+}
+
+
+void MyImGui::AllConnect()
+{
+	if (ImGui::Button("All Connect"))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			if (!obj->IsStringNull())
+				obj->Connect();
+		}
+	}
+}
+void MyImGui::AllDisConnect()
+{
+	if (ImGui::Button("All DisConnect"))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+		ButtonRelease();
+	}
+}
+void MyImGui::ComportReset()
+{
+	if (ImGui::Button("ComPort Reset"))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+		ButtonRelease();
+	}
+}
+void MyImGui::ButtonRelease()
+{
+	ObjectBox.clear();
+	CreateBool = true;
+	PortName.clear();
 }

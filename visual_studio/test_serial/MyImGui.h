@@ -8,6 +8,7 @@
 #include <string>
 #include <serial/serial.h>
 #include <fstream>
+#include <thread>
 
 // Data
 static ID3D11Device* g_pd3dDevice = nullptr;
@@ -32,17 +33,23 @@ public:
     {
         return PortName;
     }
-    void LogFileOpen();
     void LogFlash(std::string _PortName, std::string _Content);
 protected:
+    void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
     void CleanupDeviceD3D();
     void CreateRenderTarget();
     void CleanupRenderTarget();
 
+
+
+    void AllConnect();
+    void AllDisConnect();
+    void ComportReset();
+    void ButtonRelease();
 private:
   
-
+    ThreadPool
 
     bool LogFileSet = true; //로그파일 이름설정할것
     bool CreateBool = true;
