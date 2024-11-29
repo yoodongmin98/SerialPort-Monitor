@@ -3,13 +3,14 @@
 #include "PortBox.h"
 #include <string>
 #include "MyTime.h"
-
+#include "ThreadPool.h"
 
 
 
 
 MyImGui* MyImGui::MyImGuis = nullptr;
 MyImGui::MyImGui()
+	: ThreadPools(std::make_shared<ThreadPool>(5))
 {
 	MyImGuis = this;
 }
@@ -36,7 +37,7 @@ void MyImGui::Instance()
 
 	::ShowWindow(hwnd, SW_SHOWDEFAULT);
 	::UpdateWindow(hwnd);
-
+	
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -124,6 +125,13 @@ void MyImGui::Instance()
 			CreateBool = false;
 		}
 		//Instancing   
+	/*	for (auto i = 0; i < PortName.size(); ++i)
+		{
+			ThreadPools->enqueue([sp = ObjectBox[i], portName = std::string(PortName[i])]
+				{
+					sp->Instance(portName);
+				});
+		}*/
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			ObjectBox[i]->Instance(PortName[i]);

@@ -20,6 +20,7 @@ static ID3D11RenderTargetView* g_mainRenderTargetView = nullptr;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+class ThreadPool;
 class PortBox;
 class MyImGui
 {
@@ -48,8 +49,7 @@ protected:
     void ComportReset();
     void ButtonRelease();
 private:
-  
-    ThreadPool
+    std::shared_ptr<ThreadPool> ThreadPools;
 
     bool LogFileSet = true; //로그파일 이름설정할것
     bool CreateBool = true;

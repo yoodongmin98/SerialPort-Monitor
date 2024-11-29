@@ -20,25 +20,28 @@ public:
 	~ThreadPool(); 
 
     template <class F, class... Args>
-    auto enqueue(F&& f, Args&&... args) -> std::future<typename std::invoke_result<F(Args...)>::type>
-    {
-        using returnType = typename std::result_of<F(Args...)>::type;
+    auto enqueue(F&& f, Args&&... args) -> std::future<typename std::invoke_result<F(Args...)>::type> {
+        using returnType = typename std::invoke_result<F(Args...)>::type;
+
         auto task = std::make_shared<std::packaged_task<returnType()>>(
             std::bind(std::forward<F>(f), std::forward<Args>(args)...)
         );
 
         std::future<returnType> res = task->get_future();
         {
-            std::unique_lock<std::mutex> lock(queueMutex);
+            std::unique_lock<std::mutex> lock(QueueMutex);
 
             if (stop)
                 throw std::runtime_error("Enqueue함수가 ThreadPool에서 멈췄습니다");
 
-            tasks.emplace([task]() { (*task)(); });
+            tasks.emplace([task]() { (*task)(); }); 
         }
         condition.notify_one();
         return res;
     }
+
+
+   
 protected:
 private:
 	//돌아갈 쓰레드들
