@@ -43,6 +43,9 @@ protected:
     void CleanupRenderTarget();
 
 
+    void CreateLeftBox();
+    void CreateRightBox();
+
 
     void AllConnect();
     void AllDisConnect();

@@ -125,17 +125,17 @@ void MyImGui::Instance()
 			}
 			CreateBool = false;
 		}
-		////Instancing   
-		//for (auto i = 0; i < PortName.size(); ++i)
-		//{
-		//	ObjectBox[i]->Instance(PortName[i]);
-		//}
-
+		//Instancing   
 		for (auto i = 0; i < PortName.size(); ++i)
+		{
+			ObjectBox[i]->Instance(PortName[i]);
+		}
+
+		/*for (auto i = 0; i < PortName.size(); ++i)
 		{
 			auto k = std::bind(&PortBox::Instance, ObjectBox[i].get(), std::placeholders::_1);
 			
-		}
+		}*/
 		ImGui::Begin("All Check");
 		AllConnect();
 		AllDisConnect();
