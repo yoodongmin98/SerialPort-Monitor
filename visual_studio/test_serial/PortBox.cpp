@@ -41,7 +41,7 @@ void PortBox::Instance(std::string _PortName)
 {
 	
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
-	ImGui::Begin(BoxName.c_str());
+	ImGui::Begin(BoxName.c_str(), nullptr,ImGuiWindowFlags_NoTitleBar);
 	ImGui::SetWindowSize(ImVec2(200, 100));
 	ImGui::PushItemWidth(50);
 

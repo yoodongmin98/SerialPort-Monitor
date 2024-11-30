@@ -11,7 +11,7 @@
 
 MyImGui* MyImGui::MyImGuis = nullptr;
 MyImGui::MyImGui()
-	: ThreadPools(std::make_shared<ThreadPool>(5))
+	//: ThreadPools(std::make_shared<ThreadPool>(5))
 {
 	MyImGuis = this;
 }
@@ -52,7 +52,11 @@ void MyImGui::Instance()
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+
+	
+	
+
 
 	// Main loop
 	bool done = false;
@@ -125,6 +129,8 @@ void MyImGui::Instance()
 			}
 			CreateBool = false;
 		}
+
+
 		//Instancing   
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
@@ -136,7 +142,9 @@ void MyImGui::Instance()
 			auto k = std::bind(&PortBox::Instance, ObjectBox[i].get(), std::placeholders::_1);
 			
 		}*/
-		ImGui::Begin("All Check");
+		ImGui::SetNextWindowPos(ImVec2(1065, 0), ImGuiCond_Always);
+		ImGui::Begin("All Check",nullptr, ImGuiWindowFlags_NoCollapse);
+		ImGui::SetWindowSize(ImVec2(200, 150));
 		AllConnect();
 		AllDisConnect();
 		ComportReset();
@@ -147,8 +155,14 @@ void MyImGui::Instance()
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		{
-			ImGui::Begin("Frame / FPS");
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+			ImGui::SetNextWindowPos(ImVec2(1065, 150), ImGuiCond_Always);
+			//ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+			ImGui::StyleColorsClassic();  // 클래식 스타일로 설정
+
+			ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
+			ImGui::SetWindowSize(ImVec2(200, 150));
+			ImGui::Text("Frame : %.3f ms/frame", 1000.0f / io.Framerate);
+			ImGui::Text("FPS : %.1f",  io.Framerate);
 			ImGui::End();
 		}
 
@@ -306,4 +320,14 @@ void MyImGui::ButtonRelease()
 	ObjectBox.clear();
 	CreateBool = true;
 	PortName.clear();
+}
+
+
+void MyImGui::CreateLeftBox()
+{
+
+}
+void MyImGui::CreateRightBox()
+{
+
 }
