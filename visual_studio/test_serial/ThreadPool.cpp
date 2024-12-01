@@ -47,12 +47,20 @@ void ThreadPool::WorkerThread()
 
             if (stop && tasks.empty()) 
                 return;
-
+            
             task = std::move(tasks.front());
             tasks.pop();
             lock.unlock();
+
+            try 
+            {
+                task();
+            }
+            catch (const std::exception& e) 
+            {
+                std::cerr << "Serial Thread 처리에 오류가 발생했습니다 : " << e.what() << std::endl;
+            }
         }
-        task();
     }
 }
 
@@ -68,5 +76,5 @@ void ThreadPool::AddWork(std::function<void()> _function)
         }
         tasks.push(_function);
     }
-    condition.notify_all();
+    condition.notify_one();
 }

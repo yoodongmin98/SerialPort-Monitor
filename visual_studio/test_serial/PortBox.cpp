@@ -34,7 +34,7 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 
 PortBox::~PortBox()
 {
-	
+	CloseSerialPort();
 }
 
 
@@ -49,20 +49,17 @@ void PortBox::Instance(std::string _PortName)
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
 	
-
 	if (ImGui::Button("Connect"))
-	{
 		Connect();
-	}
+
 	ImGui::SameLine();
+
 	if (ImGui::Button("DisConnect"))
-	{
 		DisConnect();
-	}
+
 	if (IsLost)
-	{
 		ImGui::TextColored(redColor, "Connection Lost");
-	}
+
 	if (PortBoxBool)
 	{
 		if (LogFileBool) //연결되었을때 생성
@@ -76,13 +73,8 @@ void PortBox::Instance(std::string _PortName)
 			ImGui::TextColored(yellowColor, "Missing");
 		else if (BootStart)
 			ImGui::TextColored(Colors, "Booting");
-		
 	}
 
-
-
-
-	
 	ImGui::End();
 }
 
@@ -93,38 +85,33 @@ void PortBox::SerialMonitor()
 	{
 		try
 		{
+			// 멀티쓰레드에서 queue에 추가된 작업들이 꺼진상태에서도 작업을 실행하지않도록  serial여부를 체크
+			if (!my_serial.isOpen())
+				return;
 			//데이터를 라인 기준으로 읽어옴
-			Dataline = my_serial.readline();
+			if (my_serial.available())
+				Dataline = my_serial.readline();
+			else
+				return;
 			//데이터가 비어있지 않다면 MissingBool초기화(데이터를 읽고나서의 지났던 시간을 초기화)
 			if (!Dataline.empty())
 				MissingBool = true;
-			//읽
 			if (!Dataline.find("\n") || Dataline.empty())
 				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+			if (Dataline.find("START") != std::string::npos && !BootStart)
+				BootStart = true;
 			else
 				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
-			if (Dataline.find("START") != std::string::npos && !BootStart)
-			{
-				BootStart = true;
-			}
+			
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
 			MyImGui::MyImGuis->LogFlash(String, " 의 시리얼 통신이 끊겼습니다. ");
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
-			PortBoxBool = false;
-			String.clear();
-			{
-				std::lock_guard<std::mutex> lock(serialMutex);
-				if (my_serial.isOpen())
-				{
-					my_serial.close();
-				}
-			}
+			CloseSerialPort();
 			return;
 		}
 	
-		
 		// 데이터가 비어있지 않을 때
 		if (!Dataline.empty() && Dataline[0] == '#')
 		{
@@ -164,7 +151,6 @@ void PortBox::SerialMonitor()
 					MissingBool = false;
 				}
 				currentMissingTime = std::chrono::steady_clock::now();
-				// 데이터가 비었을 때
 				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 6)
 				{
 					MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
@@ -238,6 +224,11 @@ void PortBox::Connect()
 }
 
 void PortBox::DisConnect()
+{
+	CloseSerialPort();
+}
+
+void PortBox::CloseSerialPort()
 {
 	{
 		std::lock_guard<std::mutex> lock(serialMutex);

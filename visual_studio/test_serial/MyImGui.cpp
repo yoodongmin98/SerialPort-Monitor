@@ -13,7 +13,7 @@
 
 MyImGui* MyImGui::MyImGuis = nullptr;
 MyImGui::MyImGui()
-	: ThreadPools(std::make_shared<ThreadPool>(3))
+	: ThreadPools(std::make_shared<ThreadPool>(2))
 {
 	MyImGuis = this;
 }
@@ -91,12 +91,10 @@ void MyImGui::Instance()
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		std::cout << ThreadPools->GetTasks().size() << std::endl;
 
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-
 
 		if (LogFileSet)
 		{
@@ -105,38 +103,14 @@ void MyImGui::Instance()
 			LogFileSet = false;
 		}
 
-
 		//PortBoxCreate
-		int Xpos = 0, Ypos = 0, Count = 0;
-		std::string Name = "PortBox";
-		std::string target = "USB";
-		if (CreateBool)
-		{
-			PortInfo = serial::list_ports();
-			for (auto i = 0; i < PortInfo.size(); ++i)
-			{
-				if(PortInfo[i].description.find(target) != std::string::npos)
-					PortName.push_back(PortInfo[i].port.c_str());
-			}
-			for (auto i = 0; i < MaxPortCount; ++i)
-			{
-				std::string SetName = Name + std::to_string(i);
-				if (Count == 6)
-				{
-					Xpos = 0; Ypos += 100; Count = 0;
-				}
-				Count++;
-				ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
-				Xpos += 180;
-			}
-			CreateBool = false;
-		}
-
+		PortBoxCreate();
+		
 		//Instancing   
 		for (auto i = 0; i < PortName.size(); ++i)
-		{
 			ObjectBox[i]->Instance(PortName[i]);
-		}
+
+		std::cout<<MyImGui::MyImGuis->GetThreadPool()->GetTasks().size() << std::endl;
 
 		ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
 		ImGui::Begin("All Check",nullptr, ImGuiWindowFlags_NoCollapse);
@@ -147,20 +121,17 @@ void MyImGui::Instance()
 		ImGui::End();
 
 
+		ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
+		ImGui::StyleColorsClassic();
 
+		ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
+		ImGui::SetWindowSize(ImVec2(200, 150));
+		ImGui::Text("Frame : %.3f ms/frame", 1000.0f / io.Framerate);
+		ImGui::Text("FPS : %.1f", io.Framerate);
+		ImGui::End();
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		{
-			ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
-			ImGui::StyleColorsClassic();  // 클래식 스타일로 설정
-
-			ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
-			ImGui::SetWindowSize(ImVec2(200, 150));
-			ImGui::Text("Frame : %.3f ms/frame", 1000.0f / io.Framerate);
-			ImGui::Text("FPS : %.1f",  io.Framerate);
-			ImGui::End();
-		}
-
+		
 		ImGui::Render();
 		const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
 		g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, nullptr);
@@ -274,6 +245,33 @@ void MyImGui::LogFileOpen()
 void MyImGui::LogFlash(std::string _PortName , std::string _Content)
 {
 	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
+}
+
+
+void MyImGui::PortBoxCreate()
+{
+	int Xpos = 0, Ypos = 0, Count = 0;
+	if (CreateBool)
+	{
+		PortInfo = serial::list_ports();
+		for (auto i = 0; i < PortInfo.size(); ++i)
+		{
+			if (PortInfo[i].description.find(target) != std::string::npos)
+				PortName.push_back(PortInfo[i].port.c_str());
+		}
+		for (auto i = 0; i < MaxPortCount; ++i)
+		{
+			std::string SetName = Name + std::to_string(i);
+			if (Count == 6)
+			{
+				Xpos = 0; Ypos += 100; Count = 0;
+			}
+			Count++;
+			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
+			Xpos += 180;
+		}
+		CreateBool = false;
+	}
 }
 
 

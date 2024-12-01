@@ -47,7 +47,7 @@ protected:
     void CreateRenderTarget();
     void CleanupRenderTarget();
 
-
+    void PortBoxCreate();
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
@@ -58,7 +58,8 @@ private:
     bool LogFileSet = true; //로그파일 이름설정할것
     bool CreateBool = true;
 
-
+    std::string Name = "PortBox";
+    std::string target = "USB";
 
     std::vector<std::shared_ptr<PortBox>> ObjectBox;
 

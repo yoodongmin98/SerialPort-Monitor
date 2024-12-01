@@ -26,10 +26,11 @@ protected:
 	void PortCheck();
 	void CreatePortLogFile();
 	void SerialMonitor();
+	void CloseSerialPort();
 private:
 	
 	std::vector<const char*> PortName;
-	serial::Timeout timeout = serial::Timeout::simpleTimeout(100);
+	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
 
 	bool BootStart = false;
 	bool PortBoxBool = false;
