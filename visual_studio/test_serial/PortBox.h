@@ -4,6 +4,7 @@
 #include <serial/serial.h>
 #include <chrono>
 #include <fstream>
+#include <mutex>
 
 
 class PortBox
@@ -54,6 +55,9 @@ private:
 	serial::Serial my_serial;
 
 
+
+
+	std::mutex serialMutex;
 
 	//File
 	std::ofstream logFile;

@@ -8,7 +8,8 @@
 #include <Windows.h>
 #include <chrono>
 #include "MyImGui.h"
-
+#include <functional>
+#include "ThreadPool.h"
 
 
 
@@ -42,7 +43,7 @@ void PortBox::Instance(std::string _PortName)
 	
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str(), nullptr,ImGuiWindowFlags_NoTitleBar);
-	ImGui::SetWindowSize(ImVec2(200, 100));
+	ImGui::SetWindowSize(ImVec2(180, 100));
 	ImGui::PushItemWidth(50);
 
 	String = _PortName;
@@ -69,8 +70,19 @@ void PortBox::Instance(std::string _PortName)
 			logFile.open("ABB_Raw_" + _PortName+ +".txt", std::ios::app);
 			LogFileBool = false;
 		}
-		SerialMonitor();
+		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
+		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
+		if (!BootStart)
+			ImGui::TextColored(yellowColor, "Missing");
+		else if (BootStart)
+			ImGui::TextColored(Colors, "Booting");
+		
 	}
+
+
+
+
+	
 	ImGui::End();
 }
 
@@ -102,7 +114,13 @@ void PortBox::SerialMonitor()
 			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
 			PortBoxBool = false;
 			String.clear();
-			my_serial.close();
+			{
+				std::lock_guard<std::mutex> lock(serialMutex);
+				if (my_serial.isOpen())
+				{
+					my_serial.close();
+				}
+			}
 			return;
 		}
 	
@@ -123,7 +141,6 @@ void PortBox::SerialMonitor()
 		}
 		else if (BootStart)
 		{
-			ImGui::TextColored(Colors, "Booting");
 			if (BootingBool)
 			{
 				BootingTime = std::chrono::steady_clock::now();
@@ -141,7 +158,6 @@ void PortBox::SerialMonitor()
 		{
 			if (!BootStart)
 			{
-				ImGui::TextColored(yellowColor, "Missing");
 				if (MissingBool)
 				{
 					MissingTime = std::chrono::steady_clock::now();
@@ -207,23 +223,29 @@ void PortBox::PortCheck()
 
 void PortBox::Connect()
 {
-	if (!my_serial.isOpen())
 	{
-		PortBoxBool = true;
-		IsLost = false;
-		my_serial.setPort(String);
-		my_serial.setBaudrate(921600);
-		my_serial.setTimeout(timeout);
-		PortCheck();
+		std::lock_guard<std::mutex> lock(serialMutex);
+		if (!my_serial.isOpen())
+		{
+			PortBoxBool = true;
+			IsLost = false;
+			my_serial.setPort(String);
+			my_serial.setBaudrate(921600);
+			my_serial.setTimeout(timeout);
+			PortCheck();
+		}
 	}
 }
 
 void PortBox::DisConnect()
 {
-	if (my_serial.isOpen())
 	{
-		PortBoxBool = false;
-		String.clear();
-		my_serial.close();
+		std::lock_guard<std::mutex> lock(serialMutex);
+		if (my_serial.isOpen())
+		{
+			my_serial.close();
+			PortBoxBool = false;
+			String.clear();
+		}
 	}
 }

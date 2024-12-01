@@ -35,16 +35,17 @@ public:
         return PortName;
     }
     void LogFlash(std::string _PortName, std::string _Content);
+
+    std::shared_ptr<ThreadPool> GetThreadPool()
+    {
+        return ThreadPools;
+    }
 protected:
     void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
     void CleanupDeviceD3D();
     void CreateRenderTarget();
     void CleanupRenderTarget();
-
-
-    void CreateLeftBox();
-    void CreateRightBox();
 
 
     void AllConnect();

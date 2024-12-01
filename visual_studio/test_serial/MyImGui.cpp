@@ -7,11 +7,13 @@
 #include <functional>
 
 
+#define MaxPortCount 30
+
 
 
 MyImGui* MyImGui::MyImGuis = nullptr;
 MyImGui::MyImGui()
-	//: ThreadPools(std::make_shared<ThreadPool>(5))
+	: ThreadPools(std::make_shared<ThreadPool>(3))
 {
 	MyImGuis = this;
 }
@@ -52,7 +54,7 @@ void MyImGui::Instance()
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+	ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
 
 	
 	
@@ -89,7 +91,7 @@ void MyImGui::Instance()
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+		std::cout << ThreadPools->GetTasks().size() << std::endl;
 
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -116,7 +118,7 @@ void MyImGui::Instance()
 				if(PortInfo[i].description.find(target) != std::string::npos)
 					PortName.push_back(PortInfo[i].port.c_str());
 			}
-			for (auto i = 0; i < 50; ++i)
+			for (auto i = 0; i < MaxPortCount; ++i)
 			{
 				std::string SetName = Name + std::to_string(i);
 				if (Count == 6)
@@ -125,11 +127,10 @@ void MyImGui::Instance()
 				}
 				Count++;
 				ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
-				Xpos += 200;
+				Xpos += 180;
 			}
 			CreateBool = false;
 		}
-
 
 		//Instancing   
 		for (auto i = 0; i < PortName.size(); ++i)
@@ -137,12 +138,7 @@ void MyImGui::Instance()
 			ObjectBox[i]->Instance(PortName[i]);
 		}
 
-		/*for (auto i = 0; i < PortName.size(); ++i)
-		{
-			auto k = std::bind(&PortBox::Instance, ObjectBox[i].get(), std::placeholders::_1);
-			
-		}*/
-		ImGui::SetNextWindowPos(ImVec2(1065, 0), ImGuiCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
 		ImGui::Begin("All Check",nullptr, ImGuiWindowFlags_NoCollapse);
 		ImGui::SetWindowSize(ImVec2(200, 150));
 		AllConnect();
@@ -155,8 +151,7 @@ void MyImGui::Instance()
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		{
-			ImGui::SetNextWindowPos(ImVec2(1065, 150), ImGuiCond_Always);
-			//ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+			ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
 			ImGui::StyleColorsClassic();  // 클래식 스타일로 설정
 
 			ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
@@ -320,14 +315,4 @@ void MyImGui::ButtonRelease()
 	ObjectBox.clear();
 	CreateBool = true;
 	PortName.clear();
-}
-
-
-void MyImGui::CreateLeftBox()
-{
-
-}
-void MyImGui::CreateRightBox()
-{
-
 }

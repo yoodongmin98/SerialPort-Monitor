@@ -8,6 +8,7 @@
 #include <queue>
 #include <condition_variable>
 #include <memory>
+#include <string>
 
 
 class ThreadPool
@@ -20,7 +21,10 @@ public:
 
 	
 	void AddWork(std::function<void()> _function);
-   
+	std::queue<std::function<void()>> GetTasks()
+	{
+		return tasks;
+	}
 protected:
 	void WorkerThread();
 private:
@@ -28,5 +32,6 @@ private:
 	std::vector<std::thread> Worker;
 	std::mutex QueueMutex;
 	std::queue<std::function<void()>> tasks;
+	std::condition_variable condition;
 	std::atomic<bool> stop;
 };
