@@ -8,12 +8,13 @@
 
 
 #define MaxPortCount 30
-
+#define ThreadCount 2
 
 
 MyImGui* MyImGui::MyImGuis = nullptr;
+
 MyImGui::MyImGui()
-	: ThreadPools(std::make_shared<ThreadPool>(2))
+	: ThreadPools(std::make_shared<ThreadPool>(ThreadCount))
 {
 	MyImGuis = this;
 }
@@ -52,13 +53,7 @@ void MyImGui::Instance()
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
-
-	
-	
-
 
 	// Main loop
 	bool done = false;
@@ -103,32 +98,17 @@ void MyImGui::Instance()
 			LogFileSet = false;
 		}
 
-		//PortBoxCreate
 		PortBoxCreate();
-		
-		//Instancing   
+		DrawLine();
+		AllConnectBox();
+		Frame_FPSBox(io);
+		RadarTypeBox();
+		LogBox();
 		for (auto i = 0; i < PortName.size(); ++i)
 			ObjectBox[i]->Instance(PortName[i]);
 
-		std::cout<<MyImGui::MyImGuis->GetThreadPool()->GetTasks().size() << std::endl;
-
-		ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
-		ImGui::Begin("All Check",nullptr, ImGuiWindowFlags_NoCollapse);
-		ImGui::SetWindowSize(ImVec2(200, 150));
-		AllConnect();
-		AllDisConnect();
-		ComportReset();
-		ImGui::End();
-
-
-		ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
-		ImGui::StyleColorsClassic();
-
-		ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
-		ImGui::SetWindowSize(ImVec2(200, 150));
-		ImGui::Text("Frame : %.3f ms/frame", 1000.0f / io.Framerate);
-		ImGui::Text("FPS : %.1f", io.Framerate);
-		ImGui::End();
+	
+		
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -149,8 +129,6 @@ void MyImGui::Instance()
 	CleanupDeviceD3D();
 	::DestroyWindow(hwnd);
 	::UnregisterClassW(wc.lpszClassName, wc.hInstance);
-
-	
 }
 
 
@@ -185,6 +163,7 @@ bool MyImGui::CreateDeviceD3D(HWND hWnd)
 	return true;
 }
 
+
 void MyImGui::CleanupDeviceD3D()
 {
 	CleanupRenderTarget();
@@ -193,7 +172,9 @@ void MyImGui::CleanupDeviceD3D()
 	if (g_pd3dDevice) { g_pd3dDevice->Release(); g_pd3dDevice = nullptr; }
 }
 
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -219,6 +200,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return ::DefWindowProcW(hWnd, msg, wParam, lParam);
 }
 
+
 void MyImGui::CreateRenderTarget()
 {
 	ID3D11Texture2D* pBackBuffer;
@@ -227,13 +209,11 @@ void MyImGui::CreateRenderTarget()
 	pBackBuffer->Release();
 }
 
+
 void MyImGui::CleanupRenderTarget()
 {
 	if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; }
 }
-
-
-
 
 
 void MyImGui::LogFileOpen()
@@ -250,9 +230,9 @@ void MyImGui::LogFlash(std::string _PortName , std::string _Content)
 
 void MyImGui::PortBoxCreate()
 {
-	int Xpos = 0, Ypos = 0, Count = 0;
 	if (CreateBool)
 	{
+		int Xpos = 0, Ypos = 0, Count = 0;
 		PortInfo = serial::list_ports();
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
@@ -272,6 +252,85 @@ void MyImGui::PortBoxCreate()
 		}
 		CreateBool = false;
 	}
+}
+
+void MyImGui::DrawLine()
+{
+	ImVec2 topLeft = { 0.0f,0.0f };
+	ImVec2 bottomRight = ImVec2(topLeft.x + 1080, topLeft.y + 500);
+	float cellSizeX = 180.0f; // X 크기
+	float cellSizeY = 100.0f; // Y 크기
+	ImU32 color = IM_COL32(205, 205, 205, 128); 
+	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+
+	// 수직선
+	for (float x = topLeft.x; x <= bottomRight.x; x += cellSizeX) 
+		drawList->AddLine(ImVec2(x, topLeft.y), ImVec2(x, bottomRight.y), color);
+
+	// 수평선
+	for (float y = topLeft.y; y <= bottomRight.y; y += cellSizeY) 
+		drawList->AddLine(ImVec2(topLeft.x, y), ImVec2(bottomRight.x, y), color);
+	
+}
+
+
+void MyImGui::RadarTypeBox()
+{
+	ImGui::SetNextWindowPos(ImVec2(1080, 300), ImGuiCond_Always);
+	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(200, 300));
+
+	std::vector<serial::PortInfo> Infos = serial::list_ports();
+	unsigned int BluetoothCount = 0;
+	unsigned int USBSerialCount = 0;
+	unsigned int ETCCount = 0;
+	for (serial::PortInfo& V : Infos)
+	{
+		if (V.description.find("Bluetooth") != std::string::npos)
+			BluetoothCount++;
+		else if (V.description.find(target) != std::string::npos)
+			USBSerialCount++;
+		else
+			ETCCount++;
+	}
+	ImGui::Text("Port detected : %d", Infos.size());
+	ImGui::Text("Blutooth detected : %d", BluetoothCount);
+	ImGui::Text("USBSerial detected : %d", USBSerialCount);
+	ImGui::Text("ETC Port detected : %d", ETCCount);
+	ImGui::End();
+}
+
+void MyImGui::AllConnectBox()
+{
+	ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
+	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(200, 150));
+	AllConnect();
+	AllDisConnect();
+	ComportReset();
+	ImGui::End();
+}
+
+
+void MyImGui::Frame_FPSBox(ImGuiIO& _io)
+{
+	ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
+	ImGui::StyleColorsClassic();
+
+	ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(200, 150));
+	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
+	ImGui::Text("FPS : %.1f", _io.Framerate);
+	ImGui::End();
+}
+
+
+void MyImGui::LogBox()
+{
+	ImGui::SetNextWindowPos(ImVec2(0, 500), ImGuiCond_Always);
+	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(1080, 260));
+	ImGui::End();
 }
 
 

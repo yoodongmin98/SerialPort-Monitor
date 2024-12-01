@@ -48,6 +48,11 @@ protected:
     void CleanupRenderTarget();
 
     void PortBoxCreate();
+    void DrawLine();
+    void RadarTypeBox();
+    void AllConnectBox();
+    void Frame_FPSBox(ImGuiIO& _io);
+    void LogBox();
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
