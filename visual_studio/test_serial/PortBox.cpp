@@ -40,7 +40,6 @@ PortBox::~PortBox()
 
 void PortBox::Instance(std::string _PortName)
 {
-	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f); 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str(), nullptr,ImGuiWindowFlags_NoTitleBar);

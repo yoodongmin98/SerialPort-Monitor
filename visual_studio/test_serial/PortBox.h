@@ -28,10 +28,6 @@ protected:
 	void SerialMonitor();
 	void CloseSerialPort();
 private:
-	
-	std::vector<const char*> PortName;
-	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
-
 	bool BootStart = false;
 	bool PortBoxBool = false;
 	bool IsLost = false; //Ελ½Ε ²χ°εΐ»Ά§ ΖΗΊ°
@@ -45,20 +41,29 @@ private:
 	std::string Dots = "."; //Working ...±Χ°Ε €·€·
 
 
+	//Time
 	std::chrono::steady_clock::time_point MissingTime;
 	std::chrono::steady_clock::time_point currentMissingTime;
 	std::chrono::steady_clock::time_point BootingTime;
 	std::chrono::steady_clock::time_point currentBootingTime;
+
+
 	//initializer
 	int X = 0;
 	int Y = 0;
 	std::string BoxName = "";
+
+	//UI
+	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f);
+
+
+	//Serial
 	serial::Serial my_serial;
-
-
-
-
 	std::mutex serialMutex;
+	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
+	std::vector<const char*> PortName;
+
+
 
 	//File
 	std::ofstream logFile;
