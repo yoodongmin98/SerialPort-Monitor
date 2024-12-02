@@ -40,6 +40,11 @@ public:
     {
         return ThreadPools;
     }
+    void AddLogBoxString(const std::string message) 
+    {
+        logs.emplace_back(message);
+        scrollToBottom = true; // 스크롤을 맨 아래로 내리기 위한 플래그
+    }
 protected:
     void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
@@ -53,13 +58,16 @@ protected:
     void AllConnectBox();
     void Frame_FPSBox(ImGuiIO& _io);
     void LogBox();
+    void EtcBox();
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
     void ButtonRelease();
 private:
     std::shared_ptr<ThreadPool> ThreadPools;
+    std::vector<std::string> logs;
 
+    bool scrollToBottom = false;
     bool LogFileSet = true; //로그파일 이름설정할것
     bool CreateBool = true;
 

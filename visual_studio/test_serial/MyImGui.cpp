@@ -104,6 +104,7 @@ void MyImGui::Instance()
 		Frame_FPSBox(io);
 		RadarTypeBox();
 		LogBox();
+		EtcBox();
 		for (auto i = 0; i < PortName.size(); ++i)
 			ObjectBox[i]->Instance(PortName[i]);
 
@@ -278,7 +279,7 @@ void MyImGui::RadarTypeBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(1080, 300), ImGuiCond_Always);
 	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 300));
+	ImGui::SetWindowSize(ImVec2(200, 200));
 
 	std::vector<serial::PortInfo> Infos = serial::list_ports();
 	unsigned int BluetoothCount = 0;
@@ -329,9 +330,32 @@ void MyImGui::LogBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(0, 500), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 	ImGui::SetWindowSize(ImVec2(1080, 260));
+
+	for (const auto& log : logs) 
+	{
+		ImGui::Text("%s", log.c_str());
+	}
+	if (scrollToBottom) 
+	{
+		ImGui::SetScrollHereY(1.0f);
+		scrollToBottom = false;
+	}
+
+	ImGui::EndChild();
 	ImGui::End();
 }
+
+
+void MyImGui::EtcBox()
+{
+	ImGui::SetNextWindowPos(ImVec2(1080, 500), ImGuiCond_Always);
+	ImGui::Begin("Etc", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(200, 260));
+	ImGui::End();
+}
+
 
 
 void MyImGui::AllConnect()

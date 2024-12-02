@@ -92,24 +92,24 @@ void PortBox::SerialMonitor()
 				return;
 			//데이터를 라인 기준으로 읽어옴
 			if (my_serial.available())
+			{
 				Dataline = my_serial.readline();
+				if (!Dataline.empty())
+					MissingBool = true;
+				else if (!Dataline.find("\n") || Dataline.empty())
+					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+				else if (Dataline.find("START") != std::string::npos && !BootStart)
+					BootStart = true;
+
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
+			}
 			else
 				return;
-			//데이터가 비어있지 않다면 MissingBool초기화(데이터를 읽고나서의 지났던 시간을 초기화)
-			if (!Dataline.empty())
-				MissingBool = true;
-			if (!Dataline.find("\n") || Dataline.empty())
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
-			if (Dataline.find("START") != std::string::npos && !BootStart)
-				BootStart = true;
-			else
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
-			
 		}
 		catch (const std::exception& e) {
 			IsLost = true;
 			MyImGui::MyImGuis->LogFlash(String, " 의 시리얼 통신이 끊겼습니다. ");
-			std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << String + " 의 시리얼 통신이 끊겼습니다. " << std::endl;
+			MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "]" + String + " Serial communication was lost");
 			CloseSerialPort();
 			return;
 		}
@@ -138,8 +138,8 @@ void PortBox::SerialMonitor()
 			currentBootingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 3)
 			{
-				MyImGui::MyImGuis->LogFlash(String, "을 부팅중입니다 ");
-				std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "을 부팅중입니다 " << std::endl;
+				MyImGui::MyImGuis->LogFlash(String, "이 부팅되었습니다");
+				MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "]" + String + " Port has rebooted");
 				BootingBool = true;
 			}
 		}
@@ -156,7 +156,7 @@ void PortBox::SerialMonitor()
 				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 6)
 				{
 					MyImGui::MyImGuis->LogFlash(String, "의 데이터가 수신되지 않았습니다. ");
-					std::cout << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << String + "의 데이터가 수신되지 않았습니다. " << std::endl;
+					MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "]" + String + " No data was received");
 					MissingBool = true;
 				}
 			}
