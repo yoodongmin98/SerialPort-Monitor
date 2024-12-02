@@ -377,7 +377,6 @@ void MyImGui::AllDisConnect()
 		{
 			obj->DisConnect();
 		}
-		ButtonRelease();
 	}
 }
 void MyImGui::ComportReset()
@@ -394,6 +393,6 @@ void MyImGui::ComportReset()
 void MyImGui::ButtonRelease()
 {
 	ObjectBox.clear();
-	CreateBool = true;
 	PortName.clear();
+	CreateBool = true;
 }
