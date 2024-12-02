@@ -57,6 +57,9 @@
     <ClCompile Include="ThreadPool.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="PortBoxChild.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -87,6 +90,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="ThreadPool.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PortBoxChild.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

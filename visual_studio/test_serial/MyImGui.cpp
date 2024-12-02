@@ -330,8 +330,8 @@ void MyImGui::LogBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(0, 500), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 	ImGui::SetWindowSize(ImVec2(1080, 260));
+	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 	for (const auto& log : logs) 
 	{

@@ -10,7 +10,7 @@
 #include "MyImGui.h"
 #include <functional>
 #include "ThreadPool.h"
-
+#include "PortBoxChild.h"
 
 
 
@@ -28,7 +28,7 @@ PortBox::PortBox()
 PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X), Y(_Y), BoxName(_Name)
 {
-
+	ChildBox = std::make_shared<PortBoxChild>();
 }
 
 
@@ -43,12 +43,14 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str(), nullptr,ImGuiWindowFlags_NoTitleBar);
-	ImGui::SetWindowSize(ImVec2(180, 100));
+	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
+
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
 	
+
 	if (ImGui::Button("Connect"))
 		Connect();
 
@@ -60,6 +62,8 @@ void PortBox::Instance(std::string _PortName)
 	if (IsLost)
 		ImGui::TextColored(redColor, "Connection Lost");
 
+
+
 	if (PortBoxBool)
 	{
 		if (LogFileBool) //연결되었을때 생성
@@ -67,14 +71,23 @@ void PortBox::Instance(std::string _PortName)
 			logFile.open("ABB_Raw_" + _PortName+ +".txt", std::ios::app);
 			LogFileBool = false;
 		}
+
+
 		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
+
 
 		if (!BootStart)
 			ImGui::TextColored(yellowColor, "Missing");
 		else if (BootStart)
 			ImGui::TextColored(Colors, "Booting");
+		{
+			std::lock_guard<std::mutex> lock(serialMutex);
+			ChildBox->SendRowData(Dataline);
+		}
 	}
+
+	CreateRowDataBox();
 
 	ImGui::End();
 	ImGui::PopStyleColor();
@@ -239,6 +252,27 @@ void PortBox::CloseSerialPort()
 			my_serial.close();
 			PortBoxBool = false;
 			String.clear();
+			RowDataBox = false;
 		}
+	}
+}
+
+
+void PortBox::CreateRowDataBox()
+{
+	ImGui::Checkbox("Row Data", &RowDataBox);
+	if (RowDataBox)
+	{
+		ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+		{ //경합 방지
+			std::lock_guard<std::mutex> lock(serialMutex);
+			ImGui::Text(Dataline.c_str());
+		}
+		ImGui::EndChild();
+		PortBoxSize = ImVec2{ 400 , 150 };
+	}
+	else
+	{
+		PortBoxSize = ImVec2{ 180 , 100 };
 	}
 }

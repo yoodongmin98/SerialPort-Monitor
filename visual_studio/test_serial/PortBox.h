@@ -8,6 +8,8 @@
 #include "imgui.h"
 
 
+
+class PortBoxChild;
 class PortBox
 {
 public:
@@ -28,12 +30,14 @@ protected:
 	void CreatePortLogFile();
 	void SerialMonitor();
 	void CloseSerialPort();
+	void CreateRowDataBox();
 private:
 	bool BootStart = false;
 	bool PortBoxBool = false;
 	bool IsLost = false; //통신 끊겼을때 판별
 	bool MissingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
 	bool BootingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
+	bool RowDataBox = false;
 
 	int DotCount = 1; //Working ...뜨는거
 	
@@ -56,7 +60,8 @@ private:
 
 	//UI
 	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f);
-
+	std::shared_ptr<PortBoxChild> ChildBox = nullptr;
+	ImVec2 PortBoxSize = ImVec2{ 180,100 };
 
 	//Serial
 	serial::Serial my_serial;

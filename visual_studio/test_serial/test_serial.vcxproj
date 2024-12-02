@@ -145,6 +145,7 @@
     <ClCompile Include="MyImGui.cpp" />
     <ClCompile Include="MyTime.cpp" />
     <ClCompile Include="PortBox.cpp" />
+    <ClCompile Include="PortBoxChild.cpp" />
     <ClCompile Include="SerialMain.cpp" />
     <ClCompile Include="ThirdParty\ImGui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="ThirdParty\ImGui\backends\imgui_impl_win32.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="MyImGui.h" />
     <ClInclude Include="MyTime.h" />
     <ClInclude Include="PortBox.h" />
+    <ClInclude Include="PortBoxChild.h" />
     <ClInclude Include="ThirdParty\ImGui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="ThirdParty\ImGui\backends\imgui_impl_win32.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
