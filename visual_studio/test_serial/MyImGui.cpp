@@ -357,13 +357,14 @@ void MyImGui::CLIBox()
 	ImGui::SetWindowSize(ImVec2(200, 200));
 	static char buffer[256] = "";
 	ImGui::Text("Input CLI");
-	if (ImGui::InputText("##InputBox", buffer, 64))
-	{
-		int a = 0;
-	}
+	ImGui::InputText("##InputBox", buffer, 64);
 	if (ImGui::Button("AllSend"))
 	{
-		ImGui::Text("%s", buffer);
+		std::string CLI_Text = buffer;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->InputCLI(CLI_Text);
+		}
 	}
 	ImGui::End();
 }

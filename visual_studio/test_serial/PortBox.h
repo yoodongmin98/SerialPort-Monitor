@@ -21,7 +21,7 @@ public:
 	void Instance(std::string _PortName);
 	void Connect();
 	void DisConnect();
-
+	void InputCLI(std::string& _CLI);
 	bool IsStringNull()
 	{
 		return String.empty();
@@ -32,6 +32,7 @@ protected:
 	void SerialMonitor();
 	void CloseSerialPort();
 	void CreateRowDataBox();
+	
 private:
 	bool BootStart = false;
 	bool PortBoxBool = false;

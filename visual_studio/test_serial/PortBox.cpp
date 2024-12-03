@@ -296,3 +296,12 @@ void PortBox::CreateRowDataBox()
 		PortBoxSize = ImVec2{ 180 , 100 };
 	}
 }
+
+void PortBox::InputCLI(std::string& _CLI)
+{
+	{
+		std::lock_guard<std::mutex> lock(serialMutex);
+		if(my_serial.isOpen())
+			my_serial.write(_CLI+"\n");
+	}
+}
