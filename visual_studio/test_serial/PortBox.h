@@ -38,6 +38,9 @@ private:
 	bool MissingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
 	bool BootingBool = true; //시간 1프레임만 적용시킬때 쓸 변수
 	bool RowDataBox = false;
+	bool WorkingBool = false;
+	std::mutex stateMutex;
+
 
 	int DotCount = 1; //Working ...뜨는거
 	
