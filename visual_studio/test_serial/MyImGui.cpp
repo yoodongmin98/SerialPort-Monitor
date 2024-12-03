@@ -309,6 +309,10 @@ void MyImGui::AllConnectBox()
 	AllConnect();
 	AllDisConnect();
 	ComportReset();
+	if (ImGui::Button("Log Clear"))
+	{
+		logs.clear();
+	}
 	ImGui::End();
 }
 
@@ -332,7 +336,8 @@ void MyImGui::LogBox()
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(1080, 260));
 	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-
+	
+	
 	for (const auto& log : logs) 
 	{
 		ImGui::Text("%s", log.c_str());
