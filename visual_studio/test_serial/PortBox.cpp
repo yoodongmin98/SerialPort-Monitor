@@ -203,6 +203,8 @@ void PortBox::PortCheck()
 	try
 	{
 		my_serial.open();
+		my_serial.setRTS(true);
+		my_serial.setDTR(true);
 		my_serial.setRTS(false);
 		my_serial.setDTR(false);
 	}
