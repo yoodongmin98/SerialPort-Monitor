@@ -114,6 +114,11 @@ void PortBox::SerialMonitor()
 			std::lock_guard<std::mutex> lock(stateMutex);
 			Dataline = my_serial.readline();
 
+			if (!Dataline.find("\n") || Dataline.empty())
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+			else
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
+
 			if (!Dataline.empty())
 			{
 				dataReceived = true;
