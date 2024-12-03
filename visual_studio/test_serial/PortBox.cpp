@@ -67,11 +67,6 @@ void PortBox::Instance(std::string _PortName)
 	if (PortBoxBool)
 	{
 
-		std::cout << "WorkingBool : " << WorkingBool << std::endl;
-		std::cout << "MissingBool : " << MissingBool << std::endl;
-		std::cout << "BootStart : " << BootStart << std::endl;
-		system("cls");
-
 		if (LogFileBool) //연결되었을때 생성
 		{
 			logFile.open("ABB_Raw_" + _PortName + +".txt", std::ios::app);
@@ -83,7 +78,7 @@ void PortBox::Instance(std::string _PortName)
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 
 		if (WorkingBool) 
-			ImGui::Text("Working%s", Dots.c_str());
+			ImGui::Text("Working");
 		else if (MissingBool) 
 			ImGui::TextColored(yellowColor, "Missing");
 		else if (BootStart) 
@@ -109,9 +104,9 @@ void PortBox::SerialMonitor()
 	try 
 	{
 		if (!my_serial.isOpen())
-			return; // 시리얼 포트가 열려있지 않으면 종료
+			return;
 
-		bool dataReceived = false; // 데이터를 수신했는지 여부를 추적
+		bool dataReceived = false;
 
 		// 데이터 읽기
 		if (my_serial.available()) 
@@ -148,7 +143,6 @@ void PortBox::SerialMonitor()
 			//이때부터 시간을 재기 시작
 			if (!MissingBool)
 			{
-				std::lock_guard<std::mutex> lock(stateMutex);
 				MissingTime = std::chrono::steady_clock::now();
 				MissingBool = true;
 			}
@@ -159,7 +153,6 @@ void PortBox::SerialMonitor()
 		{
 			auto currentMissingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 5) {
-				std::lock_guard<std::mutex> lock(stateMutex);
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;
@@ -173,7 +166,6 @@ void PortBox::SerialMonitor()
 		{
 			auto currentBootingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5) {
-				std::lock_guard<std::mutex> lock(stateMutex);
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;

@@ -8,7 +8,7 @@
 
 
 #define MaxPortCount 30
-#define ThreadCount 2
+#define ThreadCount 3
 
 
 MyImGui* MyImGui::MyImGuis = nullptr;
