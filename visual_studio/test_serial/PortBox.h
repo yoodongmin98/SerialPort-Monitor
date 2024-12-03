@@ -6,6 +6,7 @@
 #include <fstream>
 #include <mutex>
 #include "imgui.h"
+#include <deque>
 
 
 
@@ -76,4 +77,10 @@ private:
 	//File
 	std::ofstream logFile;
 	bool LogFileBool = true;
+
+
+
+	//Log
+	std::deque<std::string> RawDataLog;
+	bool scrollToBottom = false;
 };

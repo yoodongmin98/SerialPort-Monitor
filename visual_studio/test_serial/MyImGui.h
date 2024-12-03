@@ -58,10 +58,11 @@ protected:
     void AllConnectBox();
     void Frame_FPSBox(ImGuiIO& _io);
     void LogBox();
-    void EtcBox();
+    void CLIBox();
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
+    void LogClear();
     void ButtonRelease();
 private:
     std::shared_ptr<ThreadPool> ThreadPools;

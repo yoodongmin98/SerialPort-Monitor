@@ -114,6 +114,12 @@ void PortBox::SerialMonitor()
 			std::lock_guard<std::mutex> lock(stateMutex);
 			Dataline = my_serial.readline();
 
+			//RawDataBox누르면 스크롤 뜨게하는거
+			if (RawDataLog.size() >= 200) 
+				RawDataLog.pop_front(); // 오래된 로그 제거
+			RawDataLog.push_back(Dataline); // 새 로그 추가
+			scrollToBottom = true;
+
 			if (!Dataline.find("\n") || Dataline.empty())
 				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
 			else
@@ -203,8 +209,6 @@ void PortBox::PortCheck()
 	try
 	{
 		my_serial.open();
-		my_serial.setRTS(true);
-		my_serial.setDTR(true);
 		my_serial.setRTS(false);
 		my_serial.setDTR(false);
 	}
@@ -254,10 +258,13 @@ void PortBox::CloseSerialPort()
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if (my_serial.isOpen())
 		{
+			my_serial.setRTS(true);
+			my_serial.setDTR(true);
 			my_serial.close();
 			PortBoxBool = false;
 			String.clear();
 			RowDataBox = false;
+			RawDataLog.clear();
 		}
 	}
 }
@@ -271,10 +278,18 @@ void PortBox::CreateRowDataBox()
 		ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 		{ //경합 방지
 			std::lock_guard<std::mutex> lock(serialMutex);
-			ImGui::Text(Dataline.c_str());
+			for (const auto& Rawlog : RawDataLog)
+			{
+				ImGui::Text("%s", Rawlog.c_str());
+			}
+			if (scrollToBottom)
+			{
+				ImGui::SetScrollHereY(1.0f);
+				scrollToBottom = false;
+			}
 		}
 		ImGui::EndChild();
-		PortBoxSize = ImVec2{ 400 , 150 };
+		PortBoxSize = ImVec2{ 400 , 350 };
 	}
 	else
 	{

@@ -104,7 +104,7 @@ void MyImGui::Instance()
 		Frame_FPSBox(io);
 		RadarTypeBox();
 		LogBox();
-		EtcBox();
+		CLIBox();
 		for (auto i = 0; i < PortName.size(); ++i)
 			ObjectBox[i]->Instance(PortName[i]);
 
@@ -277,9 +277,9 @@ void MyImGui::DrawLine()
 
 void MyImGui::RadarTypeBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 300), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(1080, 500), ImGuiCond_Always);
 	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 200));
+	ImGui::SetWindowSize(ImVec2(200, 110));
 
 	std::vector<serial::PortInfo> Infos = serial::list_ports();
 	unsigned int BluetoothCount = 0;
@@ -309,17 +309,14 @@ void MyImGui::AllConnectBox()
 	AllConnect();
 	AllDisConnect();
 	ComportReset();
-	if (ImGui::Button("Log Clear"))
-	{
-		logs.clear();
-	}
+	LogClear();
 	ImGui::End();
 }
 
 
 void MyImGui::Frame_FPSBox(ImGuiIO& _io)
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(1080, 610), ImGuiCond_Always);
 	ImGui::StyleColorsClassic();
 
 	ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
@@ -353,11 +350,21 @@ void MyImGui::LogBox()
 }
 
 
-void MyImGui::EtcBox()
+void MyImGui::CLIBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 500), ImGuiCond_Always);
-	ImGui::Begin("Etc", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 260));
+	ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
+	ImGui::Begin("CLI Box", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(200, 200));
+	static char buffer[256] = "";
+	ImGui::Text("Input CLI");
+	if (ImGui::InputText("##InputBox", buffer, 64))
+	{
+		int a = 0;
+	}
+	if (ImGui::Button("AllSend"))
+	{
+		ImGui::Text("%s", buffer);
+	}
 	ImGui::End();
 }
 
@@ -374,6 +381,7 @@ void MyImGui::AllConnect()
 		}
 	}
 }
+
 void MyImGui::AllDisConnect()
 {
 	if (ImGui::Button("All DisConnect"))
@@ -384,6 +392,7 @@ void MyImGui::AllDisConnect()
 		}
 	}
 }
+
 void MyImGui::ComportReset()
 {
 	if (ImGui::Button("ComPort Reset"))
@@ -395,6 +404,15 @@ void MyImGui::ComportReset()
 		ButtonRelease();
 	}
 }
+
+void MyImGui::LogClear()
+{
+	if (ImGui::Button("Log Clear"))
+	{
+		logs.clear();
+	}
+}
+
 void MyImGui::ButtonRelease()
 {
 	ObjectBox.clear();

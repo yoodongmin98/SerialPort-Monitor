@@ -31,7 +31,6 @@ ThreadPool::~ThreadPool()
 			worker.join();
 		}
 	}
-
 }
 
 
