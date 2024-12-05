@@ -18,6 +18,7 @@ public:
 	PortBox();
 	PortBox(int _X,int _Y, std::string _Name);
 	~PortBox();
+
 	void Instance(std::string _PortName);
 	void Connect();
 	void DisConnect();

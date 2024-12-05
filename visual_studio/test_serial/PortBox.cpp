@@ -164,7 +164,7 @@ void PortBox::SerialMonitor()
 		//시간을 재기 시작한 순간부터 이게 돌아가서 5초가 지나면 작동함
 		if (MissingBool) 
 		{
-			auto currentMissingTime = std::chrono::steady_clock::now();
+			currentMissingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 5) {
 				WorkingBool = false;
 				MissingBool = false;
@@ -177,7 +177,7 @@ void PortBox::SerialMonitor()
 		// BootStart 상태에서 일정 시간이 경과하면 처리
 		if (BootStart) 
 		{
-			auto currentBootingTime = std::chrono::steady_clock::now();
+			currentBootingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5) {
 				WorkingBool = false;
 				MissingBool = false;
