@@ -41,9 +41,10 @@ PortBox::~PortBox()
 void PortBox::Instance(std::string _PortName)
 {
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
-	//ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
+	 
 	//임시로 옮길 수 있게
-	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Once);
+	//ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Once);
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
 	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
