@@ -29,12 +29,11 @@ protected:
     void PortBoxCreate();
     void DrawLine();
     void RadarTypeBox();
-    void AllConnectBox();
+    void AllConnectBox(ImGuiIO& _io);
 
     void Frame_FPSBox(ImGuiIO& _io);
     void LogBox();
     void LogManagementBox();
-    void ShowLog();
     void CLIBox();
 
 
@@ -46,7 +45,7 @@ protected:
 private:
     bool CreateBool = true;
     bool scrollToBottom = false;
-    bool LogBoxbool = true;
+
 
     std::vector<std::string> logs;
 

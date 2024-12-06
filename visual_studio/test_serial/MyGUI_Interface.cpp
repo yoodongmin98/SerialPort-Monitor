@@ -7,6 +7,7 @@
 
 
 #define MaxPortCount 42
+#define ButtonSize ImVec2{130,20}
 
 MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
 
@@ -26,12 +27,9 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
     PortBoxCreate();
     DrawLine();
-    RadarTypeBox();
-    AllConnectBox();
-    Frame_FPSBox(_io);
+    AllConnectBox(_io);
 	LogManagementBox();
     LogBox();
-    CLIBox();
     for (auto i = 0; i < PortName.size(); ++i)
         ObjectBox[i]->Instance(PortName[i]);
 }
@@ -83,46 +81,50 @@ void MyGUI_Interface::DrawLine()
 }
 
 
-void MyGUI_Interface::RadarTypeBox()
+void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 500), ImGuiCond_Always);
-	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 110));
 
-	std::vector<serial::PortInfo> Infos = serial::list_ports();
-	std::vector<std::string> BluetoothPort;
-	std::vector<std::string> USBSerialCount;
-	std::vector<std::string> ETCCount;
-	for (serial::PortInfo& V : Infos)
-	{
-		if (V.description.find("Bluetooth") != std::string::npos)
-			BluetoothPort.push_back(V.description);
-		else if (V.description.find(target) != std::string::npos)
-			USBSerialCount.push_back(V.description);
-		else
-			ETCCount.push_back(V.description);
-	}
-	ImGui::Text("Port detected : %d", Infos.size());
-	ImGui::Text("Blutooth detected : %d", BluetoothPort.size());
-	ImGui::Text("USBSerial detected : %d", USBSerialCount.size());
-	ImGui::Text("ETC Port detected : %d", ETCCount.size());
-
-	ImGui::SeparatorText("Inputs");
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
+	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(294, 600));
+	ImGui::SeparatorText("Connect");
+	AllConnect();
+	AllDisConnect();
+	ComportReset();
+	CLIBox();
+	RadarTypeBox();
+	Frame_FPSBox(_io);
 
 	ImGui::End();
 }
 
-void MyGUI_Interface::AllConnectBox()
-{
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 0), ImGuiCond_Always);
-	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 150));
-	AllConnect();
-	AllDisConnect();
-	ComportReset();
-	
 
-	ImGui::End();
+void MyGUI_Interface::RadarTypeBox()
+{
+	ImGui::SeparatorText("Radar Type");
+	std::vector<serial::PortInfo> Infos = serial::list_ports();
+	std::vector<const char*> BluetoothPort;
+	std::vector<const char*> USBSerialCount;
+	std::vector<const char*> ETCCount;
+	for (serial::PortInfo& V : Infos)
+	{
+		if (V.description.find("Bluetooth") != std::string::npos)
+			BluetoothPort.push_back(V.description.c_str());
+		else if (V.description.find(target) != std::string::npos)
+			USBSerialCount.push_back(V.description.c_str());
+		else
+			ETCCount.push_back(V.description.c_str());
+	}
+	static int USBinfo = 0;
+	static int Bluetoothinfo = 0;
+	static int ETCinfo = 0;
+	ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Port detected %d",Infos.size());
+	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "USBSerial detected : %d", USBSerialCount.size());
+	ImGui::Combo("USB(Serial)", &USBinfo, USBSerialCount.data(), USBSerialCount.size());
+	ImGui::TextColored(ImVec4(0.0f, 0.9f, 0.9f, 1.0f), "Blutooth detected : %d", BluetoothPort.size());
+	ImGui::Combo("BlueTooth", &Bluetoothinfo, BluetoothPort.data(), BluetoothPort.size());
+	ImGui::TextColored(ImVec4(0.7f,0.7f, 0.95f, 1.0f), "ETC Port detected : %d", ETCCount.size());
+	ImGui::Combo("ETC", &ETCinfo, ETCCount.data(), ETCCount.size());
 }
 
 
@@ -131,58 +133,48 @@ void MyGUI_Interface::LogManagementBox()
 	ImGui::SetNextWindowPos(ImVec2(1080, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(100, 230));
-	ShowLog();
 	LogClear();
 	ImGui::End();
 }
 
 void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 {
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 610), ImGuiCond_Always);
-	ImGui::StyleColorsClassic();
-
-	ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 150));
+	ImGui::SeparatorText("Frame / FPS");
 	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
 	ImGui::Text("FPS : %.1f", _io.Framerate);
-	ImGui::End();
 }
 
 
 void MyGUI_Interface::LogBox()
 {
-	if (LogBoxbool)
+	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(1080, 230));
+	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+
+	for (const auto& log : logs)
 	{
-		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
-		ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-		ImGui::SetWindowSize(ImVec2(1080, 230));
-		ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-
-
-		for (const auto& log : logs)
-		{
-			ImGui::Text("%s", log.c_str());
-		}
-		if (scrollToBottom)
-		{
-			ImGui::SetScrollHereY(1.0f);
-			scrollToBottom = false;
-		}
-
-		ImGui::EndChild();
-		ImGui::End();
+		ImGui::Text("%s", log.c_str());
 	}
+	if (scrollToBottom)
+	{
+		ImGui::SetScrollHereY(1.0f);
+		scrollToBottom = false;
+	}
+
+	ImGui::EndChild();
+	ImGui::End();
 }
 
 
 void MyGUI_Interface::CLIBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 150), ImGuiCond_Always);
-	ImGui::Begin("CLI Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 200));
+	ImGui::SeparatorText("CLI (Write)");
 	static char buffer[256] = "";
 	ImGui::Text("Input CLI");
 	ImGui::InputText("##InputBox", buffer, 64);
+	ImGui::SameLine();
 	if (ImGui::Button("AllSend"))
 	{
 		std::string CLI_Text = buffer;
@@ -191,14 +183,13 @@ void MyGUI_Interface::CLIBox()
 			obj->InputCLI(CLI_Text);
 		}
 	}
-	ImGui::End();
 }
 
 
 
 void MyGUI_Interface::AllConnect()
 {
-	if (ImGui::Button("All Connect"))
+	if (ImGui::Button("All Connect", ButtonSize))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
@@ -210,7 +201,7 @@ void MyGUI_Interface::AllConnect()
 
 void MyGUI_Interface::AllDisConnect()
 {
-	if (ImGui::Button("All DisConnect"))
+	if (ImGui::Button("All DisConnect", ButtonSize))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
@@ -221,7 +212,7 @@ void MyGUI_Interface::AllDisConnect()
 
 void MyGUI_Interface::ComportReset()
 {
-	if (ImGui::Button("ComPort Reset"))
+	if (ImGui::Button("ComPort Reset", ButtonSize))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
@@ -236,14 +227,6 @@ void MyGUI_Interface::LogClear()
 	if (ImGui::Button("Log Clear"))
 	{
 		logs.clear();
-	}
-}
-
-void MyGUI_Interface::ShowLog()
-{
-	if (ImGui::Button("ShowLogBox"))
-	{
-		LogBoxbool = !LogBoxbool;
 	}
 }
 
