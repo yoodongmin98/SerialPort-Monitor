@@ -5,9 +5,9 @@
 #include "MyTime.h"
 #include "ThreadPool.h"
 #include <functional>
+#include "MyGUI_Interface.h"
 
 
-#define MaxPortCount 30
 #define ThreadCount 3
 
 
@@ -17,6 +17,7 @@ MyImGui::MyImGui()
 	: ThreadPools(std::make_shared<ThreadPool>(ThreadCount))
 {
 	MyImGuis = this;
+	MyGUI_Interfaces = std::make_shared<MyGUI_Interface>();
 }
 MyImGui::~MyImGui()
 {
@@ -85,8 +86,6 @@ void MyImGui::Instance()
 			CreateRenderTarget();
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
@@ -98,19 +97,7 @@ void MyImGui::Instance()
 			LogFileSet = false;
 		}
 
-		PortBoxCreate();
-		DrawLine();
-		AllConnectBox();
-		Frame_FPSBox(io);
-		RadarTypeBox();
-		LogBox();
-		CLIBox();
-		for (auto i = 0; i < PortName.size(); ++i)
-			ObjectBox[i]->Instance(PortName[i]);
-
-	
-		
-
+		MyGUI_Interfaces->Instance(io);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		ImGui::Render();
@@ -226,197 +213,4 @@ void MyImGui::LogFileOpen()
 void MyImGui::LogFlash(std::string _PortName , std::string _Content)
 {
 	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
-}
-
-
-void MyImGui::PortBoxCreate()
-{
-	if (CreateBool)
-	{
-		int Xpos = 0, Ypos = 0, Count = 0;
-		PortInfo = serial::list_ports();
-		for (auto i = 0; i < PortInfo.size(); ++i)
-		{
-			if (PortInfo[i].description.find(target) != std::string::npos)
-				PortName.push_back(PortInfo[i].port.c_str());
-		}
-		for (auto i = 0; i < MaxPortCount; ++i)
-		{
-			std::string SetName = Name + std::to_string(i);
-			if (Count == 6)
-			{
-				Xpos = 0; Ypos += 100; Count = 0;
-			}
-			Count++;
-			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
-			Xpos += 180;
-		}
-		CreateBool = false;
-	}
-}
-
-void MyImGui::DrawLine()
-{
-	ImVec2 topLeft = { 0.0f,0.0f };
-	ImVec2 bottomRight = ImVec2(topLeft.x + 1080, topLeft.y + 500);
-	float cellSizeX = 180.0f; // X 크기
-	float cellSizeY = 100.0f; // Y 크기
-	ImU32 color = IM_COL32(205, 205, 205, 128); 
-	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
-
-	// 수직선
-	for (float x = topLeft.x; x <= bottomRight.x; x += cellSizeX) 
-		drawList->AddLine(ImVec2(x, topLeft.y), ImVec2(x, bottomRight.y), color);
-
-	// 수평선
-	for (float y = topLeft.y; y <= bottomRight.y; y += cellSizeY) 
-		drawList->AddLine(ImVec2(topLeft.x, y), ImVec2(bottomRight.x, y), color);
-	
-}
-
-
-void MyImGui::RadarTypeBox()
-{
-	ImGui::SetNextWindowPos(ImVec2(1080, 500), ImGuiCond_Always);
-	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 110));
-
-	std::vector<serial::PortInfo> Infos = serial::list_ports();
-	unsigned int BluetoothCount = 0;
-	unsigned int USBSerialCount = 0;
-	unsigned int ETCCount = 0;
-	for (serial::PortInfo& V : Infos)
-	{
-		if (V.description.find("Bluetooth") != std::string::npos)
-			BluetoothCount++;
-		else if (V.description.find(target) != std::string::npos)
-			USBSerialCount++;
-		else
-			ETCCount++;
-	}
-	ImGui::Text("Port detected : %d", Infos.size());
-	ImGui::Text("Blutooth detected : %d", BluetoothCount);
-	ImGui::Text("USBSerial detected : %d", USBSerialCount);
-	ImGui::Text("ETC Port detected : %d", ETCCount);
-	ImGui::End();
-}
-
-void MyImGui::AllConnectBox()
-{
-	ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
-	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 150));
-	AllConnect();
-	AllDisConnect();
-	ComportReset();
-	LogClear();
-	ImGui::End();
-}
-
-
-void MyImGui::Frame_FPSBox(ImGuiIO& _io)
-{
-	ImGui::SetNextWindowPos(ImVec2(1080, 610), ImGuiCond_Always);
-	ImGui::StyleColorsClassic();
-
-	ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 150));
-	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
-	ImGui::Text("FPS : %.1f", _io.Framerate);
-	ImGui::End();
-}
-
-
-void MyImGui::LogBox()
-{
-	ImGui::SetNextWindowPos(ImVec2(0, 500), ImGuiCond_Always);
-	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(1080, 260));
-	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-	
-	
-	for (const auto& log : logs) 
-	{
-		ImGui::Text("%s", log.c_str());
-	}
-	if (scrollToBottom) 
-	{
-		ImGui::SetScrollHereY(1.0f);
-		scrollToBottom = false;
-	}
-
-	ImGui::EndChild();
-	ImGui::End();
-}
-
-
-void MyImGui::CLIBox()
-{
-	ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
-	ImGui::Begin("CLI Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(200, 200));
-	static char buffer[256] = "";
-	ImGui::Text("Input CLI");
-	ImGui::InputText("##InputBox", buffer, 64);
-	if (ImGui::Button("AllSend"))
-	{
-		std::string CLI_Text = buffer;
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->InputCLI(CLI_Text);
-		}
-	}
-	ImGui::End();
-}
-
-
-
-void MyImGui::AllConnect()
-{
-	if (ImGui::Button("All Connect"))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			if (!obj->IsStringNull())
-				obj->Connect();
-		}
-	}
-}
-
-void MyImGui::AllDisConnect()
-{
-	if (ImGui::Button("All DisConnect"))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->DisConnect();
-		}
-	}
-}
-
-void MyImGui::ComportReset()
-{
-	if (ImGui::Button("ComPort Reset"))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->DisConnect();
-		}
-		ButtonRelease();
-	}
-}
-
-void MyImGui::LogClear()
-{
-	if (ImGui::Button("Log Clear"))
-	{
-		logs.clear();
-	}
-}
-
-void MyImGui::ButtonRelease()
-{
-	ObjectBox.clear();
-	PortName.clear();
-	CreateBool = true;
 }

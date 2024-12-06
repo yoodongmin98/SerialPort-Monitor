@@ -10,7 +10,7 @@
 
 
 
-class PortBoxChild;
+class MyGUI_Interface;
 class PortBox
 {
 public:
@@ -26,6 +26,10 @@ public:
 	bool IsStringNull()
 	{
 		return String.empty();
+	}
+	void SetRawDataBox()
+	{
+		RowDataBox = !RowDataBox;
 	}
 protected:
 	void PortCheck();
@@ -65,7 +69,6 @@ private:
 
 	//UI
 	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f);
-	std::shared_ptr<PortBoxChild> ChildBox = nullptr;
 	ImVec2 PortBoxSize = ImVec2{ 180,100 };
 
 	//Serial

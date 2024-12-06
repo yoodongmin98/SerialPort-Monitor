@@ -10,7 +10,7 @@
 #include "MyImGui.h"
 #include <functional>
 #include "ThreadPool.h"
-#include "PortBoxChild.h"
+#include "MyGUI_Interface.h"
 
 
 
@@ -28,7 +28,7 @@ PortBox::PortBox()
 PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X), Y(_Y), BoxName(_Name)
 {
-	ChildBox = std::make_shared<PortBoxChild>();
+	
 }
 
 
@@ -42,9 +42,6 @@ void PortBox::Instance(std::string _PortName)
 {
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
-	 
-	//임시로 옮길 수 있게
-	//ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Once);
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
 	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
@@ -69,13 +66,11 @@ void PortBox::Instance(std::string _PortName)
 
 	if (PortBoxBool)
 	{
-
 		if (LogFileBool) //연결되었을때 생성
 		{
 			logFile.open("ABB_Raw_" + _PortName + +".txt", std::ios::app);
 			LogFileBool = false;
 		}
-
 
 		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
@@ -86,13 +81,6 @@ void PortBox::Instance(std::string _PortName)
 			ImGui::TextColored(yellowColor, "Missing");
 		else if (BootStart) 
 			ImGui::TextColored(Colors, "Booting");
-		
-			
-		{
-			std::lock_guard<std::mutex> lock(serialMutex);
-			ChildBox->SendRowData(Dataline);
-		}
-
 	}
 
 	CreateRowDataBox();
@@ -171,7 +159,7 @@ void PortBox::SerialMonitor()
 				MissingBool = false;
 				BootStart = false;
 				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 5초 이상 수신되지 않았습니다.");
-				MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for 5 seconds");
+				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for 5 seconds");
 			}
 		}
 
@@ -184,7 +172,7 @@ void PortBox::SerialMonitor()
 				MissingBool = false;
 				BootStart = false;
 				MyImGui::MyImGuis->LogFlash(String, "이 부팅되었습니다.");
-				MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
+				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
 			}
 		}
 		
@@ -194,7 +182,7 @@ void PortBox::SerialMonitor()
 		std::lock_guard<std::mutex> lock(stateMutex);
 		IsLost = true;
 		MyImGui::MyImGuis->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
-		MyImGui::MyImGuis->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
+		MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
 		CloseSerialPort();
 		return;
 	}
@@ -292,7 +280,7 @@ void PortBox::CreateRowDataBox()
 			}
 		}
 		ImGui::EndChild();
-		PortBoxSize = ImVec2{ 350 , 450 };
+		PortBoxSize = ImVec2{ 300 , 150 };
 	}
 	else
 	{

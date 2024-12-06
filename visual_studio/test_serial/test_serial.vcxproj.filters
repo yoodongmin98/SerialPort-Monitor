@@ -57,7 +57,7 @@
     <ClCompile Include="ThreadPool.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="PortBoxChild.cpp">
+    <ClCompile Include="MyGUI_Interface.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClInclude Include="ThreadPool.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="PortBoxChild.h">
+    <ClInclude Include="MyGUI_Interface.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
