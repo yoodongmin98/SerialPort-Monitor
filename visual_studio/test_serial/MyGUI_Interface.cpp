@@ -1,6 +1,7 @@
 #include "MyGUI_Interface.h"
 #include "imgui.h"
 #include "PortBox.h"
+#include "MyImGui.h"
 
 
 
@@ -28,6 +29,7 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
     RadarTypeBox();
     AllConnectBox();
     Frame_FPSBox(_io);
+	LogManagementBox();
     LogBox();
     CLIBox();
     for (auto i = 0; i < PortName.size(); ++i)
@@ -51,11 +53,11 @@ void MyGUI_Interface::PortBoxCreate()
 			std::string SetName = Name + std::to_string(i);
 			if (Count == 6)
 			{
-				Xpos = 0; Ypos += 100; Count = 0;
+				Xpos = 0; Ypos += 130; Count = 0;
 			}
 			Count++;
 			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
-			Xpos += 180;
+			Xpos += 250;
 		}
 		CreateBool = false;
 	}
@@ -64,9 +66,9 @@ void MyGUI_Interface::PortBoxCreate()
 void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = { 0.0f,0.0f };
-	ImVec2 bottomRight = ImVec2(topLeft.x + 1080, topLeft.y + 700);
-	float cellSizeX = 180.0f; // X 农扁
-	float cellSizeY = 100.0f; // Y 农扁
+	ImVec2 bottomRight = ImVec2(topLeft.x + 1500, topLeft.y + 780);
+	float cellSizeX = 250.0f; // X 农扁
+	float cellSizeY = 130.0f; // Y 农扁
 	ImU32 color = IM_COL32(205, 205, 205, 128);
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
@@ -83,48 +85,60 @@ void MyGUI_Interface::DrawLine()
 
 void MyGUI_Interface::RadarTypeBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 500), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 500), ImGuiCond_Always);
 	ImGui::Begin("Radar Type", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(200, 110));
 
 	std::vector<serial::PortInfo> Infos = serial::list_ports();
-	unsigned int BluetoothCount = 0;
-	unsigned int USBSerialCount = 0;
-	unsigned int ETCCount = 0;
+	std::vector<std::string> BluetoothPort;
+	std::vector<std::string> USBSerialCount;
+	std::vector<std::string> ETCCount;
 	for (serial::PortInfo& V : Infos)
 	{
 		if (V.description.find("Bluetooth") != std::string::npos)
-			BluetoothCount++;
+			BluetoothPort.push_back(V.description);
 		else if (V.description.find(target) != std::string::npos)
-			USBSerialCount++;
+			USBSerialCount.push_back(V.description);
 		else
-			ETCCount++;
+			ETCCount.push_back(V.description);
 	}
 	ImGui::Text("Port detected : %d", Infos.size());
-	ImGui::Text("Blutooth detected : %d", BluetoothCount);
-	ImGui::Text("USBSerial detected : %d", USBSerialCount);
-	ImGui::Text("ETC Port detected : %d", ETCCount);
+	ImGui::Text("Blutooth detected : %d", BluetoothPort.size());
+	ImGui::Text("USBSerial detected : %d", USBSerialCount.size());
+	ImGui::Text("ETC Port detected : %d", ETCCount.size());
+
+	ImGui::SeparatorText("Inputs");
+
 	ImGui::End();
 }
 
 void MyGUI_Interface::AllConnectBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 0), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 0), ImGuiCond_Always);
 	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(200, 150));
 	AllConnect();
 	AllDisConnect();
 	ComportReset();
-	AllRowData();
+	
+
+	ImGui::End();
+}
+
+
+void MyGUI_Interface::LogManagementBox()
+{
+	ImGui::SetNextWindowPos(ImVec2(1080, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::SetWindowSize(ImVec2(100, 230));
 	ShowLog();
 	LogClear();
 	ImGui::End();
 }
 
-
 void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 610), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 610), ImGuiCond_Always);
 	ImGui::StyleColorsClassic();
 
 	ImGui::Begin("Frame / FPS", nullptr, ImGuiWindowFlags_NoCollapse);
@@ -139,9 +153,9 @@ void MyGUI_Interface::LogBox()
 {
 	if (LogBoxbool)
 	{
-		ImGui::SetNextWindowPos(ImVec2(0, 500), ImGuiCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 		ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-		ImGui::SetWindowSize(ImVec2(1080, 260));
+		ImGui::SetWindowSize(ImVec2(1080, 230));
 		ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 
@@ -163,7 +177,7 @@ void MyGUI_Interface::LogBox()
 
 void MyGUI_Interface::CLIBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, 150), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 190, 150), ImGuiCond_Always);
 	ImGui::Begin("CLI Box", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(200, 200));
 	static char buffer[256] = "";
@@ -222,17 +236,6 @@ void MyGUI_Interface::LogClear()
 	if (ImGui::Button("Log Clear"))
 	{
 		logs.clear();
-	}
-}
-
-void MyGUI_Interface::AllRowData()
-{
-	if (ImGui::Button("Show All RawData"))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->SetRawDataBox();
-		}
 	}
 }
 

@@ -32,8 +32,11 @@ void MyImGui::Instance()
 {
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
+	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1800, 1050, nullptr, nullptr, wc.hInstance, nullptr);
+	//HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPEDWINDOW, 100, 100, 1800, 1200, nullptr, nullptr, wc.hInstance, nullptr);
 
+	
+	
 	if (!CreateDeviceD3D(hwnd))
 	{
 		CleanupDeviceD3D();
@@ -60,6 +63,12 @@ void MyImGui::Instance()
 	bool done = false;
 	while (!done)
 	{
+		RECT rect;
+		if (GetClientRect(hwnd, &rect))
+		{
+			width = rect.right - rect.left;
+			height = rect.bottom - rect.top;
+		}
 		MSG msg;
 		while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
 		{

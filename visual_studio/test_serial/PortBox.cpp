@@ -50,7 +50,7 @@ void PortBox::Instance(std::string _PortName)
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
 
-
+	ImGui::SameLine();
 	if (ImGui::Button("Connect"))
 		Connect();
 
@@ -266,7 +266,6 @@ void PortBox::CloseSerialPort()
 			my_serial.close();
 			PortBoxBool = false;
 			String.clear();
-			RowDataBox = false;
 			RawDataLog.clear();
 		}
 	}
@@ -275,9 +274,6 @@ void PortBox::CloseSerialPort()
 
 void PortBox::CreateRowDataBox()
 {
-	ImGui::Checkbox("Row Data", &RowDataBox);
-	if (RowDataBox)
-	{
 		ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 		{ //경합 방지
 			std::lock_guard<std::mutex> lock(serialMutex);
@@ -292,12 +288,7 @@ void PortBox::CreateRowDataBox()
 			}
 		}
 		ImGui::EndChild();
-		PortBoxSize = ImVec2{ 300 , 150 };
-	}
-	else
-	{
-		PortBoxSize = ImVec2{ 180 , 100 };
-	}
+		PortBoxSize = ImVec2{ 250 , 130 };
 }
 
 void PortBox::InputCLI(std::string& _CLI)

@@ -38,7 +38,14 @@ public:
     {
         return ThreadPools;
     }
-  
+    const int GetWindowSize_X()
+    {
+        return width;
+    }
+    const int GetWindowSize_Y()
+    {
+        return height;
+    }
 protected:
     void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
@@ -49,6 +56,9 @@ protected:
    
 private:
     bool LogFileSet = true; //로그파일 이름설정할것
+
+    int width = 0;
+    int height = 0;
 
     std::shared_ptr<MyGUI_Interface> MyGUI_Interfaces = nullptr;
     std::shared_ptr<ThreadPool> ThreadPools;

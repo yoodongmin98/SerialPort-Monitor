@@ -30,11 +30,12 @@ protected:
     void DrawLine();
     void RadarTypeBox();
     void AllConnectBox();
+
     void Frame_FPSBox(ImGuiIO& _io);
     void LogBox();
+    void LogManagementBox();
     void ShowLog();
     void CLIBox();
-    void AllRowData();
 
 
     void AllConnect();

@@ -27,10 +27,6 @@ public:
 	{
 		return String.empty();
 	}
-	void SetRawDataBox()
-	{
-		RowDataBox = !RowDataBox;
-	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -43,7 +39,6 @@ private:
 	bool PortBoxBool = false;
 	bool IsLost = false; //통신 끊겼을때 판별
 	bool MissingBool = false; //시간 1프레임만 적용시킬때 쓸 변수
-	bool RowDataBox = false;
 	bool WorkingBool = false;
 	std::mutex stateMutex;
 
@@ -69,7 +64,7 @@ private:
 
 	//UI
 	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f);
-	ImVec2 PortBoxSize = ImVec2{ 180,100 };
+	ImVec2 PortBoxSize = ImVec2{ 250,130 };
 
 	//Serial
 	serial::Serial my_serial;
