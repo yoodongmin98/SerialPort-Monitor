@@ -6,7 +6,6 @@
 
 
 
-#define MaxPortCount 42
 #define ButtonSize ImVec2{130,20}
 
 MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
@@ -28,10 +27,9 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
     PortBoxCreate();
     DrawLine();
     AllConnectBox(_io);
-	LogManagementBox();
     LogBox();
-    for (auto i = 0; i < PortName.size(); ++i)
-        ObjectBox[i]->Instance(PortName[i]);
+	LogManagementBox();
+	BoxInstance();
 }
 
 
@@ -46,16 +44,16 @@ void MyGUI_Interface::PortBoxCreate()
 			if (PortInfo[i].description.find(target) != std::string::npos)
 				PortName.push_back(PortInfo[i].port.c_str());
 		}
-		for (auto i = 0; i < MaxPortCount; ++i)
+		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			std::string SetName = Name + std::to_string(i);
-			if (Count == 6)
+			if (Count == 7)
 			{
-				Xpos = 0; Ypos += 130; Count = 0;
+				Xpos = 0; Ypos += cellSizeY; Count = 0;
 			}
 			Count++;
 			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
-			Xpos += 250;
+			Xpos += cellSizeX;
 		}
 		CreateBool = false;
 	}
@@ -65,8 +63,6 @@ void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = { 0.0f,0.0f };
 	ImVec2 bottomRight = ImVec2(topLeft.x + 1500, topLeft.y + 780);
-	float cellSizeX = 250.0f; // X 크기
-	float cellSizeY = 130.0f; // Y 크기
 	ImU32 color = IM_COL32(205, 205, 205, 128);
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
@@ -94,7 +90,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	CLIBox();
 	RadarTypeBox();
 	Frame_FPSBox(_io);
-
+	LineMode();
 	ImGui::End();
 }
 
@@ -183,6 +179,42 @@ void MyGUI_Interface::CLIBox()
 			obj->InputCLI(CLI_Text);
 		}
 	}
+}
+
+void MyGUI_Interface::LineMode()
+{
+	ImGui::SeparatorText("Data Port Mode");
+	static int e = 2;
+	if(ImGui::RadioButton("Mode 1(1port)", &e, 0))
+	{
+		MaxPortCount = 1;
+		cellSizeX = 1500.0f; 
+		cellSizeY = 780.0f; 
+		ComportReset();
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Mode 2(6Port)", &e, 1))
+	{
+		MaxPortCount = 6;
+		cellSizeX = 500.0f; 
+		cellSizeY = 390.0f; 
+		ComportReset();
+	}
+	if(ImGui::RadioButton("Mode 3(36Port)", &e, 2))
+	{
+		MaxPortCount = 36;
+		cellSizeX = 250.0f; 
+		cellSizeY = 130.0f; 
+		ComportReset();
+	}
+}
+
+
+void MyGUI_Interface::BoxInstance()
+{
+
+	for (auto i = 0; i < PortName.size(); ++i)
+		ObjectBox[i]->Instance(PortName[i]);
 }
 
 

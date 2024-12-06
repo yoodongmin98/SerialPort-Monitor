@@ -43,6 +43,7 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
+	PortBoxSize = MyGUI_Interface::GUI->GetcellSize();
 	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
 
