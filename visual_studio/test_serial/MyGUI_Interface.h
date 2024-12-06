@@ -32,12 +32,15 @@ protected:
     void AllConnectBox();
     void Frame_FPSBox(ImGuiIO& _io);
     void LogBox();
+    void ShowLog();
     void CLIBox();
+    void AllRowData();
+
+
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
     void LogClear();
-    void AllRowData();
     void ButtonRelease();
 private:
     bool CreateBool = true;

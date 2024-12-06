@@ -76,7 +76,7 @@ void PortBox::Instance(std::string _PortName)
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 
 		if (WorkingBool) 
-			ImGui::Text("Working");
+			ImGui::Text("Working%s", Dots.c_str());
 		else if (MissingBool) 
 			ImGui::TextColored(yellowColor, "Missing");
 		else if (BootStart) 
@@ -105,6 +105,18 @@ void PortBox::SerialMonitor()
 			std::lock_guard<std::mutex> lock(stateMutex);
 			Dataline = my_serial.readline();
 
+			if (!Dataline.empty())
+			{
+				DotCount++;
+				if (DotCount > 7) {
+					DotCount = 1;
+				}
+				Dots.clear();
+				for (int i = 0; i < DotCount; ++i) {
+					Dots += ".";
+				}
+			}
+			
 			//RawDataBox누르면 스크롤 뜨게하는거
 			if (RawDataLog.size() >= 200) 
 				RawDataLog.pop_front(); // 오래된 로그 제거

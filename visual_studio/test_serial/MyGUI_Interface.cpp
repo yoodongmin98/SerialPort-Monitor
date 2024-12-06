@@ -5,7 +5,7 @@
 
 
 
-#define MaxPortCount 30
+#define MaxPortCount 42
 
 MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
 
@@ -64,7 +64,7 @@ void MyGUI_Interface::PortBoxCreate()
 void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = { 0.0f,0.0f };
-	ImVec2 bottomRight = ImVec2(topLeft.x + 1080, topLeft.y + 500);
+	ImVec2 bottomRight = ImVec2(topLeft.x + 1080, topLeft.y + 700);
 	float cellSizeX = 180.0f; // X 크기
 	float cellSizeY = 100.0f; // Y 크기
 	ImU32 color = IM_COL32(205, 205, 205, 128);
@@ -116,6 +116,7 @@ void MyGUI_Interface::AllConnectBox()
 	AllDisConnect();
 	ComportReset();
 	AllRowData();
+	ShowLog();
 	LogClear();
 	ImGui::End();
 }
@@ -232,6 +233,14 @@ void MyGUI_Interface::AllRowData()
 		{
 			obj->SetRawDataBox();
 		}
+	}
+}
+
+void MyGUI_Interface::ShowLog()
+{
+	if (ImGui::Button("ShowLogBox"))
+	{
+		LogBoxbool = !LogBoxbool;
 	}
 }
 
