@@ -43,6 +43,9 @@ void MyGUI_Interface::PortBoxCreate()
 		{
 			if (PortInfo[i].description.find(target) != std::string::npos)
 				PortName.push_back(PortInfo[i].port.c_str());
+			if (PortName.size() >= MaxPortCount)
+				break;
+			
 		}
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
@@ -82,7 +85,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 
 	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
 	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(294, 600));
+	ImGui::SetWindowSize(ImVec2(294, 700));
 	ImGui::SeparatorText("Connect");
 	AllConnect();
 	AllDisConnect();
@@ -90,7 +93,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	CLIBox();
 	RadarTypeBox();
 	Frame_FPSBox(_io);
-	LineMode();
+	ASCIILineMode();
+	HEXLineMode();
 	ImGui::End();
 }
 
@@ -181,38 +185,67 @@ void MyGUI_Interface::CLIBox()
 	}
 }
 
-void MyGUI_Interface::LineMode()
+void MyGUI_Interface::ASCIILineMode()
 {
-	ImGui::SeparatorText("Data Port Mode");
-	static int e = 2;
-	if(ImGui::RadioButton("Mode 1(1port)", &e, 0))
+	ImGui::SeparatorText("Data Port Mode(ASCII)");
+	if(ImGui::RadioButton("ASCII 1(1port)", &ASCII_Button, 0))
 	{
-		MaxPortCount = 1;
-		cellSizeX = 1500.0f; 
-		cellSizeY = 780.0f; 
-		ComportReset();
+		HEX_Button = -1;
+		LineModeReset(1, 1500.0f, 780.0f);
 	}
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Mode 2(6Port)", &e, 1))
+	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
 	{
-		MaxPortCount = 6;
-		cellSizeX = 500.0f; 
-		cellSizeY = 390.0f; 
-		ComportReset();
+		HEX_Button = -1;
+		LineModeReset(6,500.0f,390.0f);
 	}
-	if(ImGui::RadioButton("Mode 3(36Port)", &e, 2))
+	if(ImGui::RadioButton("ASCII 3(36Port)", &ASCII_Button, 2))
 	{
-		MaxPortCount = 36;
-		cellSizeX = 250.0f; 
-		cellSizeY = 130.0f; 
-		ComportReset();
+		HEX_Button = -1;
+		LineModeReset(36, 250.0f, 130.0f);
 	}
+}
+
+
+
+void MyGUI_Interface::HEXLineMode()
+{
+	ImGui::SeparatorText("Data Port Mode(HEX)");
+	if (ImGui::RadioButton("HEX 1(1port1)", &HEX_Button, 0))
+	{
+		ASCII_Button = -1;
+		LineModeReset(1, 1500.0f, 780.0f);
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("HEX 2(6Port1)", &HEX_Button, 1))
+	{
+		ASCII_Button = -1;
+		LineModeReset(6, 500.0f, 390.0f);
+	}
+	if (ImGui::RadioButton("HEX 3(36Port1)", &HEX_Button, 2))
+	{
+		ASCII_Button = -1;
+		LineModeReset(36, 250.0f, 130.0f);
+	}
+}
+
+
+
+void MyGUI_Interface::LineModeReset(int _PortCount, float _SizeX, float _SizeY)
+{
+	MaxPortCount = _PortCount;
+	cellSizeX = _SizeX;
+	cellSizeY = _SizeY;
+	for (std::shared_ptr<PortBox> obj : ObjectBox)
+	{
+		obj->DisConnect();
+	}
+	ButtonRelease();
 }
 
 
 void MyGUI_Interface::BoxInstance()
 {
-
 	for (auto i = 0; i < PortName.size(); ++i)
 		ObjectBox[i]->Instance(PortName[i]);
 }
@@ -225,6 +258,7 @@ void MyGUI_Interface::AllConnect()
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
+			ASCII_Button > 0 ? obj->SetASCIIMODE() : obj->SetHEXMODE();
 			if (!obj->IsStringNull())
 				obj->Connect();
 		}
@@ -249,6 +283,7 @@ void MyGUI_Interface::ComportReset()
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
+			obj->RawMonitorClear();
 		}
 		ButtonRelease();
 	}

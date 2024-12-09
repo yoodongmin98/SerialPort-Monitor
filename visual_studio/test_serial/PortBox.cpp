@@ -104,7 +104,10 @@ void PortBox::SerialMonitor()
 		if (my_serial.available()) 
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
-			Dataline = my_serial.readline();
+			if (ASCIIMODE)
+				Dataline = my_serial.readline();
+			else if (HEXMODE)
+ 				Dataline = my_serial.read();
 
 			if (!Dataline.empty())
 			{
@@ -251,9 +254,15 @@ void PortBox::Connect()
 	}
 }
 
+
 void PortBox::DisConnect()
 {
 	CloseSerialPort();
+}
+
+void PortBox::RawMonitorClear()
+{
+	RawDataLog.clear();
 }
 
 void PortBox::CloseSerialPort()
@@ -267,7 +276,6 @@ void PortBox::CloseSerialPort()
 			my_serial.close();
 			PortBoxBool = false;
 			String.clear();
-			RawDataLog.clear();
 		}
 	}
 }

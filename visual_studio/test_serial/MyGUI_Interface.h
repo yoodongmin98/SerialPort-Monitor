@@ -41,8 +41,9 @@ protected:
     void LogBox();
     void LogManagementBox();
     void CLIBox();
-    void LineMode();
-
+    void ASCIILineMode();
+    void HEXLineMode();
+    void LineModeReset(int _PortCount, float _SizeX, float _SizeY);
 
     void AllConnect();
     void AllDisConnect();
@@ -53,9 +54,11 @@ private:
     bool CreateBool = true;
     bool scrollToBottom = false;
     
+    int ASCII_Button = 0;
+    int HEX_Button = -1;
     int MaxPortCount = 36;
-    float cellSizeX = 250.0f; // X 农扁
-    float cellSizeY = 130.0f; // Y 农扁
+    float cellSizeX = 1500.0f; // X 农扁
+    float cellSizeY = 780.0f; // Y 农扁
 
 
     std::vector<std::string> logs;

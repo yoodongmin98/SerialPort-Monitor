@@ -27,6 +27,17 @@ public:
 	{
 		return String.empty();
 	}
+	void RawMonitorClear();
+	void SetASCIIMODE()
+	{
+		ASCIIMODE = true;
+		HEXMODE = false;
+	}
+	void SetHEXMODE()
+	{
+		ASCIIMODE = false;
+		HEXMODE = true;
+	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -40,6 +51,9 @@ private:
 	bool IsLost = false; //통신 끊겼을때 판별
 	bool MissingBool = false; //시간 1프레임만 적용시킬때 쓸 변수
 	bool WorkingBool = false;
+
+	bool ASCIIMODE = true;
+	bool HEXMODE = false;
 	std::mutex stateMutex;
 
 
