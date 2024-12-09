@@ -38,6 +38,10 @@ public:
 		ASCIIMODE = false;
 		HEXMODE = true;
 	}
+	void SetHexPrintNumberCount(int _Count)
+	{
+		HexNumberCount = _Count;
+	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -56,11 +60,13 @@ private:
 	bool HEXMODE = false;
 	std::mutex stateMutex;
 
-
+	int PreHexCount = 0;
+	int HexNumberCount = 0;
 	int DotCount = 1; //Working ...뜨는거
 	
 	std::string String; //Combo누르면 포트번호가 담길 string
 	std::string Dataline; //Serial Data를 읽을 string
+	std::stringstream hexStream; //Serial Data를 읽을 hex
 	std::string Dots = "."; //Working ...그거 ㅇㅇ
 
 
@@ -96,5 +102,6 @@ private:
 
 	//Log
 	std::deque<std::string> RawDataLog;
+	std::deque<std::string> RawHexLog;
 	bool scrollToBottom = false;
 };

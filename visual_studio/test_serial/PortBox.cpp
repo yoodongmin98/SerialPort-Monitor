@@ -107,25 +107,37 @@ void PortBox::SerialMonitor()
 			if (ASCIIMODE)
 				Dataline = my_serial.readline();
 			else if (HEXMODE)
- 				Dataline = my_serial.read();
-
+				Dataline = my_serial.read();
+			
 			if (!Dataline.empty())
 			{
 				DotCount++;
-				if (DotCount > 7) {
+				if (DotCount > 7) 
 					DotCount = 1;
-				}
 				Dots.clear();
-				for (int i = 0; i < DotCount; ++i) {
+				for (int i = 0; i < DotCount; ++i) 
 					Dots += ".";
-				}
 			}
 			
 			//RawDataBox누르면 스크롤 뜨게하는거
-			if (RawDataLog.size() >= 200) 
-				RawDataLog.pop_front(); // 오래된 로그 제거
-			RawDataLog.push_back(Dataline); // 새 로그 추가
-			scrollToBottom = true;
+			if (ASCIIMODE)
+			{
+				if (RawDataLog.size() >= 200)
+					RawDataLog.pop_front(); // 오래된 로그 제거
+				RawDataLog.push_back(Dataline); // 새 로그 추가
+				scrollToBottom = true;
+			}
+			if (HEXMODE)
+			{
+				if (RawHexLog.size() >= 200)
+					RawHexLog.pop_front();
+				hexStream.str("");
+				for (unsigned char c : Dataline)
+					hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
+				RawHexLog.push_back(hexStream.str());
+				scrollToBottom = true;
+			}
+		
 
 			if (!Dataline.find("\n") || Dataline.empty())
 				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
@@ -286,15 +298,31 @@ void PortBox::CreateRowDataBox()
 		ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 		{ //경합 방지
 			std::lock_guard<std::mutex> lock(serialMutex);
-			for (const auto& Rawlog : RawDataLog)
+			if (ASCIIMODE)
 			{
-				ImGui::Text("%s", Rawlog.c_str());
+				for (const auto& Rawlog : RawDataLog)
+					ImGui::Text("%s", Rawlog.c_str());
 			}
+			else if (HEXMODE)
+			{
+				for (auto& Rawlog : RawHexLog)
+				{
+					//여기 멀티쓰레드 문제때문에 중복 출력됨 유남생?
+					ImGui::Text("%s", Rawlog.c_str());
+					PreHexCount++;
+					if (PreHexCount >= HexNumberCount)
+						PreHexCount = 0;
+					else
+						ImGui::SameLine(0.0f, 1.0f);
+				}
+			}
+
 			if (scrollToBottom)
 			{
 				ImGui::SetScrollHereY(1.0f);
 				scrollToBottom = false;
 			}
+			
 		}
 		ImGui::EndChild();
 		PortBoxSize = ImVec2{ 250 , 130 };
