@@ -123,7 +123,7 @@ void PortBox::SerialMonitor()
 			//RawDataBox누르면 스크롤 뜨게하는거
 			if (ASCIIMODE)
 			{
-				if (RawDataLog.size() >= 200)
+				if (RawDataLog.size() >= 1000)
 					RawDataLog.pop_front(); 
 				RawDataLog.push_back(Dataline); 
 				scrollToBottom = true;
@@ -187,7 +187,7 @@ void PortBox::SerialMonitor()
 		if (MissingBool) 
 		{
 			currentMissingTime = std::chrono::steady_clock::now();
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= 5) {
+			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= NoDataTime) {
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;

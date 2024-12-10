@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "PortBox.h"
 #include "MyImGui.h"
-
+#include <functional>
 
 
 
@@ -84,18 +84,29 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
 
 	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
-	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(294, 1012));
+	ComPortDataSetting();
 	ImGui::SeparatorText("Connect");
 	AllConnect();
 	AllDisConnect();
 	ComportReset();
 	CLIBox();
 	RadarTypeBox();
-	Frame_FPSBox(_io);
 	ASCIILineMode();
 	HEXLineMode();
+	Frame_FPSBox(_io);
 	ImGui::End();
+}
+
+
+void MyGUI_Interface::ComPortDataSetting()
+{
+	ImGui::SeparatorText("ComPortSetting");
+	if (ImGui::InputInt("BaudRate", &BaudRate))
+	{
+		
+	}
 }
 
 
@@ -135,6 +146,7 @@ void MyGUI_Interface::LogManagementBox()
 	ImGui::SetWindowSize(ImVec2(420, 230));
 	LogClear();
 	LogFileCreateSelect();
+	DataSetting();
 	ImGui::End();
 }
 
@@ -172,10 +184,9 @@ void MyGUI_Interface::LogBox()
 void MyGUI_Interface::CLIBox()
 {
 	ImGui::SeparatorText("CLI (Write)");
-	static char buffer[256] = "";
+	static char buffer[1500] = "";
 	ImGui::Text("Input CLI");
-	ImGui::InputText("##InputBox", buffer, 64);
-	ImGui::SameLine();
+	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	if (ImGui::Button("AllSend"))
 	{
 		std::string CLI_Text = buffer;
@@ -321,8 +332,24 @@ void MyGUI_Interface::LogFileCreateSelect()
 			for (std::shared_ptr<PortBox> obj : ObjectBox)
 				obj->SetCOMLofFileClose();
 		}
-		
 	}
+}
+
+void MyGUI_Interface::DataSetting()
+{
+	ImGui::SeparatorText("Data Setting");
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.2f, 0.2f, 0.8f, 1.0f));           
+	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.3f, 0.3f, 1.0f, 1.0f));    
+	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.1f, 0.1f, 0.6f, 1.0f));     
+	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));     
+	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
+	static int Sliderint = 5;
+	if (ImGui::SliderInt("Undetected time", &Sliderint, 5, 10))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+			obj->SetNoDataTime(Sliderint);
+	}
+	ImGui::PopStyleColor(5);
 }
 
 void MyGUI_Interface::ButtonRelease()

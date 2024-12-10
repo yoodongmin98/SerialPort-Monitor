@@ -51,6 +51,10 @@ public:
 		if (logFile.is_open())
 			logFile.close();
 	}
+	void SetNoDataTime(int _Time)
+	{
+		NoDataTime = _Time;
+	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -109,7 +113,7 @@ private:
 	bool LogFileBool = false;
 
 
-
+	int NoDataTime = 5;
 	//Log
 	std::deque<std::string> RawDataLog;
 	std::vector<std::string> RawHexLog;

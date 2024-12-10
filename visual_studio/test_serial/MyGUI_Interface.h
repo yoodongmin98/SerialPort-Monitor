@@ -42,23 +42,30 @@ public:
 protected:
     void PortBoxCreate();
     void DrawLine();
-    void RadarTypeBox();
+
+
     void AllConnectBox(ImGuiIO& _io);
-    void BoxInstance();
-
-    void Frame_FPSBox(ImGuiIO& _io);
-    void LogBox();
-    void LogManagementBox();
-    void CLIBox();
-    void ASCIILineMode();
-    void HEXLineMode();
-    void LineModeReset(int _PortCount, float _SizeX, float _SizeY);
-
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
+    void ComPortDataSetting();
+    void CLIBox();
+    void RadarTypeBox();
+    void ASCIILineMode();
+    void HEXLineMode();
+    void Frame_FPSBox(ImGuiIO& _io);
+
+    void BoxInstance();
+
+    void LogBox();
+    void LogManagementBox();
     void LogClear();
     void LogFileCreateSelect();
+    void DataSetting();
+    void LineModeReset(int _PortCount, float _SizeX, float _SizeY);
+
+
+
     void ButtonRelease();
 private:
     bool CreateBool = true;
@@ -67,6 +74,7 @@ private:
     int ASCII_Button = 0;
     int HEX_Button = -1;
     int MaxPortCount = 36;
+    int BaudRate = 921600; //Defalut
     float cellSizeX = 1500.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 
