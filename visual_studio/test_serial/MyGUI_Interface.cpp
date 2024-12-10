@@ -258,25 +258,6 @@ void MyGUI_Interface::AllConnect()
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
-			ASCII_Button >= 0 ? obj->SetASCIIMODE() : obj->SetHEXMODE();
-			switch (MaxPortCount)
-			{
-			case 1: {
-				obj->SetHexPrintNumberCount(70);
-				break;
-			}
-			case 6: {
-				obj->SetHexPrintNumberCount(22);
-				break;
-			}
-			case 36: {
-				obj->SetHexPrintNumberCount(10);
-				break;
-			}
-			default :
-				break;
-			}
-		
 			if (!obj->IsStringNull())
 				obj->Connect();
 		}

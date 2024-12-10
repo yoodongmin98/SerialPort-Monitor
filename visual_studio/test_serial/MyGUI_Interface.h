@@ -30,6 +30,15 @@ public:
 	{
         return ImVec2{ cellSizeX ,cellSizeY };
 	}
+
+    const int& GetASCIIButton()
+    {
+        return ASCII_Button;
+    }
+    const int& GetMaxPortCount()
+    {
+        return MaxPortCount;
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();

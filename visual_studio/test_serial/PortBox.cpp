@@ -265,6 +265,24 @@ void PortBox::Connect()
 			my_serial.setPort(String);
 			my_serial.setBaudrate(921600);
 			my_serial.setTimeout(timeout);
+			MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
+			switch (MyGUI_Interface::GUI->GetMaxPortCount())
+			{
+			case 1: {
+				SetHexPrintNumberCount(70);
+				break;
+			}
+			case 6: {
+				SetHexPrintNumberCount(22);
+				break;
+			}
+			case 36: {
+				SetHexPrintNumberCount(10);
+				break;
+			}
+			default:
+				break;
+			}
 			PortCheck();
 		}
 	}
