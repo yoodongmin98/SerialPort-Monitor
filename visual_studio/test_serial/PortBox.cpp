@@ -69,7 +69,8 @@ void PortBox::Instance(std::string _PortName)
 	{
 		if (LogFileBool) //연결되었을때 생성
 		{
-			logFile.open("ABB_Raw_" + _PortName + +".txt", std::ios::app);
+			if(!logFile.is_open())
+				logFile.open("Raw_" + _PortName + +".txt", std::ios::app);
 			LogFileBool = false;
 		}
 
@@ -139,8 +140,8 @@ void PortBox::SerialMonitor()
 					RawHexLog.push_back(HexLineData);
 					PreHexCount = 0;
 					HexLineData.clear();
+					scrollToBottom = true;
 				}
-				scrollToBottom = true;
 			}
 		
 

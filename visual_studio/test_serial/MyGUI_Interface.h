@@ -58,6 +58,7 @@ protected:
     void AllDisConnect();
     void ComportReset();
     void LogClear();
+    void LogFileCreateSelect();
     void ButtonRelease();
 private:
     bool CreateBool = true;

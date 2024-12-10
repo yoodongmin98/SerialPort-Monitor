@@ -46,6 +46,15 @@ public:
     {
         return height;
     }
+    void SetLogBoxBool()
+    {
+        LogFileSet = !LogFileSet;
+    }
+    void SetLogBoxFileClose()
+    {
+        if (logFile.is_open())
+            logFile.close();
+    }
 protected:
     void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
@@ -55,7 +64,7 @@ protected:
 
    
 private:
-    bool LogFileSet = true; //로그파일 이름설정할것
+    bool LogFileSet = false;
 
     int width = 0;
     int height = 0;

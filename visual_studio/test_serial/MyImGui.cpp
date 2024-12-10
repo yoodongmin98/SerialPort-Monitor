@@ -32,7 +32,7 @@ void MyImGui::Instance()
 {
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Serial Monitor Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1800, 1050, nullptr, nullptr, wc.hInstance, nullptr);
+	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"SerialPort Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1800, 1050, nullptr, nullptr, wc.hInstance, nullptr);
 	//HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPEDWINDOW, 100, 100, 1800, 1200, nullptr, nullptr, wc.hInstance, nullptr);
 
 	
@@ -216,7 +216,8 @@ void MyImGui::CleanupRenderTarget()
 void MyImGui::LogFileOpen()
 {
 	//로그파일 생성
-	logFile.open(LogFileName, std::ios::app);
+	if(!logFile.is_open())
+		logFile.open(LogFileName, std::ios::app);
 }
 
 void MyImGui::LogFlash(std::string _PortName , std::string _Content)

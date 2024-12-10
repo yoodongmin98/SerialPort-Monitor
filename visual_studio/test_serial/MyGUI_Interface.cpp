@@ -85,7 +85,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 
 	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
 	ImGui::Begin("All Check", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(294, 700));
+	ImGui::SetWindowSize(ImVec2(294, 1012));
 	ImGui::SeparatorText("Connect");
 	AllConnect();
 	AllDisConnect();
@@ -132,8 +132,9 @@ void MyGUI_Interface::LogManagementBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(1080, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(100, 230));
+	ImGui::SetWindowSize(ImVec2(420, 230));
 	LogClear();
+	LogFileCreateSelect();
 	ImGui::End();
 }
 
@@ -293,6 +294,34 @@ void MyGUI_Interface::LogClear()
 	if (ImGui::Button("Log Clear"))
 	{
 		logs.clear();
+	}
+}
+
+void MyGUI_Interface::LogFileCreateSelect()
+{
+	static bool LogBoxs = false;
+	static bool PortRawData = false;
+	ImGui::SeparatorText("Log File Record");
+	if (ImGui::Checkbox("Log Box Record", &LogBoxs))
+	{
+		if (LogBoxs)
+			MyImGui::MyImGuis->SetLogBoxBool();
+		else
+			MyImGui::MyImGuis->SetLogBoxFileClose();
+	}
+	if (ImGui::Checkbox("PortBox RawData Record", &PortRawData))
+	{
+		if (PortRawData)
+		{
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+				obj->SetCOMLogFile();
+		}
+		else
+		{
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+				obj->SetCOMLofFileClose();
+		}
+		
 	}
 }
 

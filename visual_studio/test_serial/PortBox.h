@@ -42,6 +42,15 @@ public:
 	{
 		HexNumberCount = _Count;
 	}
+	void SetCOMLogFile()
+	{
+		LogFileBool = !LogFileBool;
+	}
+	void SetCOMLofFileClose()
+	{
+		if (logFile.is_open())
+			logFile.close();
+	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -97,7 +106,7 @@ private:
 
 	//File
 	std::ofstream logFile;
-	bool LogFileBool = true;
+	bool LogFileBool = false;
 
 
 
