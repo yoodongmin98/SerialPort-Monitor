@@ -262,7 +262,7 @@ void MyGUI_Interface::AllConnect()
 			switch (MaxPortCount)
 			{
 			case 1: {
-				obj->SetHexPrintNumberCount(67);
+				obj->SetHexPrintNumberCount(70);
 				break;
 			}
 			case 6: {

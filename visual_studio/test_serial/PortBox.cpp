@@ -123,18 +123,23 @@ void PortBox::SerialMonitor()
 			if (ASCIIMODE)
 			{
 				if (RawDataLog.size() >= 200)
-					RawDataLog.pop_front(); // 오래된 로그 제거
-				RawDataLog.push_back(Dataline); // 새 로그 추가
+					RawDataLog.pop_front(); 
+				RawDataLog.push_back(Dataline); 
 				scrollToBottom = true;
 			}
-			if (HEXMODE)
+			else if (HEXMODE)
 			{
-				if (RawHexLog.size() >= 200)
-					RawHexLog.pop_front();
 				hexStream.str("");
 				for (unsigned char c : Dataline)
 					hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
-				RawHexLog.push_back(hexStream.str());
+				HexLineData += hexStream.str();
+				PreHexCount++;
+				if ((PreHexCount % HexNumberCount) == 0)
+				{
+					RawHexLog.push_back(HexLineData);
+					PreHexCount = 0;
+					HexLineData.clear();
+				}
 				scrollToBottom = true;
 			}
 		
@@ -162,7 +167,6 @@ void PortBox::SerialMonitor()
 					WorkingBool = true;
 					MissingBool = false;
 					BootStart = false;
-					
 				}
 			}
 		}
@@ -307,13 +311,15 @@ void PortBox::CreateRowDataBox()
 			{
 				for (auto& Rawlog : RawHexLog)
 				{
-					//여기 멀티쓰레드 문제때문에 중복 출력됨 유남생?
-					ImGui::Text("%s", Rawlog.c_str());
-					PreHexCount++;
-					if (PreHexCount >= HexNumberCount)
-						PreHexCount = 0;
-					else
-						ImGui::SameLine(0.0f, 1.0f);
+					try
+					{
+						ImGui::Text("%s", Rawlog.c_str());
+					}
+					catch (const std::exception e)
+					{
+						std::cout << "Hex 문자열을 읽는 도중 오류가 발생했습니다. error : " << e.what() << std::endl;
+						return;
+					}
 				}
 			}
 

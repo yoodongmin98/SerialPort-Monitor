@@ -67,6 +67,7 @@ private:
 	std::string String; //Combo누르면 포트번호가 담길 string
 	std::string Dataline; //Serial Data를 읽을 string
 	std::stringstream hexStream; //Serial Data를 읽을 hex
+	std::string HexLineData; //hex를 한줄로 이어붙일 string
 	std::string Dots = "."; //Working ...그거 ㅇㅇ
 
 
@@ -102,6 +103,6 @@ private:
 
 	//Log
 	std::deque<std::string> RawDataLog;
-	std::deque<std::string> RawHexLog;
+	std::vector<std::string> RawHexLog;
 	bool scrollToBottom = false;
 };
