@@ -39,6 +39,10 @@ public:
     {
         return MaxPortCount;
     }
+    const int GetSliderInt()
+    {
+        return Sliderint;
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -74,7 +78,7 @@ private:
     int ASCII_Button = 0;
     int HEX_Button = -1;
     int MaxPortCount = 36;
-    int BaudRate = 921600; //Defalut
+    int Sliderint = 5;
     float cellSizeX = 1500.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 

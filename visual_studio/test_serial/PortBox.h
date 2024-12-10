@@ -55,6 +55,10 @@ public:
 	{
 		NoDataTime = _Time;
 	}
+	void SetBaudRate(int _BaudRate)
+	{
+		BaudRate = _BaudRate;
+	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
@@ -73,6 +77,7 @@ private:
 	bool HEXMODE = false;
 	std::mutex stateMutex;
 
+	int BaudRate = 921600; //Defalut
 	int PreHexCount = 0;
 	int HexNumberCount = 0;
 	int DotCount = 1; //Working ...¶ß´Â°Å

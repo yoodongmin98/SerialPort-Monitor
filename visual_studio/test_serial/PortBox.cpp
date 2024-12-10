@@ -47,6 +47,8 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
 
+	NoDataTime = MyGUI_Interface::GUI->GetSliderInt();
+
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
@@ -60,6 +62,8 @@ void PortBox::Instance(std::string _PortName)
 	if (ImGui::Button("DisConnect"))
 		DisConnect();
 
+	ImGui::SameLine();
+	ImGui::Text("%d", BaudRate);
 	if (IsLost)
 		ImGui::TextColored(redColor, "Connection Lost");
 
@@ -192,7 +196,7 @@ void PortBox::SerialMonitor()
 				MissingBool = false;
 				BootStart = false;
 				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 5초 이상 수신되지 않았습니다.");
-				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for 5 seconds");
+				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 			}
 		}
 
@@ -264,7 +268,7 @@ void PortBox::Connect()
 			PortBoxBool = true;
 			IsLost = false;
 			my_serial.setPort(String);
-			my_serial.setBaudrate(921600);
+			my_serial.setBaudrate(BaudRate);
 			my_serial.setTimeout(timeout);
 			MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
 			switch (MyGUI_Interface::GUI->GetMaxPortCount())
