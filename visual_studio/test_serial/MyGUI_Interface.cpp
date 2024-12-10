@@ -104,7 +104,9 @@ void MyGUI_Interface::ComPortDataSetting()
 {
 	ImGui::SeparatorText("ComPortSetting");
 	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray));
-
+	ImGui::Combo("Databit", &DataSettingDatabit, DatabitArray, IM_ARRAYSIZE(DatabitArray));
+	ImGui::Combo("Stopbit", &DataSettingStopbit, StopbitArray, IM_ARRAYSIZE(StopbitArray));
+	ImGui::Combo("Parity", &DataSettingParity, ParityArray, IM_ARRAYSIZE(ParityArray));
 }
 
 
@@ -221,18 +223,18 @@ void MyGUI_Interface::ASCIILineMode()
 void MyGUI_Interface::HEXLineMode()
 {
 	ImGui::SeparatorText("Data Port Mode(HEX)");
-	if (ImGui::RadioButton("HEX 1(1port1)", &HEX_Button, 0))
+	if (ImGui::RadioButton("HEX 1(1port)", &HEX_Button, 0))
 	{
 		ASCII_Button = -1;
 		LineModeReset(1, 1500.0f, 780.0f);
 	}
 	ImGui::SameLine();
-	if (ImGui::RadioButton("HEX 2(6Port1)", &HEX_Button, 1))
+	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
 	{
 		ASCII_Button = -1;
 		LineModeReset(6, 500.0f, 390.0f);
 	}
-	if (ImGui::RadioButton("HEX 3(36Port1)", &HEX_Button, 2))
+	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 2))
 	{
 		ASCII_Button = -1;
 		LineModeReset(36, 250.0f, 130.0f);
@@ -341,8 +343,11 @@ void MyGUI_Interface::DataSetting()
 	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.1f, 0.1f, 0.6f, 1.0f));     
 	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));     
 	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
+	ImGui::Text("Default : 5 second");
 	ImGui::SliderInt("Undetected time", &Sliderint, 5, 10);
 	ImGui::PopStyleColor(5);
+	ImGui::Text("Default : START");
+	ImGui::InputText("Boot Detection Char", BootDetection, IM_ARRAYSIZE(BootDetection));
 }
 
 void MyGUI_Interface::ButtonRelease()

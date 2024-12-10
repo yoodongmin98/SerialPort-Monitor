@@ -47,6 +47,10 @@ public:
     {
         return std::stoi(BaudrateArray[DataSettingBaudrate]);
     }
+    char* GetBootDetectionCharacter()
+    {
+        return BootDetection;
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -79,19 +83,29 @@ private:
     bool CreateBool = true;
     bool scrollToBottom = false;
     
+    
     int ASCII_Button = 0;
     int HEX_Button = -1;
     int MaxPortCount = 36;
     int Sliderint = 5;
+
     int DataSettingBaudrate = 14; //Default
+    int DataSettingDatabit = 0; //Default
+    int DataSettingStopbit = 0; //Default
+    int DataSettingParity = 0; //Default
+
     float cellSizeX = 1500.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 
 
     const char* BaudrateArray[17] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
         "115200","230400","460800","921600","1000000","1843200" };
+    const char* DatabitArray[5] = { "0","1","2","3","4" };
+    const char* StopbitArray[2] = { "0","1" };
+    const char* ParityArray[3] = { "NONE","Odd","Even" };
     std::vector<std::string> logs;
 
+    char BootDetection[128] = "START";
     std::string Name = "PortBox";
     std::string target = "USB";
 

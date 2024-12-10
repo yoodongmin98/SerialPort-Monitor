@@ -49,7 +49,7 @@ void PortBox::Instance(std::string _PortName)
 
 	NoDataTime = MyGUI_Interface::GUI->GetSliderInt();
 	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
-
+	BootingString = MyGUI_Interface::GUI->GetBootDetectionCharacter();
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
@@ -159,7 +159,7 @@ void PortBox::SerialMonitor()
 			{
 				dataReceived = true;
 				// 데이터가 들어오면 일단 Start를 찾는다.
-				if (Dataline.find("START") != std::string::npos) 
+				if (Dataline.find(BootingString) != std::string::npos)
 				{
 					WorkingBool = false;
 					MissingBool = false;
@@ -196,7 +196,7 @@ void PortBox::SerialMonitor()
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;
-				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 5초 이상 수신되지 않았습니다.");
+				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
 				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 			}
 		}

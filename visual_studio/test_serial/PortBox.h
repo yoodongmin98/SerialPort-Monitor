@@ -83,6 +83,7 @@ private:
 	std::stringstream hexStream; //Serial Data를 읽을 hex
 	std::string HexLineData; //hex를 한줄로 이어붙일 string
 	std::string Dots = "."; //Working ...그거 ㅇㅇ
+	std::string BootingString = "START"; //부팅을 감지할 string
 
 
 	//Time
