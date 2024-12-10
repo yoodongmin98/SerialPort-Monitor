@@ -43,6 +43,10 @@ public:
     {
         return Sliderint;
     }
+    int GetDataSettingBaudrate()
+    {
+        return std::stoi(BaudrateArray[DataSettingBaudrate]);
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -79,10 +83,13 @@ private:
     int HEX_Button = -1;
     int MaxPortCount = 36;
     int Sliderint = 5;
+    int DataSettingBaudrate = 14; //Default
     float cellSizeX = 1500.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 
 
+    const char* BaudrateArray[17] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
+        "115200","230400","460800","921600","1000000","1843200" };
     std::vector<std::string> logs;
 
     std::string Name = "PortBox";

@@ -103,14 +103,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 void MyGUI_Interface::ComPortDataSetting()
 {
 	ImGui::SeparatorText("ComPortSetting");
-	static int DataSettingBaudrate = 14; //Default
-	const char* BaudrateArray[] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
-		"115200","230400","460800","921600","1000000","1843200"};
-	if (ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray)))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-			obj->SetBaudRate(std::stoi(BaudrateArray[DataSettingBaudrate]));
-	}
+	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray));
+
 }
 
 

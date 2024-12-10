@@ -48,6 +48,7 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::PushItemWidth(50);
 
 	NoDataTime = MyGUI_Interface::GUI->GetSliderInt();
+	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
 
 
 	String = _PortName;
@@ -63,7 +64,7 @@ void PortBox::Instance(std::string _PortName)
 		DisConnect();
 
 	ImGui::SameLine();
-	ImGui::Text("%d", BaudRate);
+	ImGui::Text("%d", my_serial.getBaudrate());
 	if (IsLost)
 		ImGui::TextColored(redColor, "Connection Lost");
 

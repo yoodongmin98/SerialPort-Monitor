@@ -55,10 +55,6 @@ public:
 	{
 		NoDataTime = _Time;
 	}
-	void SetBaudRate(int _BaudRate)
-	{
-		BaudRate = _BaudRate;
-	}
 protected:
 	void PortCheck();
 	void CreatePortLogFile();
