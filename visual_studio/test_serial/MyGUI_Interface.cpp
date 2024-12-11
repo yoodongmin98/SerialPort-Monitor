@@ -3,7 +3,7 @@
 #include "PortBox.h"
 #include "MyImGui.h"
 #include <functional>
-
+#include <conio.h>
 
 
 #define ButtonSize ImVec2{130,20}
@@ -24,14 +24,26 @@ MyGUI_Interface::~MyGUI_Interface()
 
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
+	VisibleUI(_io);
     PortBoxCreate();
     DrawLine();
-    AllConnectBox(_io);
-    LogBox();
-	LogManagementBox();
+	AllConnectBox(_io);
+	if (UIVisible)
+	{
+		LogBox();
+		LogManagementBox();
+	}
 	BoxInstance();
 }
 
+
+void MyGUI_Interface::VisibleUI(ImGuiIO& _io)
+{
+	if(ImGui::IsKeyReleased(ImGuiKey_L))
+	{
+		UIVisible = !UIVisible;
+	}
+}
 
 void MyGUI_Interface::PortBoxCreate()
 {
@@ -65,7 +77,7 @@ void MyGUI_Interface::PortBoxCreate()
 void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = { 0.0f,0.0f };
-	ImVec2 bottomRight = ImVec2(topLeft.x + 1500, topLeft.y + 780);
+	ImVec2 bottomRight = ImVec2(topLeft.x + 1200, topLeft.y + 780);
 	ImU32 color = IM_COL32(205, 205, 205, 128);
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
@@ -85,7 +97,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 
 	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(294, 1012));
+	ImGui::SetWindowSize(ImVec2(294, 780));
 	ComPortDataSetting();
 	ImGui::SeparatorText("Connect");
 	AllConnect();
@@ -96,6 +108,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	ASCIILineMode();
 	HEXLineMode();
 	Frame_FPSBox(_io);
+	ImGui::SeparatorText("LogBox");
+	ImGui::Checkbox("LogBox ON/OFF", &UIVisible);
 	ImGui::End();
 }
 
@@ -141,9 +155,9 @@ void MyGUI_Interface::RadarTypeBox()
 
 void MyGUI_Interface::LogManagementBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(1080, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(420, 230));
+	ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.3f, 230));
 	LogClear();
 	LogFileCreateSelect();
 	DataSetting();
@@ -162,7 +176,7 @@ void MyGUI_Interface::LogBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(1080, 230));
+	ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.7f, 230));
 	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 
@@ -204,20 +218,27 @@ void MyGUI_Interface::ASCIILineMode()
 	{
 		HEX_Button = -1;
 		LineSwapSize = 1;
-		LineModeReset(1, 1500.0f, 780.0f);
+		LineModeReset(1, 1200.0f, 780.0f);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
 	{
 		HEX_Button = -1;
 		LineSwapSize = 3;
-		LineModeReset(6,500.0f,390.0f);
+		LineModeReset(6,400.0f,390.0f);
 	}
-	if(ImGui::RadioButton("ASCII 3(36Port)", &ASCII_Button, 2))
+	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
+	{
+		HEX_Button = -1;
+		LineSwapSize = 3;
+		LineModeReset(12, 300.0f, 260.0f);
+	}
+	ImGui::SameLine();
+	if(ImGui::RadioButton("ASCII 4(36Port)", &ASCII_Button, 3))
 	{
 		HEX_Button = -1;
 		LineSwapSize = 6;
-		LineModeReset(36, 250.0f, 130.0f);
+		LineModeReset(36, 200.0f, 130.0f);
 	}
 }
 
@@ -230,20 +251,20 @@ void MyGUI_Interface::HEXLineMode()
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 1;
-		LineModeReset(1, 1500.0f, 780.0f);
+		LineModeReset(1, 1200.0f, 780.0f);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 3;
-		LineModeReset(6, 500.0f, 390.0f);
+		LineModeReset(6, 400.0f, 390.0f);
 	}
 	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 2))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 6;
-		LineModeReset(36, 250.0f, 130.0f);
+		LineModeReset(36, 200.0f, 130.0f);
 	}
 }
 
