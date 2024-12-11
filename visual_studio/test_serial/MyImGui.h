@@ -55,6 +55,14 @@ public:
         if (logFile.is_open())
             logFile.close();
     }
+    HWND& GetWindowHandle()
+    {
+        return hwnd;
+    }
+    RECT& GetRECT()
+    {
+        return rect;
+    }
 protected:
     void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
@@ -64,6 +72,8 @@ protected:
 
    
 private:
+    HWND hwnd;
+    RECT rect;
     bool LogFileSet = false;
 
     int width = 0;

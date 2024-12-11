@@ -39,10 +39,7 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 
 void MyGUI_Interface::VisibleUI(ImGuiIO& _io)
 {
-	if(ImGui::IsKeyReleased(ImGuiKey_L))
-	{
-		UIVisible = !UIVisible;
-	}
+
 }
 
 void MyGUI_Interface::PortBoxCreate()
@@ -98,8 +95,10 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(294, 780));
+
+	WindowMode();
+	LogBoxOnOff();
 	ComPortDataSetting();
-	ImGui::SeparatorText("Connect");
 	AllConnect();
 	AllDisConnect();
 	ComportReset();
@@ -108,9 +107,40 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	ASCIILineMode();
 	HEXLineMode();
 	Frame_FPSBox(_io);
+	
+	ImGui::End();
+}
+
+void MyGUI_Interface::WindowMode()
+{
+	ImGui::SeparatorText("WindowMode");
+	if (ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0))
+	{
+		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
+			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
+			1500, 820, SWP_NOZORDER | SWP_NOACTIVATE);
+	}
+	if (ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1))
+	{
+		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
+			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
+			1800, 820, SWP_NOZORDER | SWP_NOACTIVATE);
+	}
+	if (ImGui::RadioButton("Window3(1800 x 1050)", &Window_Button, 2))
+	{
+		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
+			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
+			1800, 1050, SWP_NOZORDER | SWP_NOACTIVATE);
+	}
+}
+
+void MyGUI_Interface::LogBoxOnOff()
+{
 	ImGui::SeparatorText("LogBox");
 	ImGui::Checkbox("LogBox ON/OFF", &UIVisible);
-	ImGui::End();
 }
 
 
@@ -155,9 +185,9 @@ void MyGUI_Interface::RadarTypeBox()
 
 void MyGUI_Interface::LogManagementBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.3f, 230));
+	ImGui::SetWindowSize(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.3f, 230));
 	LogClear();
 	LogFileCreateSelect();
 	DataSetting();
@@ -176,7 +206,7 @@ void MyGUI_Interface::LogBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.7f, 230));
+	ImGui::SetWindowSize(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.7f, 230));
 	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 
@@ -260,7 +290,14 @@ void MyGUI_Interface::HEXLineMode()
 		LineSwapSize = 3;
 		LineModeReset(6, 400.0f, 390.0f);
 	}
-	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 2))
+	if (ImGui::RadioButton("HEX 3(12Port)", &HEX_Button, 2))
+	{
+		ASCII_Button = -1;
+		LineSwapSize = 4;
+		LineModeReset(12, 300.0f, 260.0f);
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 3))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 6;
@@ -293,6 +330,7 @@ void MyGUI_Interface::BoxInstance()
 
 void MyGUI_Interface::AllConnect()
 {
+	ImGui::SeparatorText("Connect");
 	if (ImGui::Button("All Connect", ButtonSize))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)

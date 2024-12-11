@@ -58,6 +58,8 @@ protected:
     void VisibleUI(ImGuiIO& _io);
 
     void AllConnectBox(ImGuiIO& _io);
+    void WindowMode();
+    void LogBoxOnOff();
     void AllConnect();
     void AllDisConnect();
     void ComportReset();
@@ -86,6 +88,7 @@ private:
     
     bool UIVisible = false;
     
+    int Window_Button = 0;
     int ASCII_Button = 0;
     int HEX_Button = -1;
     int MaxPortCount = 1;
@@ -98,7 +101,8 @@ private:
     int DataSettingStopbit = 0; //Default
     int DataSettingParity = 0; //Default
 
-    float cellSizeX = 1500.0f; // X 크기
+    int AllBoxXSize = 284;
+    float cellSizeX = 1200.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 
     float WinSizeX = 0.0f;

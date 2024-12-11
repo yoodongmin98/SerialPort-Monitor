@@ -32,7 +32,7 @@ void MyImGui::Instance()
 {
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"SerialPort Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1500, 820, nullptr, nullptr, wc.hInstance, nullptr);
+	hwnd = ::CreateWindowW(wc.lpszClassName, L"SerialPort Program", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, 100, 100, 1500, 820, nullptr, nullptr, wc.hInstance, nullptr);
 	//HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"NHN Test Program", WS_OVERLAPPEDWINDOW, 100, 100, 1800, 1200, nullptr, nullptr, wc.hInstance, nullptr);
 
 	
@@ -53,8 +53,6 @@ void MyImGui::Instance()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
 
-
-
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
@@ -64,7 +62,7 @@ void MyImGui::Instance()
 	bool done = false;
 	while (!done)
 	{
-		RECT rect;
+		
 		if (GetClientRect(hwnd, &rect))
 		{
 			width = rect.right - rect.left;
