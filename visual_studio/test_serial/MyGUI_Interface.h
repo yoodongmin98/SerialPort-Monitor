@@ -86,7 +86,7 @@ private:
     
     int ASCII_Button = 0;
     int HEX_Button = -1;
-    int MaxPortCount = 36;
+    int MaxPortCount = 1;
     int Sliderint = 5;
 
     int LineSwapSize = 1;
