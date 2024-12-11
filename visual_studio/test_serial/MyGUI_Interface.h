@@ -80,7 +80,7 @@ protected:
 
     void ButtonRelease();
 private:
-    bool CreateBool = true;
+    bool CreateBool = false;
     bool scrollToBottom = false;
     
     
@@ -88,6 +88,8 @@ private:
     int HEX_Button = -1;
     int MaxPortCount = 36;
     int Sliderint = 5;
+
+    int LineSwapSize = 1;
 
     int DataSettingBaudrate = 14; //Default
     int DataSettingDatabit = 0; //Default

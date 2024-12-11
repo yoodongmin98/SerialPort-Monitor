@@ -50,7 +50,7 @@ void MyGUI_Interface::PortBoxCreate()
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			std::string SetName = Name + std::to_string(i);
-			if (Count == 7)
+			if (Count == LineSwapSize)
 			{
 				Xpos = 0; Ypos += cellSizeY; Count = 0;
 			}
@@ -203,17 +203,20 @@ void MyGUI_Interface::ASCIILineMode()
 	if(ImGui::RadioButton("ASCII 1(1port)", &ASCII_Button, 0))
 	{
 		HEX_Button = -1;
+		LineSwapSize = 1;
 		LineModeReset(1, 1500.0f, 780.0f);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
 	{
 		HEX_Button = -1;
+		LineSwapSize = 3;
 		LineModeReset(6,500.0f,390.0f);
 	}
 	if(ImGui::RadioButton("ASCII 3(36Port)", &ASCII_Button, 2))
 	{
 		HEX_Button = -1;
+		LineSwapSize = 6;
 		LineModeReset(36, 250.0f, 130.0f);
 	}
 }
@@ -226,17 +229,20 @@ void MyGUI_Interface::HEXLineMode()
 	if (ImGui::RadioButton("HEX 1(1port)", &HEX_Button, 0))
 	{
 		ASCII_Button = -1;
+		LineSwapSize = 1;
 		LineModeReset(1, 1500.0f, 780.0f);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
 	{
 		ASCII_Button = -1;
+		LineSwapSize = 3;
 		LineModeReset(6, 500.0f, 390.0f);
 	}
 	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 2))
 	{
 		ASCII_Button = -1;
+		LineSwapSize = 6;
 		LineModeReset(36, 250.0f, 130.0f);
 	}
 }
