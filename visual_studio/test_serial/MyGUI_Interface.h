@@ -59,6 +59,8 @@ protected:
 
     void AllConnectBox(ImGuiIO& _io);
     void WindowMode();
+    void WindowDrawLineSet();
+    void WindowSizeSet();
     void LogBoxOnOff();
     void AllConnect();
     void AllDisConnect();
@@ -105,8 +107,8 @@ private:
     float cellSizeX = 1200.0f; // X 农扁
     float cellSizeY = 780.0f; // Y 农扁
 
-    float WinSizeX = 0.0f;
-    float WinSizeY = 0.0f;
+    int WinSizeX = 1500; //Window X农扁
+    int WinSizeY = 820; //Window Y农扁
 
     const char* BaudrateArray[17] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
         "115200","230400","460800","921600","1000000","1843200" };

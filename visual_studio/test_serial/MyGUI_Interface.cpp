@@ -74,7 +74,7 @@ void MyGUI_Interface::PortBoxCreate()
 void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = { 0.0f,0.0f };
-	ImVec2 bottomRight = ImVec2(topLeft.x + 1200, topLeft.y + 780);
+	ImVec2 bottomRight = ImVec2(topLeft.x + WinSizeX, topLeft.y + WinSizeY);
 	ImU32 color = IM_COL32(205, 205, 205, 128);
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
@@ -92,7 +92,7 @@ void MyGUI_Interface::DrawLine()
 void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
 
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 284, 0), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 280, 0), ImGuiCond_Always);
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::SetWindowSize(ImVec2(294, 780));
 
@@ -116,25 +116,89 @@ void MyGUI_Interface::WindowMode()
 	ImGui::SeparatorText("WindowMode");
 	if (ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0))
 	{
-		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
-		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
-			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
-			1500, 820, SWP_NOZORDER | SWP_NOACTIVATE);
+		WinSizeX = 1500; WinSizeY = 820;
+		WindowDrawLineSet();
+		WindowSizeSet();
 	}
 	if (ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1))
 	{
-		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
-		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
-			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
-			1800, 820, SWP_NOZORDER | SWP_NOACTIVATE);
+		WinSizeX = 1800; WinSizeY = 820;
+		WindowDrawLineSet();
+		WindowSizeSet();
 	}
 	if (ImGui::RadioButton("Window3(1800 x 1050)", &Window_Button, 2))
 	{
-		GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
-		SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
-			MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
-			1800, 1050, SWP_NOZORDER | SWP_NOACTIVATE);
+		WinSizeX = 1800; WinSizeY = 1050;
+		WindowDrawLineSet();
+		WindowSizeSet();
 	}
+}
+
+
+void MyGUI_Interface::WindowDrawLineSet()
+{
+	if (ASCII_Button)
+	{
+		switch (ASCII_Button)
+		{
+		case 0:
+		{
+			LineModeReset(1, WinSizeX - AllBoxXSize, 780.0);
+			break;
+		}
+		case 1:
+		{
+			LineModeReset(6, (WinSizeX - AllBoxXSize) / 3, 780.0 / 2);
+			break;
+		}
+		case 2:
+		{
+			LineModeReset(12, (WinSizeX - AllBoxXSize) / 4, 780.0 / 3);
+			break;
+		}
+		case 3:
+		{
+			LineModeReset(36, (WinSizeX - AllBoxXSize) / 6, 780.0 / 6);
+			break;
+		}
+		}
+	}
+	else
+	{
+		switch (HEX_Button)
+		{
+		case 0:
+		{
+			LineModeReset(1, WinSizeX - AllBoxXSize, 780.0);
+			break;
+		}
+		case 1:
+		{
+			LineModeReset(6, (WinSizeX - AllBoxXSize) / 3, 780.0 / 2);
+			break;
+		}
+		case 2:
+		{
+			LineModeReset(12, (WinSizeX - AllBoxXSize) / 4, 780.0 / 3);
+			break;
+		}
+		case 3:
+		{
+			LineModeReset(36, (WinSizeX - AllBoxXSize) / 6, 780.0 / 6);
+			break;
+		}
+		}
+	}
+	
+}
+
+
+void MyGUI_Interface::WindowSizeSet()
+{
+	GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+	SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
+		MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
+		WinSizeX, WinSizeY, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 void MyGUI_Interface::LogBoxOnOff()
@@ -255,6 +319,7 @@ void MyGUI_Interface::ASCIILineMode()
 	{
 		HEX_Button = -1;
 		LineSwapSize = 3;
+		
 		LineModeReset(6,400.0f,390.0f);
 	}
 	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
