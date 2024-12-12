@@ -52,7 +52,7 @@ void PortBox::Instance(std::string _PortName)
 	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
 	Databit = MyGUI_Interface::GUI->GetDataSettingDatabit();
 	Stopbit = MyGUI_Interface::GUI->GetDataSettingStopbit();
-
+	WinSize = MyImGui::MyImGuis->GetWindowSize_X();
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
@@ -275,24 +275,7 @@ void PortBox::Connect()
 			my_serial.setBaudrate(BaudRate);
 			my_serial.setBytesize(serial::bytesize_t::eightbits);
 			my_serial.setTimeout(timeout);
-			MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
-			switch (MyGUI_Interface::GUI->GetMaxPortCount())
-			{
-			case 1: {
-				SetHexPrintNumberCount(70);
-				break;
-			}
-			case 6: {
-				SetHexPrintNumberCount(22);
-				break;
-			}
-			case 36: {
-				SetHexPrintNumberCount(10);
-				break;
-			}
-			default:
-				break;
-			}
+			ASCII_HEX_Setting();
 			PortCheck();
 		}
 	}
@@ -368,5 +351,45 @@ void PortBox::InputCLI(std::string& _CLI)
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if(my_serial.isOpen())
 			my_serial.write(_CLI+"\n");
+	}
+}
+
+
+void PortBox::ASCII_HEX_Setting()
+{
+	MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
+	switch (MyGUI_Interface::GUI->GetMaxPortCount())
+	{
+	case 1: {
+		if(WinSize>1700)
+			SetHexPrintNumberCount(69);
+		else
+			SetHexPrintNumberCount(55);
+		break;
+	}
+	case 6: {
+		if (WinSize > 1700)
+			SetHexPrintNumberCount(22);
+		else
+			SetHexPrintNumberCount(17);
+		break;
+	}
+	case 12: {
+		if (WinSize > 1700)
+			SetHexPrintNumberCount(16);
+		else
+			SetHexPrintNumberCount(12);
+		break;
+	}
+	case 30:
+	case 42: {
+		if (WinSize > 1700)
+			SetHexPrintNumberCount(10);
+		else
+			SetHexPrintNumberCount(8);
+		break;
+	}
+	default:
+		break;
 	}
 }

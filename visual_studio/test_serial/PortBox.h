@@ -61,7 +61,7 @@ protected:
 	void SerialMonitor();
 	void CloseSerialPort();
 	void CreateRowDataBox();
-	
+	void ASCII_HEX_Setting();
 private:
 	bool BootStart = false;
 	bool PortBoxBool = false;
@@ -78,7 +78,7 @@ private:
 	int Databit = 8; //Default
 	bool Stopbit = true; //Default
 
-
+	int WinSize = 1200; //Default
 	int PreHexCount = 0;
 	int HexNumberCount = 0;
 	int DotCount = 1; //Working ...¶ß´Â°Å

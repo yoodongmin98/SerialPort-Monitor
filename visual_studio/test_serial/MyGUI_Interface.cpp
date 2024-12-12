@@ -465,7 +465,7 @@ void MyGUI_Interface::HEXLineMode()
 	}
 	if (ImGui::RadioButton("HEX 5(42Port)", &HEX_Button, 4))
 	{
-		HEX_Button = -1;
+		ASCII_Button = -1;
 		LineSwapSize = 6;
 		if (WinSizeX > 1700)
 			LineModeReset(42, 250.0f, 780.0f / 7.0f);
