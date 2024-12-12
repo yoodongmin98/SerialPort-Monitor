@@ -48,8 +48,11 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::PushItemWidth(50);
 
 	NoDataTime = MyGUI_Interface::GUI->GetSliderInt();
-	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
 	BootingString = MyGUI_Interface::GUI->GetBootDetectionCharacter();
+	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
+	Databit = MyGUI_Interface::GUI->GetDataSettingDatabit();
+	Stopbit = MyGUI_Interface::GUI->GetDataSettingStopbit();
+
 
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
@@ -270,6 +273,7 @@ void PortBox::Connect()
 			IsLost = false;
 			my_serial.setPort(String);
 			my_serial.setBaudrate(BaudRate);
+			my_serial.setBytesize(serial::bytesize_t::eightbits);
 			my_serial.setTimeout(timeout);
 			MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
 			switch (MyGUI_Interface::GUI->GetMaxPortCount())

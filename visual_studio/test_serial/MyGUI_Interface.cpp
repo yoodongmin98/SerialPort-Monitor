@@ -265,7 +265,7 @@ void MyGUI_Interface::LogBoxOnOff()
 void MyGUI_Interface::ComPortDataSetting()
 {
 	ImGui::SeparatorText("ComPortSetting");
-	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray),10);
+	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray));
 	ImGui::Combo("Databit", &DataSettingDatabit, DatabitArray, IM_ARRAYSIZE(DatabitArray));
 	ImGui::Combo("Stopbit", &DataSettingStopbit, StopbitArray, IM_ARRAYSIZE(StopbitArray));
 	ImGui::Combo("Parity", &DataSettingParity, ParityArray, IM_ARRAYSIZE(ParityArray));
@@ -544,28 +544,25 @@ void MyGUI_Interface::LogClear()
 
 void MyGUI_Interface::LogFileCreateSelect()
 {
-	static bool LogBoxs = false;
-	static bool PortRawData = false;
 	ImGui::SeparatorText("Log File Record");
-	if (ImGui::Checkbox("Log Box Record", &LogBoxs))
+	ImGui::Checkbox("Log Box Record", &LogBoxs);
+	
+	if (LogBoxs)
+		MyImGui::MyImGuis->SetLogBoxBool();
+	else
+		MyImGui::MyImGuis->SetLogBoxFileClose();
+	
+	ImGui::Checkbox("PortBox RawData Record", &PortRawData);
+	
+	if (PortRawData)
 	{
-		if (LogBoxs)
-			MyImGui::MyImGuis->SetLogBoxBool();
-		else
-			MyImGui::MyImGuis->SetLogBoxFileClose();
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+			obj->SetCOMLogFile();
 	}
-	if (ImGui::Checkbox("PortBox RawData Record", &PortRawData))
+	else
 	{
-		if (PortRawData)
-		{
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-				obj->SetCOMLogFile();
-		}
-		else
-		{
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-				obj->SetCOMLofFileClose();
-		}
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+			obj->SetCOMLofFileClose();
 	}
 }
 

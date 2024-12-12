@@ -47,6 +47,16 @@ public:
     {
         return std::stoi(BaudrateArray[DataSettingBaudrate]);
     }
+    int GetDataSettingDatabit()
+    {
+        return std::stoi(DatabitArray[DataSettingDatabit]);
+    }
+    int GetDataSettingStopbit()
+    {
+        return std::stoi(StopbitArray[DataSettingStopbit]);
+    }
+    //패리티는 잠깐 보류
+
     char* GetBootDetectionCharacter()
     {
         return BootDetection;
@@ -89,6 +99,10 @@ private:
     bool scrollToBottom = false;
     
     bool UIVisible = false;
+
+    bool LogBoxs = false;
+    bool PortRawData = false;
+
     
     int Window_Button = 0;
     int ASCII_Button = 0;
