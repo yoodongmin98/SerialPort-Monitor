@@ -183,9 +183,17 @@ void MyGUI_Interface::WindowDrawLineSet()
 		case 3:
 		{
 			if (WinSizeX > 1700)
-				LineModeReset(36, 250.0, 130.0);
+				LineModeReset(30, 250.0, 156.0);
 			else
-				LineModeReset(36, 200.0, 130.0);
+				LineModeReset(30, 200.0, 156.0);
+			break;
+		}
+		case 4:
+		{
+			if (WinSizeX > 1700)
+				LineModeReset(42, 250.0, 780.0f / 7.0f);
+			else
+				LineModeReset(42, 200.0, 780.0f / 7.0f);
 			break;
 		}
 		}
@@ -221,9 +229,17 @@ void MyGUI_Interface::WindowDrawLineSet()
 		case 3:
 		{
 			if (WinSizeX > 1700)
-				LineModeReset(36, 250.0, 130.0);
+				LineModeReset(30, 250.0, 156.0);
 			else
-				LineModeReset(36, 200.0, 130.0);
+				LineModeReset(30, 200.0, 156.0);
+			break;
+		}
+		case 4:
+		{
+			if (WinSizeX > 1700)
+				LineModeReset(42, 250.0, 780.0f / 7.0f);
+			else
+				LineModeReset(42, 200.0, 780.0f / 7.0f);
 			break;
 		}
 		}
@@ -377,21 +393,30 @@ void MyGUI_Interface::ASCIILineMode()
 	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 3;
+		LineSwapSize = 4;
 		if (WinSizeX > 1700)
 			LineModeReset(12, 375.0f, 260.0f);
 		else
 			LineModeReset(12, 300.0f, 260.0f);
 	}
 	ImGui::SameLine();
-	if(ImGui::RadioButton("ASCII 4(36Port)", &ASCII_Button, 3))
+	if(ImGui::RadioButton("ASCII 4(30Port)", &ASCII_Button, 3))
 	{
 		HEX_Button = -1;
 		LineSwapSize = 6;
 		if (WinSizeX > 1700)
-			LineModeReset(36, 250.0f, 130.0f);
+			LineModeReset(30, 250.0f, 156.0f);
 		else
-			LineModeReset(36, 200.0f, 130.0f);
+			LineModeReset(30, 200.0f, 156.0f);
+	}
+	if (ImGui::RadioButton("ASCII 5(42Port)", &ASCII_Button, 4))
+	{
+		HEX_Button = -1;
+		LineSwapSize = 6;
+		if (WinSizeX > 1700)
+			LineModeReset(42, 250.0f, 780.0f / 7.0f);
+		else
+			LineModeReset(42, 200.0f, 780.0f / 7.0f);
 	}
 }
 
@@ -429,14 +454,23 @@ void MyGUI_Interface::HEXLineMode()
 			LineModeReset(12, 300.0f, 260.0f);
 	}
 	ImGui::SameLine();
-	if (ImGui::RadioButton("HEX 3(36Port)", &HEX_Button, 3))
+	if (ImGui::RadioButton("HEX 4(30Port)", &HEX_Button, 3))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 6;
 		if (WinSizeX > 1700)
-			LineModeReset(36, 250.0f, 130.0f);
+			LineModeReset(30, 250.0f, 156.0f);
 		else
-			LineModeReset(36, 200.0f, 130.0f);
+			LineModeReset(30, 200.0f, 156.0f);
+	}
+	if (ImGui::RadioButton("HEX 5(42Port)", &HEX_Button, 4))
+	{
+		HEX_Button = -1;
+		LineSwapSize = 6;
+		if (WinSizeX > 1700)
+			LineModeReset(42, 250.0f, 780.0f / 7.0f);
+		else
+			LineModeReset(42, 200.0f, 780.0f / 7.0f);
 	}
 }
 
