@@ -24,6 +24,10 @@ MyGUI_Interface::~MyGUI_Interface()
 
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
+	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
+
+
+
 	VisibleUI(_io);
     PortBoxCreate();
     DrawLine();
@@ -91,13 +95,21 @@ void MyGUI_Interface::DrawLine()
 
 void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
-
-	ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() - 280, 0), ImGuiCond_Always);
+	if (Window_Button == 0)
+		ImGui::SetNextWindowPos(ImVec2(1200, 0), ImGuiCond_Always);
+	else
+		ImGui::SetNextWindowPos(ImVec2(1500, 0), ImGuiCond_Always);
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2(294, 780));
+	if (Window_Button == 0)
+		ImGui::SetWindowSize(ImVec2(WinSizeX - 1200, 780));
+	else if(Window_Button == 1)
+		ImGui::SetWindowSize(ImVec2(WinSizeX - 1500, 780));
+	else if(Window_Button == 2)
+		ImGui::SetWindowSize(ImVec2(WinSizeX - 1500, 1011));
 
 	WindowMode();
-	LogBoxOnOff();
+	if(Window_Button == 0 || Window_Button == 1)
+		LogBoxOnOff();
 	ComPortDataSetting();
 	AllConnect();
 	AllDisConnect();
@@ -117,48 +129,60 @@ void MyGUI_Interface::WindowMode()
 	if (ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0))
 	{
 		WinSizeX = 1500; WinSizeY = 820;
-		WindowDrawLineSet();
 		WindowSizeSet();
+		WindowDrawLineSet();
 	}
 	if (ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1))
 	{
 		WinSizeX = 1800; WinSizeY = 820;
-		WindowDrawLineSet();
 		WindowSizeSet();
+		WindowDrawLineSet();
 	}
-	if (ImGui::RadioButton("Window3(1800 x 1050)", &Window_Button, 2))
+	if (ImGui::RadioButton("Window3(1800 x 1050) (LogBox On)", &Window_Button, 2))
 	{
 		WinSizeX = 1800; WinSizeY = 1050;
-		WindowDrawLineSet();
 		WindowSizeSet();
+		WindowDrawLineSet();
 	}
 }
 
 
 void MyGUI_Interface::WindowDrawLineSet()
 {
-	if (ASCII_Button)
+	if (ASCII_Button > -1)
 	{
 		switch (ASCII_Button)
 		{
 		case 0:
 		{
-			LineModeReset(1, WinSizeX - AllBoxXSize, 780.0);
+			if (WinSizeX > 1700)
+				LineModeReset(1, 1500.0, 780.0);
+			else
+				LineModeReset(1, 1200.0, 780.0);
 			break;
 		}
 		case 1:
 		{
-			LineModeReset(6, (WinSizeX - AllBoxXSize) / 3, 780.0 / 2);
+			if (WinSizeX > 1700)
+				LineModeReset(6, 500.0, 390.0);
+			else
+				LineModeReset(6, 400.0, 390.0);
 			break;
 		}
 		case 2:
 		{
-			LineModeReset(12, (WinSizeX - AllBoxXSize) / 4, 780.0 / 3);
+			if (WinSizeX > 1700)
+				LineModeReset(12, 375.0, 260.0);
+			else
+				LineModeReset(12, 300.0, 260.0);
 			break;
 		}
 		case 3:
 		{
-			LineModeReset(36, (WinSizeX - AllBoxXSize) / 6, 780.0 / 6);
+			if (WinSizeX > 1700)
+				LineModeReset(36, 250.0, 130.0);
+			else
+				LineModeReset(36, 200.0, 130.0);
 			break;
 		}
 		}
@@ -169,27 +193,38 @@ void MyGUI_Interface::WindowDrawLineSet()
 		{
 		case 0:
 		{
-			LineModeReset(1, WinSizeX - AllBoxXSize, 780.0);
+			if (WinSizeX > 1700)
+				LineModeReset(1, 1500.0, 780.0);
+			else
+				LineModeReset(1, 1200.0, 780.0);
 			break;
 		}
 		case 1:
 		{
-			LineModeReset(6, (WinSizeX - AllBoxXSize) / 3, 780.0 / 2);
+			if (WinSizeX > 1700)
+				LineModeReset(6, 500.0, 390.0);
+			else
+				LineModeReset(6, 400.0, 390.0);
 			break;
 		}
 		case 2:
 		{
-			LineModeReset(12, (WinSizeX - AllBoxXSize) / 4, 780.0 / 3);
+			if (WinSizeX > 1700)
+				LineModeReset(12, 375.0, 260.0);
+			else
+				LineModeReset(12, 300.0, 260.0);
 			break;
 		}
 		case 3:
 		{
-			LineModeReset(36, (WinSizeX - AllBoxXSize) / 6, 780.0 / 6);
+			if (WinSizeX > 1700)
+				LineModeReset(36, 250.0, 130.0);
+			else
+				LineModeReset(36, 200.0, 130.0);
 			break;
 		}
 		}
 	}
-	
 }
 
 
@@ -211,7 +246,7 @@ void MyGUI_Interface::LogBoxOnOff()
 void MyGUI_Interface::ComPortDataSetting()
 {
 	ImGui::SeparatorText("ComPortSetting");
-	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray));
+	ImGui::Combo("BaudRate", &DataSettingBaudrate, BaudrateArray, IM_ARRAYSIZE(BaudrateArray),10);
 	ImGui::Combo("Databit", &DataSettingDatabit, DatabitArray, IM_ARRAYSIZE(DatabitArray));
 	ImGui::Combo("Stopbit", &DataSettingStopbit, StopbitArray, IM_ARRAYSIZE(StopbitArray));
 	ImGui::Combo("Parity", &DataSettingParity, ParityArray, IM_ARRAYSIZE(ParityArray));
@@ -249,9 +284,15 @@ void MyGUI_Interface::RadarTypeBox()
 
 void MyGUI_Interface::LogManagementBox()
 {
-	ImGui::SetNextWindowPos(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	if (WinSizeX > 1700)
+		ImGui::SetNextWindowPos(ImVec2(1500.0 * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	else
+		ImGui::SetNextWindowPos(ImVec2(1200.0 * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.3f, 230));
+	if (WinSizeX > 1700)
+		ImGui::SetWindowSize(ImVec2(1500 * 0.3f, 230));
+	else
+		ImGui::SetWindowSize(ImVec2(1200 * 0.3f, 230));
 	LogClear();
 	LogFileCreateSelect();
 	DataSetting();
@@ -270,7 +311,10 @@ void MyGUI_Interface::LogBox()
 {
 	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	ImGui::SetWindowSize(ImVec2((MyImGui::MyImGuis->GetWindowSize_X()- AllBoxXSize) * 0.7f, 230));
+	if (WinSizeX > 1700)
+		ImGui::SetWindowSize(ImVec2(1500.0 * 0.7f, 230));
+	else
+		ImGui::SetWindowSize(ImVec2(1200.0 * 0.7f, 230));
 	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 
@@ -319,7 +363,6 @@ void MyGUI_Interface::ASCIILineMode()
 	{
 		HEX_Button = -1;
 		LineSwapSize = 3;
-		
 		LineModeReset(6,400.0f,390.0f);
 	}
 	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))

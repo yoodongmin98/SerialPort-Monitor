@@ -103,7 +103,7 @@ private:
     int DataSettingStopbit = 0; //Default
     int DataSettingParity = 0; //Default
 
-    int AllBoxXSize = 284;
+    int AllBoxXSize = 294;
     float cellSizeX = 1200.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기
 
