@@ -14,6 +14,7 @@
 class ThreadPool
 {
 public:
+	static ThreadPool* TP;
 	ThreadPool();
 	ThreadPool(size_t numThreads);
 
@@ -21,6 +22,7 @@ public:
 
 	
 	void AddWork(std::function<void()> _function);
+	void ClearWork();
 	std::queue<std::function<void()>> GetTasks()
 	{
 		return tasks;

@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "PortBox.h"
 #include "MyImGui.h"
+#include "ThreadPool.h"
 #include <functional>
 #include <conio.h>
 
@@ -518,6 +519,7 @@ void MyGUI_Interface::AllDisConnect()
 		{
 			obj->DisConnect();
 		}
+		//ThreadPool::TP->ClearWork();
 	}
 }
 
@@ -530,6 +532,7 @@ void MyGUI_Interface::ComportReset()
 			obj->DisConnect();
 			obj->RawMonitorClear();
 		}
+		//ThreadPool::TP->ClearWork();
 		ButtonRelease();
 	}
 }

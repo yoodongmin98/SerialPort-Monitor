@@ -1,10 +1,12 @@
+#include <queue>
+#include <utility>
 #include "ThreadPool.h"
 
-
+ThreadPool* ThreadPool::TP = nullptr;
 
 ThreadPool::ThreadPool()
 {
-
+	TP = this;
 }
 
 
@@ -79,4 +81,16 @@ void ThreadPool::AddWork(std::function<void()> _function)
 		tasks.push(_function);
 	}
 	condition.notify_one();
+}
+
+
+void ThreadPool::ClearWork()
+{
+	/*
+	if (tasks.size() > 0)
+	{
+		std::queue<std::function<void()>> empty;
+		std::swap(tasks, empty);
+	}*/
+	
 }

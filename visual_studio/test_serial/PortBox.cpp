@@ -106,7 +106,7 @@ void PortBox::SerialMonitor()
 	{
 		if (!my_serial.isOpen())
 			return;
-
+		
 		bool dataReceived = false;
 
 		// 데이터 읽기
@@ -117,7 +117,7 @@ void PortBox::SerialMonitor()
 				Dataline = my_serial.readline();
 			else if (HEXMODE)
 				Dataline = my_serial.read();
-			
+
 			if (!Dataline.empty())
 			{
 				DotCount++;
@@ -218,14 +218,17 @@ void PortBox::SerialMonitor()
 		}
 		
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception& e)
+	{
 		// 예외 처리 및 로그 기록
-		std::lock_guard<std::mutex> lock(stateMutex);
-		IsLost = true;
-		MyImGui::MyImGuis->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
-		MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
+		{
+			std::lock_guard<std::mutex> lock(stateMutex);
+			IsLost = true;
+			MyImGui::MyImGuis->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
+			MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
+		}
+
 		CloseSerialPort();
-		return;
 	}
 }
 
