@@ -1,12 +1,13 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <serial/serial.h>
 #include <chrono>
-#include <fstream>
-#include <mutex>
-#include "imgui.h"
 #include <deque>
+#include <fstream>
+#include <iostream>
+#include <mutex>
+#include <serial/serial.h>
+#include <string>
+
+#include "imgui.h"
 
 
 
@@ -19,7 +20,7 @@ public:
 	PortBox(int _X,int _Y, std::string _Name);
 	~PortBox();
 
-	void Instance(std::string _PortName);
+	void Instance(std::string& _PortName);
 	void Connect();
 	void DisConnect();
 	void InputCLI(std::string& _CLI);
@@ -56,8 +57,12 @@ public:
 		NoDataTime = _Time;
 	}
 protected:
+	void GUISetting();
+	void DataSet();
+	void CreatePortButton(std::string& _PortName);
+	void InsertTask_WorkingCheck(std::string& _PortName);
 	void PortCheck();
-	void CreatePortLogFile();
+
 	void SerialMonitor();
 	void CloseSerialPort();
 	void CreateRowDataBox();
@@ -69,9 +74,11 @@ private:
 	bool MissingBool = false; //시간 1프레임만 적용시킬때 쓸 변수
 	bool WorkingBool = false;
 
+
+	//MODE
 	bool ASCIIMODE = true;
 	bool HEXMODE = false;
-	std::mutex stateMutex;
+
 
 	//Serial Data Setting
 	int BaudRate = 921600; //Defalut
@@ -103,13 +110,15 @@ private:
 	int Y = 0;
 	std::string BoxName = "";
 
+
 	//UI
-	ImVec4 customColor = ImVec4(0.3f, 0.2f, 0.4f, 0.4f);
 	ImVec2 PortBoxSize = ImVec2{ 250,130 };
+
 
 	//Serial
 	serial::Serial my_serial;
 	std::mutex serialMutex;
+	std::mutex stateMutex;
 	serial::Timeout timeout = serial::Timeout::simpleTimeout(10);
 	std::vector<const char*> PortName;
 
@@ -118,9 +127,9 @@ private:
 	//File
 	std::ofstream logFile;
 	bool LogFileBool = false;
-
-
 	int NoDataTime = 5;
+
+
 	//Log
 	std::deque<std::string> RawDataLog;
 	std::vector<std::string> RawHexLog;

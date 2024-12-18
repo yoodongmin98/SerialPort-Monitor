@@ -3,11 +3,12 @@
 #include "PortBox.h"
 #include "MyImGui.h"
 #include "ThreadPool.h"
+#include "DataFile.h"
 #include <functional>
 #include <conio.h>
 
 
-#define ButtonSize ImVec2{130,20}
+
 
 MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
 
@@ -27,9 +28,6 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
 
-
-
-	VisibleUI(_io);
     PortBoxCreate();
     DrawLine();
 	AllConnectBox(_io);
@@ -42,17 +40,12 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 }
 
 
-void MyGUI_Interface::VisibleUI(ImGuiIO& _io)
-{
-
-}
-
 void MyGUI_Interface::PortBoxCreate()
 {
+	PortInfo = serial::list_ports();
 	if (CreateBool)
 	{
-		int Xpos = 0, Ypos = 0, Count = 0;
-		PortInfo = serial::list_ports();
+		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
 			if (PortInfo[i].description.find(target) != std::string::npos)
@@ -66,7 +59,7 @@ void MyGUI_Interface::PortBoxCreate()
 			std::string SetName = Name + std::to_string(i);
 			if (Count == LineSwapSize)
 			{
-				Xpos = 0; Ypos += cellSizeY; Count = 0;
+				Xpos = ZERO; Ypos += cellSizeY; Count = ZERO;
 			}
 			Count++;
 			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
@@ -76,11 +69,13 @@ void MyGUI_Interface::PortBoxCreate()
 	}
 }
 
+
 void MyGUI_Interface::DrawLine()
 {
-	ImVec2 topLeft = { 0.0f,0.0f };
+	//window 좌표계기준
+	ImVec2 topLeft = XYZERO;
 	ImVec2 bottomRight = ImVec2(topLeft.x + WinSizeX, topLeft.y + WinSizeY);
-	ImU32 color = IM_COL32(205, 205, 205, 128);
+	ImU32 color = PORTVIEWBACKGROUND;
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
 	// 수직선
@@ -97,16 +92,16 @@ void MyGUI_Interface::DrawLine()
 void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
 	if (Window_Button == 0)
-		ImGui::SetNextWindowPos(ImVec2(1200, 0), ImGuiCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
 	else
-		ImGui::SetNextWindowPos(ImVec2(1500, 0), ImGuiCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
 	if (Window_Button == 0)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - 1200, 780));
+		ImGui::SetWindowSize(ImVec2(WinSizeX - MINI_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
 	else if(Window_Button == 1)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - 1500, 780));
+		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
 	else if(Window_Button == 2)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - 1500, 1011));
+		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, NORMAL_PORTVIEWSIZE_Y));
 
 	WindowMode();
 	if(Window_Button == 0 || Window_Button == 1)
@@ -129,21 +124,21 @@ void MyGUI_Interface::WindowMode()
 	ImGui::SeparatorText("WindowMode");
 	if (ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0))
 	{
-		WinSizeX = 1500; WinSizeY = 820;
+		WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
 		UIVisible = false;
 		WindowSizeSet();
 		WindowDrawLineSet();
 	}
 	if (ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1))
 	{
-		WinSizeX = 1800; WinSizeY = 820;
+		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
 		UIVisible = false;
 		WindowSizeSet();
 		WindowDrawLineSet();
 	}
 	if (ImGui::RadioButton("Window3(1800 x 1050) (LogBox On)", &Window_Button, 2))
 	{
-		WinSizeX = 1800; WinSizeY = 1050;
+		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
 		UIVisible = true;
 		WindowSizeSet();
 		WindowDrawLineSet();
@@ -159,42 +154,42 @@ void MyGUI_Interface::WindowDrawLineSet()
 		{
 		case 0:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(1, 1500.0, 780.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 			else
-				LineModeReset(1, 1200.0, 780.0);
+				LineModeReset(1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 			break;
 		}
 		case 1:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(6, 500.0, 390.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0);
 			else
-				LineModeReset(6, 400.0, 390.0);
+				LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0);
 			break;
 		}
 		case 2:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(12, 375.0, 260.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0);
 			else
-				LineModeReset(12, 300.0, 260.0);
+				LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0);
 			break;
 		}
 		case 3:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(30, 250.0, 156.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0);
 			else
-				LineModeReset(30, 200.0, 156.0);
+				LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0);
 			break;
 		}
 		case 4:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(42, 250.0, 780.0f / 7.0f);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 			else
-				LineModeReset(42, 200.0, 780.0f / 7.0f);
+				LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 			break;
 		}
 		}
@@ -205,42 +200,42 @@ void MyGUI_Interface::WindowDrawLineSet()
 		{
 		case 0:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(1, 1500.0, 780.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 			else
-				LineModeReset(1, 1200.0, 780.0);
+				LineModeReset(1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 			break;
 		}
 		case 1:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(6, 500.0, 390.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0);
 			else
-				LineModeReset(6, 400.0, 390.0);
+				LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0);
 			break;
 		}
 		case 2:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(12, 375.0, 260.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0);
 			else
-				LineModeReset(12, 300.0, 260.0);
+				LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0);
 			break;
 		}
 		case 3:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(30, 250.0, 156.0);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0);
 			else
-				LineModeReset(30, 200.0, 156.0);
+				LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0);
 			break;
 		}
 		case 4:
 		{
-			if (WinSizeX > 1700)
-				LineModeReset(42, 250.0, 780.0f / 7.0f);
+			if (WinSizeX > WINDOW_CHECK_SIZE)
+				LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 			else
-				LineModeReset(42, 200.0, 780.0f / 7.0f);
+				LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 			break;
 		}
 		}
@@ -276,11 +271,10 @@ void MyGUI_Interface::ComPortDataSetting()
 void MyGUI_Interface::RadarTypeBox()
 {
 	ImGui::SeparatorText("Radar Type");
-	std::vector<serial::PortInfo> Infos = serial::list_ports();
 	std::vector<const char*> BluetoothPort;
 	std::vector<const char*> USBSerialCount;
 	std::vector<const char*> ETCCount;
-	for (serial::PortInfo& V : Infos)
+	for (serial::PortInfo& V : PortInfo)
 	{
 		if (V.description.find("Bluetooth") != std::string::npos)
 			BluetoothPort.push_back(V.description.c_str());
@@ -292,7 +286,7 @@ void MyGUI_Interface::RadarTypeBox()
 	static int USBinfo = 0;
 	static int Bluetoothinfo = 0;
 	static int ETCinfo = 0;
-	ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Port detected %d",Infos.size());
+	ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Port detected %d", PortInfo.size());
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "USBSerial detected : %d", USBSerialCount.size());
 	ImGui::Combo("USB(Serial)", &USBinfo, USBSerialCount.data(), USBSerialCount.size());
 	ImGui::TextColored(ImVec4(0.0f, 0.9f, 0.9f, 1.0f), "Blutooth detected : %d", BluetoothPort.size());
@@ -304,15 +298,15 @@ void MyGUI_Interface::RadarTypeBox()
 
 void MyGUI_Interface::LogManagementBox()
 {
-	if (WinSizeX > 1700)
-		ImGui::SetNextWindowPos(ImVec2(1500.0 * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	if (WinSizeX > WINDOW_CHECK_SIZE)
+		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	else
-		ImGui::SetNextWindowPos(ImVec2(1200.0 * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (WinSizeX > 1700)
-		ImGui::SetWindowSize(ImVec2(1500 * 0.3f, 230));
+	if (WinSizeX > WINDOW_CHECK_SIZE)
+		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
 	else
-		ImGui::SetWindowSize(ImVec2(1200 * 0.3f, 230));
+		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
 	LogClear();
 	LogFileCreateSelect();
 	DataSetting();
@@ -329,12 +323,12 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 
 void MyGUI_Interface::LogBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - 230), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (WinSizeX > 1700)
-		ImGui::SetWindowSize(ImVec2(1500.0 * 0.7f, 230));
+	if (WinSizeX > WINDOW_CHECK_SIZE)
+		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));
 	else
-		ImGui::SetWindowSize(ImVec2(1200.0 * 0.7f, 230));
+		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));
 	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 
@@ -356,7 +350,7 @@ void MyGUI_Interface::LogBox()
 void MyGUI_Interface::CLIBox()
 {
 	ImGui::SeparatorText("CLI (Write)");
-	static char buffer[1500] = "";
+	static char buffer[2000] = "";
 	ImGui::Text("Input CLI");
 	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	if (ImGui::Button("AllSend"))
@@ -375,49 +369,54 @@ void MyGUI_Interface::ASCIILineMode()
 	if(ImGui::RadioButton("ASCII 1(1port)", &ASCII_Button, 0))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 1;
-		if (WinSizeX > 1700)
-			LineModeReset(1, 1500.0, 780.0);
+		LineSwapSize = Line_1;
+		PortCount = 1;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(PORT_1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 		else
-			LineModeReset(1, 1200.0, 780.0);
+			LineModeReset(PORT_1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 3;
-		if (WinSizeX > 1700)
-			LineModeReset(6, 500.0f, 390.0f);
+		LineSwapSize = Line_3;
+		PortCount = 6;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(PORT_6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
 		else
-			LineModeReset(6, 400.0f, 390.0f);
+			LineModeReset(PORT_6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
 	}
 	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 4;
-		if (WinSizeX > 1700)
-			LineModeReset(12, 375.0f, 260.0f);
+		LineSwapSize = Line_4;
+		PortCount = 12;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(PORT_12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
 		else
-			LineModeReset(12, 300.0f, 260.0f);
+			LineModeReset(PORT_12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
 	}
 	ImGui::SameLine();
 	if(ImGui::RadioButton("ASCII 4(30Port)", &ASCII_Button, 3))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 6;
-		if (WinSizeX > 1700)
-			LineModeReset(30, 250.0f, 156.0f);
+		LineSwapSize = Line_6;
+		PortCount = 30;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(PORT_30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
 		else
-			LineModeReset(30, 200.0f, 156.0f);
+			LineModeReset(PORT_30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
 	}
 	if (ImGui::RadioButton("ASCII 5(42Port)", &ASCII_Button, 4))
 	{
 		HEX_Button = -1;
-		LineSwapSize = 6;
-		if (WinSizeX > 1700)
-			LineModeReset(42, 250.0f, 780.0f / 7.0f);
+		LineSwapSize = Line_6;
+		PortCount = 42;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(PORT_42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 		else
-			LineModeReset(42, 200.0f, 780.0f / 7.0f);
+			LineModeReset(PORT_42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 	}
 }
 
@@ -430,48 +429,53 @@ void MyGUI_Interface::HEXLineMode()
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 1;
-		if (WinSizeX > 1700)
-			LineModeReset(1, 1500.0, 780.0);
+		PortCount = 1;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
 		else
-			LineModeReset(1, 1200.0, 780.0);
+			LineModeReset(1, MINI_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 3;
-		if (WinSizeX > 1700)
-			LineModeReset(6, 500.0f, 390.0f);
+		PortCount = 6;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
 		else
-			LineModeReset(6, 400.0f, 390.0f);
+			LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
 	}
 	if (ImGui::RadioButton("HEX 3(12Port)", &HEX_Button, 2))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 4;
-		if (WinSizeX > 1700)
-			LineModeReset(12, 375.0f, 260.0f);
+		PortCount = 12;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
 		else
-			LineModeReset(12, 300.0f, 260.0f);
+			LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 4(30Port)", &HEX_Button, 3))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 6;
-		if (WinSizeX > 1700)
-			LineModeReset(30, 250.0f, 156.0f);
+		PortCount = 30;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
 		else
-			LineModeReset(30, 200.0f, 156.0f);
+			LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
 	}
 	if (ImGui::RadioButton("HEX 5(42Port)", &HEX_Button, 4))
 	{
 		ASCII_Button = -1;
 		LineSwapSize = 6;
-		if (WinSizeX > 1700)
-			LineModeReset(42, 250.0f, 780.0f / 7.0f);
+		PortCount = 42;
+		if (WinSizeX > WINDOW_CHECK_SIZE)
+			LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 		else
-			LineModeReset(42, 200.0f, 780.0f / 7.0f);
+			LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
 	}
 }
 

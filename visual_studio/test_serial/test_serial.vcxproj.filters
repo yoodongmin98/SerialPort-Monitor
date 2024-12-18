@@ -95,5 +95,8 @@
     <ClInclude Include="MyGUI_Interface.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="DataFile.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

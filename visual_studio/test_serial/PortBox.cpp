@@ -11,10 +11,11 @@
 #include <functional>
 #include "ThreadPool.h"
 #include "MyGUI_Interface.h"
+#include "DataFile.h"
 
 
 
-ImVec4 redColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // 빨강
+
 ImVec4 yellowColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f); // 노랑
 ImVec4 Colors = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 하늘색
 
@@ -38,22 +39,40 @@ PortBox::~PortBox()
 }
 
 
-void PortBox::Instance(std::string _PortName)
+void PortBox::Instance(std::string& _PortName)
 {
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, customColor);
+	GUISetting();
+	DataSet();
+	CreatePortButton(_PortName);
+	InsertTask_WorkingCheck(_PortName);
+	CreateRowDataBox();
+}
+
+
+void PortBox::GUISetting()
+{
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, PORTBOXCOLOR);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
 	PortBoxSize = MyGUI_Interface::GUI->GetcellSize();
 	ImGui::SetWindowSize(PortBoxSize);
 	ImGui::PushItemWidth(50);
+}
 
+
+void PortBox::DataSet()
+{
 	NoDataTime = MyGUI_Interface::GUI->GetSliderInt();
 	BootingString = MyGUI_Interface::GUI->GetBootDetectionCharacter();
 	BaudRate = MyGUI_Interface::GUI->GetDataSettingBaudrate();
 	Databit = MyGUI_Interface::GUI->GetDataSettingDatabit();
 	Stopbit = MyGUI_Interface::GUI->GetDataSettingStopbit();
 	WinSize = MyImGui::MyImGuis->GetWindowSize_X();
+}
 
+
+void PortBox::CreatePortButton(std::string& _PortName)
+{
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
 
@@ -69,15 +88,17 @@ void PortBox::Instance(std::string _PortName)
 	ImGui::SameLine();
 	ImGui::Text("%d", my_serial.getBaudrate());
 	if (IsLost)
-		ImGui::TextColored(redColor, "Connection Lost");
+		ImGui::TextColored(REDCOLOR, "Connection Lost");
+}
 
 
-
+void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
+{
 	if (PortBoxBool)
 	{
-		if (LogFileBool) //연결되었을때 생성
+		if (LogFileBool)
 		{
-			if(!logFile.is_open())
+			if (!logFile.is_open())
 				logFile.open("Raw_" + _PortName + +".txt", std::ios::app);
 			LogFileBool = false;
 		}
@@ -85,18 +106,13 @@ void PortBox::Instance(std::string _PortName)
 		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 
-		if (WorkingBool) 
+		if (WorkingBool)
 			ImGui::Text("Working%s", Dots.c_str());
-		else if (MissingBool) 
+		else if (MissingBool)
 			ImGui::TextColored(yellowColor, "Missing");
-		else if (BootStart) 
+		else if (BootStart)
 			ImGui::TextColored(Colors, "Booting");
 	}
-
-	CreateRowDataBox();
-
-	ImGui::End();
-	ImGui::PopStyleColor();
 }
 
 
@@ -234,11 +250,6 @@ void PortBox::SerialMonitor()
 
 
 
-void PortBox::CreatePortLogFile()
-{
-
-}
-
 void PortBox::PortCheck()
 {
 	try
@@ -313,39 +324,41 @@ void PortBox::CloseSerialPort()
 
 void PortBox::CreateRowDataBox()
 {
-		ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-		{ //경합 방지
-			std::lock_guard<std::mutex> lock(serialMutex);
-			if (ASCIIMODE)
+	ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+	{ //경합 방지
+		std::lock_guard<std::mutex> lock(serialMutex);
+		if (ASCIIMODE)
+		{
+			for (const auto& Rawlog : RawDataLog)
+				ImGui::Text("%s", Rawlog.c_str());
+		}
+		else if (HEXMODE)
+		{
+			for (auto& Rawlog : RawHexLog)
 			{
-				for (const auto& Rawlog : RawDataLog)
-					ImGui::Text("%s", Rawlog.c_str());
-			}
-			else if (HEXMODE)
-			{
-				for (auto& Rawlog : RawHexLog)
+				try
 				{
-					try
-					{
-						ImGui::Text("%s", Rawlog.c_str());
-					}
-					catch (const std::exception e)
-					{
-						std::cout << "Hex 문자열을 읽는 도중 오류가 발생했습니다. error : " << e.what() << std::endl;
-						return;
-					}
+					ImGui::Text("%s", Rawlog.c_str());
+				}
+				catch (const std::exception e)
+				{
+					std::cout << "Hex 문자열을 읽는 도중 오류가 발생했습니다. error : " << e.what() << std::endl;
+					return;
 				}
 			}
-
-			if (scrollToBottom)
-			{
-				ImGui::SetScrollHereY(1.0f);
-				scrollToBottom = false;
-			}
-			
 		}
-		ImGui::EndChild();
-		PortBoxSize = ImVec2{ 250 , 130 };
+
+		if (scrollToBottom)
+		{
+			ImGui::SetScrollHereY(1.0f);
+			scrollToBottom = false;
+		}
+
+	}
+	ImGui::EndChild();
+	PortBoxSize = ImVec2{ 250 , 130 };
+	ImGui::End();
+	ImGui::PopStyleColor();
 }
 
 void PortBox::InputCLI(std::string& _CLI)

@@ -65,7 +65,6 @@ protected:
     void PortBoxCreate();
     void DrawLine();
 
-    void VisibleUI(ImGuiIO& _io);
 
     void AllConnectBox(ImGuiIO& _io);
     void WindowMode();
@@ -109,8 +108,8 @@ private:
     int HEX_Button = -1;
     int MaxPortCount = 1;
     int Sliderint = 5;
-
-    int LineSwapSize = 1;
+    int PortCount = 1;
+    float LineSwapSize = 1.0;
 
     int DataSettingBaudrate = 14; //Default
     int DataSettingDatabit = 1; //Default
@@ -118,11 +117,13 @@ private:
     int DataSettingParity = 0; //Default
 
     int AllBoxXSize = 294;
+    int LogBoxYSize = 230;
+
     float cellSizeX = 1200.0f; // X 农扁
     float cellSizeY = 780.0f; // Y 农扁
 
-    int WinSizeX = 1500; //Window X农扁
-    int WinSizeY = 820; //Window Y农扁
+    float WinSizeX = 1500.0f; //Window X农扁
+    float WinSizeY = 820.0f; //Window Y农扁
 
     const char* BaudrateArray[17] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
         "115200","230400","460800","921600","1000000","1843200" };
