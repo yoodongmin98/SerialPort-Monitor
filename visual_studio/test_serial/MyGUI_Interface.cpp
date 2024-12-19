@@ -459,7 +459,7 @@ void MyGUI_Interface::DataSetting()
 	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));     
 	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
 	ImGui::Text("Default : 5 second");
-	ImGui::SliderInt("Undetected time", &Sliderint, 5, 10);
+	ImGui::SliderInt("Undetected time", &Sliderint, 3, 30);
 	ImGui::PopStyleColor(5);
 	ImGui::Text("Default : START");
 	ImGui::InputText("Boot Detection Char", BootDetection, IM_ARRAYSIZE(BootDetection));
