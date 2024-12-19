@@ -16,10 +16,6 @@
 
 
 
-ImVec4 yellowColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f); // 노랑
-ImVec4 Colors = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // 하늘색
-
-
 
 PortBox::PortBox()
 {
@@ -109,9 +105,9 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 		if (WorkingBool)
 			ImGui::Text("Working%s", Dots.c_str());
 		else if (MissingBool)
-			ImGui::TextColored(yellowColor, "Missing");
+			ImGui::TextColored(YELLOWCOLOR, "Missing");
 		else if (BootStart)
-			ImGui::TextColored(Colors, "Booting");
+			ImGui::TextColored(BLUECOLOR, "Booting");
 	}
 }
 
@@ -185,7 +181,7 @@ void PortBox::SerialMonitor()
 					BootStart = true;
 					BootingTime = std::chrono::steady_clock::now();
 				}
-				else if(!BootStart) //만약 찾으면 BootStart가 true가 되므로 BootStart가 밑에서 3초 지날때까지는 여기 안들어오게해서
+				else if(!BootStart) //만약 찾으면 BootStart가 true가 되므로 BootStart가 밑에서 5초 지날때까지는 여기 안들어오게해서
 					//동시 출력되는거 방지
 				{
 					// 데이터가 비어있지 않으면 Working 상태
@@ -373,25 +369,25 @@ void PortBox::InputCLI(std::string& _CLI)
 
 void PortBox::ASCII_HEX_Setting()
 {
-	MyGUI_Interface::GUI->GetASCIIButton() >= 0 ? SetASCIIMODE() : SetHEXMODE();
+	MyGUI_Interface::GUI->GetASCIIButton() >= ZERO ? SetASCIIMODE() : SetHEXMODE();
 	switch (MyGUI_Interface::GUI->GetMaxPortCount())
 	{
 	case 1: {
-		if(WinSize>1700)
+		if(WinSize> WINDOW_CHECK_SIZE)
 			SetHexPrintNumberCount(69);
 		else
 			SetHexPrintNumberCount(55);
 		break;
 	}
 	case 6: {
-		if (WinSize > 1700)
+		if (WinSize > WINDOW_CHECK_SIZE)
 			SetHexPrintNumberCount(22);
 		else
 			SetHexPrintNumberCount(17);
 		break;
 	}
 	case 12: {
-		if (WinSize > 1700)
+		if (WinSize > WINDOW_CHECK_SIZE)
 			SetHexPrintNumberCount(16);
 		else
 			SetHexPrintNumberCount(12);
@@ -399,7 +395,7 @@ void PortBox::ASCII_HEX_Setting()
 	}
 	case 30:
 	case 42: {
-		if (WinSize > 1700)
+		if (WinSize > WINDOW_CHECK_SIZE)
 			SetHexPrintNumberCount(10);
 		else
 			SetHexPrintNumberCount(8);

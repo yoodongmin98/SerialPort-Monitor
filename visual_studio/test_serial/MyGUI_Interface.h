@@ -88,7 +88,6 @@ protected:
     void LogClear();
     void LogFileCreateSelect();
     void DataSetting();
-    void LineModeReset(int _PortCount, float _SizeX, float _SizeY);
 
 
 
@@ -102,21 +101,25 @@ private:
     bool LogBoxs = false;
     bool PortRawData = false;
 
+    bool ClickASCII = false;
+    bool ClickHEX = false;
     
+
+    int USBinfo = 0;
+    int Bluetoothinfo = 0;
+    int ETCinfo = 0;
     int Window_Button = 0;
     int ASCII_Button = 0;
     int HEX_Button = -1;
     int MaxPortCount = 1;
     int Sliderint = 5;
-    int PortCount = 1;
-    float LineSwapSize = 1.0;
+    int LineSwapSize = 1;
 
     int DataSettingBaudrate = 14; //Default
     int DataSettingDatabit = 1; //Default
     int DataSettingStopbit = 0; //Default
     int DataSettingParity = 0; //Default
 
-    int AllBoxXSize = 294;
     int LogBoxYSize = 230;
 
     float cellSizeX = 1200.0f; // X Å©±â

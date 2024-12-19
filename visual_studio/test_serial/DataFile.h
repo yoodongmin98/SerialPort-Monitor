@@ -11,6 +11,8 @@
 #define ButtonSize ImVec2{130,20}
 #define PORTBOXCOLOR ImVec4(0.3f, 0.2f, 0.4f, 0.4f)
 #define REDCOLOR ImVec4(1.0f, 0.0f, 0.0f, 1.0f)
+#define YELLOWCOLOR ImVec4(1.0f, 1.0f, 0.0f, 1.0f)
+#define BLUECOLOR ImVec4(0.0f, 1.0f, 1.0f, 1.0f)
 
 #define PORTVIEWBACKGROUND IM_COL32(205, 205, 205, 128);
 
@@ -30,14 +32,9 @@
 
 
 
-//Port , Line
-#define PORT_1 1
-#define PORT_6 6 
-#define PORT_12 12
-#define PORT_30 30 
-#define PORT_42 42
 
-#define Line_1 1.0f
-#define Line_3 3.0f
-#define Line_4 4.0f
-#define Line_6 6.0f
+
+#define Line_1 1
+#define Line_3 3
+#define Line_4 4
+#define Line_6 6

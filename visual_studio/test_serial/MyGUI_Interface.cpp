@@ -85,7 +85,6 @@ void MyGUI_Interface::DrawLine()
 	// ¼öÆò¼±
 	for (float y = topLeft.y; y <= bottomRight.y; y += cellSizeY)
 		drawList->AddLine(ImVec2(topLeft.x, y), ImVec2(bottomRight.x, y), color);
-
 }
 
 
@@ -148,98 +147,18 @@ void MyGUI_Interface::WindowMode()
 
 void MyGUI_Interface::WindowDrawLineSet()
 {
-	if (ASCII_Button > -1)
-	{
-		switch (ASCII_Button)
-		{
-		case 0:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-			else
-				LineModeReset(1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-			break;
-		}
-		case 1:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0);
-			else
-				LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0);
-			break;
-		}
-		case 2:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0);
-			else
-				LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0);
-			break;
-		}
-		case 3:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0);
-			else
-				LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0);
-			break;
-		}
-		case 4:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-			else
-				LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-			break;
-		}
-		}
-	}
+	if (WinSizeX > WINDOW_CHECK_SIZE)
+		cellSizeX = NORMAL_PORTVIEWSIZE_X / LineSwapSize;
 	else
+		cellSizeX = MINI_PORTVIEWSIZE_X / LineSwapSize;
+
+	cellSizeY = MINI_PORTVIEWSIZE_Y / (MaxPortCount / LineSwapSize);
+
+	for (std::shared_ptr<PortBox> obj : ObjectBox)
 	{
-		switch (HEX_Button)
-		{
-		case 0:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-			else
-				LineModeReset(1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-			break;
-		}
-		case 1:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0);
-			else
-				LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0);
-			break;
-		}
-		case 2:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0);
-			else
-				LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0);
-			break;
-		}
-		case 3:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0);
-			else
-				LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0);
-			break;
-		}
-		case 4:
-		{
-			if (WinSizeX > WINDOW_CHECK_SIZE)
-				LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-			else
-				LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-			break;
-		}
-		}
+		obj->DisConnect();
 	}
+	ButtonRelease();
 }
 
 
@@ -283,9 +202,6 @@ void MyGUI_Interface::RadarTypeBox()
 		else
 			ETCCount.push_back(V.description.c_str());
 	}
-	static int USBinfo = 0;
-	static int Bluetoothinfo = 0;
-	static int ETCinfo = 0;
 	ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Port detected %d", PortInfo.size());
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "USBSerial detected : %d", USBSerialCount.size());
 	ImGui::Combo("USB(Serial)", &USBinfo, USBSerialCount.data(), USBSerialCount.size());
@@ -368,55 +284,42 @@ void MyGUI_Interface::ASCIILineMode()
 	ImGui::SeparatorText("Data Port Mode(ASCII)");
 	if(ImGui::RadioButton("ASCII 1(1port)", &ASCII_Button, 0))
 	{
-		HEX_Button = -1;
 		LineSwapSize = Line_1;
-		PortCount = 1;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(PORT_1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-		else
-			LineModeReset(PORT_1, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
+		MaxPortCount = 1;
+		ClickASCII = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
 	{
-		HEX_Button = -1;
 		LineSwapSize = Line_3;
-		PortCount = 6;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(PORT_6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
-		else
-			LineModeReset(PORT_6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
+		MaxPortCount = 6;
+		ClickASCII = true;
 	}
 	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
 	{
-		HEX_Button = -1;
 		LineSwapSize = Line_4;
-		PortCount = 12;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(PORT_12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
-		else
-			LineModeReset(PORT_12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
+		MaxPortCount = 12;
+		ClickASCII = true;
 	}
 	ImGui::SameLine();
 	if(ImGui::RadioButton("ASCII 4(30Port)", &ASCII_Button, 3))
 	{
-		HEX_Button = -1;
 		LineSwapSize = Line_6;
-		PortCount = 30;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(PORT_30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
-		else
-			LineModeReset(PORT_30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
+		MaxPortCount = 30;
+		ClickASCII = true;
 	}
 	if (ImGui::RadioButton("ASCII 5(42Port)", &ASCII_Button, 4))
 	{
-		HEX_Button = -1;
 		LineSwapSize = Line_6;
-		PortCount = 42;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(PORT_42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-		else
-			LineModeReset(PORT_42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
+		MaxPortCount = 42;
+		ClickASCII = true;
+	}
+
+	if (ClickASCII)
+	{
+		HEX_Button = -1;
+		WindowDrawLineSet();
+		ClickASCII = false;
 	}
 }
 
@@ -427,71 +330,45 @@ void MyGUI_Interface::HEXLineMode()
 	ImGui::SeparatorText("Data Port Mode(HEX)");
 	if (ImGui::RadioButton("HEX 1(1port)", &HEX_Button, 0))
 	{
-		ASCII_Button = -1;
-		LineSwapSize = 1;
-		PortCount = 1;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(1, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y);
-		else
-			LineModeReset(1, MINI_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y);
+		LineSwapSize = Line_1;
+		MaxPortCount = 1;
+		ClickHEX = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
 	{
-		ASCII_Button = -1;
-		LineSwapSize = 3;
-		PortCount = 6;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(6, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
-		else
-			LineModeReset(6, MINI_PORTVIEWSIZE_X / LineSwapSize, 390.0f);
+		LineSwapSize = Line_3;
+		MaxPortCount = 6;
+		ClickHEX = true;
 	}
 	if (ImGui::RadioButton("HEX 3(12Port)", &HEX_Button, 2))
 	{
-		ASCII_Button = -1;
-		LineSwapSize = 4;
-		PortCount = 12;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(12, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
-		else
-			LineModeReset(12, MINI_PORTVIEWSIZE_X / LineSwapSize, 260.0f);
+		LineSwapSize = Line_4;
+		MaxPortCount = 12;
+		ClickHEX = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("HEX 4(30Port)", &HEX_Button, 3))
 	{
-		ASCII_Button = -1;
-		LineSwapSize = 6;
-		PortCount = 30;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(30, NORMAL_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
-		else
-			LineModeReset(30, MINI_PORTVIEWSIZE_X / LineSwapSize, 156.0f);
+		LineSwapSize = Line_6;
+		MaxPortCount = 30;
+		ClickHEX = true;
 	}
 	if (ImGui::RadioButton("HEX 5(42Port)", &HEX_Button, 4))
 	{
-		ASCII_Button = -1;
-		LineSwapSize = 6;
-		PortCount = 42;
-		if (WinSizeX > WINDOW_CHECK_SIZE)
-			LineModeReset(42, NORMAL_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
-		else
-			LineModeReset(42, MINI_PORTVIEWSIZE_X / LineSwapSize, MINI_PORTVIEWSIZE_Y / 7.0f);
+		LineSwapSize = Line_6;
+		MaxPortCount = 42;
+		ClickHEX = true;
 	}
-}
 
-
-
-void MyGUI_Interface::LineModeReset(int _PortCount, float _SizeX, float _SizeY)
-{
-	MaxPortCount = _PortCount;
-	cellSizeX = _SizeX;
-	cellSizeY = _SizeY;
-	for (std::shared_ptr<PortBox> obj : ObjectBox)
+	if (ClickHEX)
 	{
-		obj->DisConnect();
+		ASCII_Button = -1;
+		WindowDrawLineSet();
+		ClickHEX = false;
 	}
-	ButtonRelease();
 }
+
 
 
 void MyGUI_Interface::BoxInstance()
