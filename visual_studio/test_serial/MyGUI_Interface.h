@@ -43,15 +43,15 @@ public:
     {
         return Sliderint;
     }
-    int GetDataSettingBaudrate()
+    const int GetDataSettingBaudrate()
     {
         return std::stoi(BaudrateArray[DataSettingBaudrate]);
     }
-    int GetDataSettingDatabit()
+    const int GetDataSettingDatabit()
     {
         return std::stoi(DatabitArray[DataSettingDatabit]);
     }
-    int GetDataSettingStopbit()
+    const int GetDataSettingStopbit()
     {
         return std::stoi(StopbitArray[DataSettingStopbit]);
     }
@@ -60,6 +60,11 @@ public:
     char* GetBootDetectionCharacter()
     {
         return BootDetection;
+    }
+    
+    const bool GetViewBool()
+    {
+        return ViewBool;
     }
 protected:
     void PortBoxCreate();
@@ -107,6 +112,9 @@ private:
     bool ClickHEX = false;
     
     bool SelectModes = true;
+    bool ViewBool = true;
+    bool FlashBool = false;
+
     int USBinfo = 0;
     int Bluetoothinfo = 0;
     int ETCinfo = 0;
@@ -146,4 +154,7 @@ private:
 
     std::vector<serial::PortInfo> PortInfo;
     std::vector<std::string> PortName;
+
+
+    std::vector<std::string> FlashFileName;
 };

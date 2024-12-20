@@ -64,7 +64,14 @@ void ThreadPool::WorkerThread()
 		{
 			std::cerr << "Serial Thread 처리에 오류가 발생했습니다 : " << e.what() << std::endl;
 		}
-
+		std::thread([task]() {
+			try {
+				task();
+			}
+			catch (const std::exception& e) {
+				std::cerr << "Worker 처리 중 오류 발생: " << e.what() << std::endl;
+			}
+			}).detach(); // 독립 실행
 	}
 }
 
@@ -83,7 +90,21 @@ void ThreadPool::AddWork(std::function<void()> _function)
 	condition.notify_one();
 }
 
+void ThreadPool::Resize(size_t numThreads) {
+    std::lock_guard<std::mutex> lock(QueueMutex);
 
+    // 쓰레드 추가
+    while (Worker.size() < numThreads) {
+        Worker.push_back(std::thread(&ThreadPool::WorkerThread, this));
+    }
+
+    // 쓰레드 제거
+    while (Worker.size() > numThreads) {
+        AddWork([this]() { stop = true; });
+        Worker.back().join();
+        Worker.pop_back();
+    }
+}
 void ThreadPool::ClearWork()
 {
 	/*

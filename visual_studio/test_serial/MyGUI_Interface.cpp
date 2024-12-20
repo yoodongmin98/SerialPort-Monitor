@@ -17,6 +17,7 @@ MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
 MyGUI_Interface::MyGUI_Interface()
 {
 	GUI = this;
+	FlashFileName.resize(4);
 }
 
 MyGUI_Interface::~MyGUI_Interface()
@@ -113,14 +114,16 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		AllDisConnect();
 		ComportReset();
 		CLIBox();
+		RadarTypeBox();
+		ASCIILineMode();
+		HEXLineMode();
 	}
 	else
 	{
 		FlashBox();
 	}
-	RadarTypeBox();
-	ASCIILineMode();
-	HEXLineMode();
+	
+
 	Frame_FPSBox(_io);
 	
 	ImGui::End();
@@ -198,8 +201,6 @@ void MyGUI_Interface::ComPortDataSetting()
 
 bool MyGUI_Interface::SelectMode()
 {
-	static bool ViewBool = true;
-	static bool FlashBool = false;
 	ImGui::SeparatorText("Select Mode");
 	if (ImGui::Checkbox("View Mode", &ViewBool))
 	{
@@ -233,19 +234,27 @@ void MyGUI_Interface::FlashBox()
 	ImGui::SeparatorText("Flash Setting");
 	std::filesystem::path exePath = std::filesystem::current_path();
 	ImGui::Text("%s", exePath.string().c_str());
-	static char Text1[50] = "";
-	static char Text2[50] = "";
-	static char Text3[50] = "";
-	static char Text4[50] = "";
+
+	
+
+	static char Text1[50] = "bootloader.bin";
+	static char Text2[50] = "partitions.bin";
+	static char Text3[50] = "boot_app0.bin";
+	static char Text4[50] = "firmware.bin";
 	ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4),ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	
+	FlashFileName[0] = Text1;
+	FlashFileName[1] = Text2;
+	FlashFileName[2] = Text3;
+	FlashFileName[3] = Text4;
 	if (ImGui::Button("Erase And Flash"))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
-			obj->StartESPFlash();
+			obj->StartESPFlash(FlashFileName);
 		}
 	}
 }
@@ -298,6 +307,7 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 	ImGui::SeparatorText("Frame / FPS");
 	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
 	ImGui::Text("FPS : %.1f", _io.Framerate);
+	ImGui::Text("%s",std::to_string(MyImGui::MyImGuis->GetThreadPool()->GetWorkers().size()).c_str());
 }
 
 
@@ -464,7 +474,6 @@ void MyGUI_Interface::AllDisConnect()
 		{
 			obj->DisConnect();
 		}
-		//ThreadPool::TP->ClearWork();
 	}
 }
 
@@ -477,7 +486,6 @@ void MyGUI_Interface::ComportReset()
 			obj->DisConnect();
 			obj->RawMonitorClear();
 		}
-		//ThreadPool::TP->ClearWork();
 		ScreenRelease();
 	}
 }

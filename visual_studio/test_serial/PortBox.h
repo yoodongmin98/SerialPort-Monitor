@@ -6,7 +6,7 @@
 #include <mutex>
 #include <serial/serial.h>
 #include <string>
-
+#include <vector>
 #include "imgui.h"
 
 
@@ -24,7 +24,7 @@ public:
 	void Connect();
 	void DisConnect();
 	void InputCLI(std::string& _CLI);
-	void StartESPFlash();
+	void StartESPFlash(std::vector<std::string>& _FileName);
 	bool IsStringNull()
 	{
 		return String.empty();

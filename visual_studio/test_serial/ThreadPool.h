@@ -27,6 +27,11 @@ public:
 	{
 		return tasks;
 	}
+	std::vector<std::thread>& GetWorkers()
+	{
+		return Worker;
+	}
+	void Resize(size_t numThreads);
 protected:
 	void WorkerThread();
 private:

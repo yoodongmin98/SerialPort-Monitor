@@ -73,17 +73,20 @@ void PortBox::CreatePortButton(std::string& _PortName)
 	String = _PortName;
 	ImGui::Text("%s", String.c_str());
 
-	ImGui::SameLine();
-	if (ImGui::Button("Connect"))
-		Connect();
+	if (MyGUI_Interface::GUI->GetViewBool())
+	{
+		ImGui::SameLine();
+		if (ImGui::Button("Connect"))
+			Connect();
 
-	ImGui::SameLine();
+		ImGui::SameLine();
 
-	if (ImGui::Button("DisConnect"))
-		DisConnect();
-
-	ImGui::SameLine();
-	ImGui::Text("%d", my_serial.getBaudrate());
+		if (ImGui::Button("DisConnect"))
+			DisConnect();
+		ImGui::SameLine();
+		ImGui::Text("%d", my_serial.getBaudrate());
+	}
+	
 	if (IsLost)
 		ImGui::TextColored(REDCOLOR, "Connection Lost");
 }
@@ -100,7 +103,7 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 			LogFileBool = false;
 		}
 
-		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
+ 		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
 		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 
 		if (WorkingBool)
@@ -409,7 +412,8 @@ void PortBox::ASCII_HEX_Setting()
 
 
 
-void PortBox::StartESPFlash()
+void PortBox::StartESPFlash(std::vector<std::string>& _FileName)
 {
-	ESP->Instance(String);
+	std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
+	MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 }
