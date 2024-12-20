@@ -6,6 +6,7 @@
 #include "DataFile.h"
 #include <functional>
 #include <conio.h>
+#include <filesystem>
 
 
 
@@ -106,10 +107,17 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	if(Window_Button == 0 || Window_Button == 1)
 		LogBoxOnOff();
 	ComPortDataSetting();
-	AllConnect();
-	AllDisConnect();
-	ComportReset();
-	CLIBox();
+	if (SelectMode())
+	{
+		AllConnect();
+		AllDisConnect();
+		ComportReset();
+		CLIBox();
+	}
+	else
+	{
+		FlashBox();
+	}
 	RadarTypeBox();
 	ASCIILineMode();
 	HEXLineMode();
@@ -117,6 +125,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	
 	ImGui::End();
 }
+
 
 void MyGUI_Interface::WindowMode()
 {
@@ -158,7 +167,7 @@ void MyGUI_Interface::WindowDrawLineSet()
 	{
 		obj->DisConnect();
 	}
-	ButtonRelease();
+	ScreenRelease();
 }
 
 
@@ -184,6 +193,61 @@ void MyGUI_Interface::ComPortDataSetting()
 	ImGui::Combo("Databit", &DataSettingDatabit, DatabitArray, IM_ARRAYSIZE(DatabitArray));
 	ImGui::Combo("Stopbit", &DataSettingStopbit, StopbitArray, IM_ARRAYSIZE(StopbitArray));
 	ImGui::Combo("Parity", &DataSettingParity, ParityArray, IM_ARRAYSIZE(ParityArray));
+}
+
+
+bool MyGUI_Interface::SelectMode()
+{
+	static bool ViewBool = true;
+	static bool FlashBool = false;
+	ImGui::SeparatorText("Select Mode");
+	if (ImGui::Checkbox("View Mode", &ViewBool))
+	{
+		ViewBool = true;
+		FlashBool = false;
+		SelectModes = true;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+		ScreenRelease();
+	}
+
+	if (ImGui::Checkbox("Flash Mode", &FlashBool))
+	{
+		ViewBool = false;
+		FlashBool = true;
+		SelectModes = false;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+		ScreenRelease();
+	}
+	return SelectModes;
+}
+
+
+void MyGUI_Interface::FlashBox()
+{
+	ImGui::SeparatorText("Flash Setting");
+	std::filesystem::path exePath = std::filesystem::current_path();
+	ImGui::Text("%s", exePath.string().c_str());
+	static char Text1[50] = "";
+	static char Text2[50] = "";
+	static char Text3[50] = "";
+	static char Text4[50] = "";
+	ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4),ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	if (ImGui::Button("Erase And Flash"))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->StartESPFlash();
+		}
+	}
 }
 
 
@@ -414,7 +478,7 @@ void MyGUI_Interface::ComportReset()
 			obj->RawMonitorClear();
 		}
 		//ThreadPool::TP->ClearWork();
-		ButtonRelease();
+		ScreenRelease();
 	}
 }
 
@@ -465,7 +529,7 @@ void MyGUI_Interface::DataSetting()
 	ImGui::InputText("Boot Detection Char", BootDetection, IM_ARRAYSIZE(BootDetection));
 }
 
-void MyGUI_Interface::ButtonRelease()
+void MyGUI_Interface::ScreenRelease()
 {
 	ObjectBox.clear();
 	PortName.clear();

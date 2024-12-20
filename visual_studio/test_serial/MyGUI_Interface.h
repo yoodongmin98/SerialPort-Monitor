@@ -67,6 +67,8 @@ protected:
 
 
     void AllConnectBox(ImGuiIO& _io);
+    bool SelectMode();
+    void FlashBox();
     void WindowMode();
     void WindowDrawLineSet();
     void WindowSizeSet();
@@ -91,7 +93,7 @@ protected:
 
 
 
-    void ButtonRelease();
+    void ScreenRelease();
 private:
     bool CreateBool = false;
     bool scrollToBottom = false;
@@ -104,7 +106,7 @@ private:
     bool ClickASCII = false;
     bool ClickHEX = false;
     
-
+    bool SelectModes = true;
     int USBinfo = 0;
     int Bluetoothinfo = 0;
     int ETCinfo = 0;

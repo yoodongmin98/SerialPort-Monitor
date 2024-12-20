@@ -10,7 +10,7 @@
 #include "imgui.h"
 
 
-
+class EspUploader;
 class MyGUI_Interface;
 class PortBox
 {
@@ -24,6 +24,7 @@ public:
 	void Connect();
 	void DisConnect();
 	void InputCLI(std::string& _CLI);
+	void StartESPFlash();
 	bool IsStringNull()
 	{
 		return String.empty();
@@ -67,6 +68,7 @@ protected:
 	void CloseSerialPort();
 	void CreateRowDataBox();
 	void ASCII_HEX_Setting();
+
 private:
 	bool BootStart = false;
 	bool PortBoxBool = false;
@@ -134,4 +136,10 @@ private:
 	std::deque<std::string> RawDataLog;
 	std::vector<std::string> RawHexLog;
 	bool scrollToBottom = false;
+
+
+
+
+	//EspUploader
+	std::shared_ptr<EspUploader> ESP = nullptr;
 };

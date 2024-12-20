@@ -12,6 +12,7 @@
 #include "ThreadPool.h"
 #include "MyGUI_Interface.h"
 #include "DataFile.h"
+#include "EspUploader.h"
 
 
 
@@ -19,13 +20,13 @@
 
 PortBox::PortBox()
 {
-
+	
 }
 
 PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X), Y(_Y), BoxName(_Name)
 {
-	
+	ESP = std::make_shared<EspUploader>();
 }
 
 
@@ -404,4 +405,11 @@ void PortBox::ASCII_HEX_Setting()
 	default:
 		break;
 	}
+}
+
+
+
+void PortBox::StartESPFlash()
+{
+	ESP->Instance(String);
 }
