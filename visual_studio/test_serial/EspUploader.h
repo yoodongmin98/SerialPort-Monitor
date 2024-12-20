@@ -13,6 +13,7 @@ public:
 
 
 	void Instance(std::string& _PortNum, std::vector<std::string>& _FileName);
+	void PrintLog();
 protected:
 private:
 	bool scrollToBottom = true;

@@ -42,7 +42,12 @@ void PortBox::Instance(std::string& _PortName)
 	DataSet();
 	CreatePortButton(_PortName);
 	InsertTask_WorkingCheck(_PortName);
+
+
+	ESP->PrintLog();
+
 	CreateRowDataBox();
+
 }
 
 
