@@ -64,14 +64,6 @@ void ThreadPool::WorkerThread()
 		{
 			std::cerr << "Serial Thread 처리에 오류가 발생했습니다 : " << e.what() << std::endl;
 		}
-		std::thread([task]() {
-			try {
-				task();
-			}
-			catch (const std::exception& e) {
-				std::cerr << "Worker 처리 중 오류 발생: " << e.what() << std::endl;
-			}
-			}).detach(); // 독립 실행
 	}
 }
 

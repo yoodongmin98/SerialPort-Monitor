@@ -27,6 +27,8 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X), Y(_Y), BoxName(_Name)
 {
 	ESP = std::make_shared<EspUploader>();
+	//ESP CallBack
+	SetCallBackEvent();
 }
 
 
@@ -42,12 +44,7 @@ void PortBox::Instance(std::string& _PortName)
 	DataSet();
 	CreatePortButton(_PortName);
 	InsertTask_WorkingCheck(_PortName);
-
-
-	ESP->PrintLog();
-
 	CreateRowDataBox();
-
 }
 
 

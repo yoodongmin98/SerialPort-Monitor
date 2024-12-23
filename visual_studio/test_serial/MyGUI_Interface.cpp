@@ -7,6 +7,9 @@
 #include <functional>
 #include <conio.h>
 #include <filesystem>
+#include "MyGUI_Interface.h"
+#include <array>
+
 
 
 
@@ -235,30 +238,67 @@ void MyGUI_Interface::FlashBox()
 	std::filesystem::path exePath = std::filesystem::current_path();
 	ImGui::Text("%s", exePath.string().c_str());
 
-	
-
 	static char Text1[50] = "bootloader.bin";
 	static char Text2[50] = "partitions.bin";
 	static char Text3[50] = "boot_app0.bin";
 	static char Text4[50] = "firmware.bin";
-	ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4),ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 	
-	FlashFileName[0] = Text1;
-	FlashFileName[1] = Text2;
-	FlashFileName[2] = Text3;
-	FlashFileName[3] = Text4;
-	if (ImGui::Button("Erase And Flash"))
+	if (EspCheck)
 	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		commandOutput = executeCommand("esptool version");
+		EspCheck = false;
+	}
+	if (commandOutput.empty())
+	{
+		ImGui::Text("esptool is not installed");
+		if (ImGui::Button("Install esptool"))
 		{
-			obj->StartESPFlash(FlashFileName);
+			std::system("pip install esptool");
+		}
+	}
+	else
+	{
+		ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+		ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+		ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+		ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+
+		FlashFileName[0] = Text1;
+		FlashFileName[1] = Text2;
+		FlashFileName[2] = Text3;
+		FlashFileName[3] = Text4;
+	
+		if (ImGui::Button("Erase And Flash"))
+		{
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+			{
+				obj->StartESPFlash(FlashFileName);
+			}
 		}
 	}
 }
 
+
+std::string MyGUI_Interface::executeCommand(const std::string& command) {
+	std::array<char, 128> buffer;
+	std::string result;
+
+	FILE* pipe = _popen(command.c_str(), "r");
+	if (!pipe) 
+	{
+		throw std::runtime_error("_popen() failed!");
+	}
+
+
+	while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) 
+	{
+		result += buffer.data();
+	}
+
+	_pclose(pipe);
+
+	return result;
+}
 
 void MyGUI_Interface::RadarTypeBox()
 {
@@ -542,4 +582,5 @@ void MyGUI_Interface::ScreenRelease()
 	ObjectBox.clear();
 	PortName.clear();
 	CreateBool = true;
+	EspCheck = true;
 }

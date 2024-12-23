@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "imgui.h"
+#include "EspUploader.h"
 
 
 class EspUploader;
@@ -15,7 +16,6 @@ class MyGUI_Interface;
 class PortBox
 {
 public:
-	
 	PortBox();
 	PortBox(int _X,int _Y, std::string _Name);
 	~PortBox();
@@ -69,6 +69,18 @@ protected:
 	void CreateRowDataBox();
 	void ASCII_HEX_Setting();
 
+	void SetCallBackEvent()
+	{
+		ESP->Event = [this](const std::string& _Log)
+			{
+				this->LogPushEvent(_Log);
+			};
+	}
+
+	void LogPushEvent(const std::string& _Log)
+	{
+		RawDataLog.push_back(_Log);
+	}
 private:
 	bool BootStart = false;
 	bool PortBoxBool = false;

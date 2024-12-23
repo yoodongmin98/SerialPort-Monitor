@@ -66,6 +66,8 @@ public:
     {
         return ViewBool;
     }
+
+    std::string executeCommand(const std::string& command);
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -74,6 +76,7 @@ protected:
     void AllConnectBox(ImGuiIO& _io);
     bool SelectMode();
     void FlashBox();
+ 
     void WindowMode();
     void WindowDrawLineSet();
     void WindowSizeSet();
@@ -115,6 +118,8 @@ private:
     bool ViewBool = true;
     bool FlashBool = false;
 
+    bool EspCheck = true;
+
     int USBinfo = 0;
     int Bluetoothinfo = 0;
     int ETCinfo = 0;
@@ -148,6 +153,7 @@ private:
     char BootDetection[128] = "START";
     std::string Name = "PortBox";
     std::string target = "USB";
+    std::string commandOutput;
 
     std::vector<std::shared_ptr<PortBox>> ObjectBox;
 
