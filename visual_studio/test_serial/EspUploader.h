@@ -11,7 +11,6 @@
 class PortBox;
 class EspUploader
 {
-	friend PortBox;
 public:
 	EspUploader();
 	~EspUploader();
@@ -21,7 +20,12 @@ public:
 		if (Event)
 			Event(_Log);
 	}
-	
+
+	std::function<void(const std::string&)>& GetEspEvent()
+	{
+		return Event;
+	}
+
 	void Instance(std::string& _PortNum, std::vector<std::string>& _FileName);
 protected:
 private:

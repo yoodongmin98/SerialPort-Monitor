@@ -68,6 +68,16 @@ public:
     }
 
     std::string executeCommand(const std::string& command);
+
+    const void SetUIAble()
+    {
+        UICount++;
+        if (UICount == PortName.size())
+        {
+            UIdisabled = false;
+            UICount = 0;
+        }
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -103,6 +113,9 @@ protected:
 
     void ScreenRelease();
 private:
+    bool UIdisabled = false;
+    int UICount = 0;
+
     bool CreateBool = false;
     bool scrollToBottom = false;
     
@@ -119,6 +132,7 @@ private:
     bool FlashBool = false;
 
     bool EspCheck = true;
+    bool Installesptool = false;
 
     int USBinfo = 0;
     int Bluetoothinfo = 0;

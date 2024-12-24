@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <iostream>
 #include "imgui.h"
-
+#include <array>
 #include "MyGUI_Interface.h"
 
 
@@ -22,34 +22,29 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 { 
     {
         std::unique_lock<std::mutex>(EspMutex);
+        std::array<char, 128> Erasebuffer;
         std::string systemcmd = "esptool --port " + _PortNum + " erase_flash";
-        if (std::system(systemcmd.c_str()) == 0)
+        FILE* pipes = _popen(systemcmd.c_str(), "r");
+        while (fgets(Erasebuffer.data(), Erasebuffer.size(), pipes) != nullptr)
         {
-            TriggerEvent("Erase of " + _PortNum + " is complete");
-            scrollToBottom = true;
+            TriggerEvent(Erasebuffer.data());
         }
-        else
-        {
-            TriggerEvent("Erase of " + _PortNum + " failed ");
-            scrollToBottom = true;
-            return;
-        }
-
-
         std::filesystem::path exePath = std::filesystem::current_path();
         for (size_t i = 0; i < MemoryAddress.size(); ++i)
         {
+            std::array<char, 128> buffer;
             std::filesystem::path filePath = exePath / _FileName[i];
             std::string writeCommand = "esptool --chip esp32 --port " + _PortNum + " --baud 921600 write_flash " + MemoryAddress[i] + " " + filePath.string();
-            TriggerEvent(writeCommand);
-            int result = std::system(writeCommand.c_str());
-            if (result == 0)
+            FILE* pipe = _popen(writeCommand.c_str(), "r");
+            while (fgets(buffer.data(), buffer.size(), pipe) != nullptr)
             {
-                TriggerEvent("Flash Complete!" + filePath.string());
-            }
-            else
-            {
-                TriggerEvent("Flash error!");
+                std::string Strings = buffer.data();
+                TriggerEvent(Strings);
+                if (Strings.find("Hash of data") != std::string::npos && i == 3)
+                {
+                    MyGUI_Interface::GUI->SetUIAble();
+                    return;
+                }
             }
         }
     }

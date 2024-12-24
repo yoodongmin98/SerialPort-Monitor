@@ -71,7 +71,7 @@ protected:
 
 	void SetCallBackEvent()
 	{
-		ESP->Event = [this](const std::string& _Log)
+		ESP->GetEspEvent() = [this](const std::string& _Log)
 			{
 				this->LogPushEvent(_Log);
 			};
@@ -80,6 +80,7 @@ protected:
 	void LogPushEvent(const std::string& _Log)
 	{
 		RawDataLog.push_back(_Log);
+		scrollToBottom = true;
 	}
 private:
 	bool BootStart = false;

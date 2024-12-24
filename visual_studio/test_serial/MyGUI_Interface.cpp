@@ -53,7 +53,7 @@ void MyGUI_Interface::PortBoxCreate()
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
-			if (PortInfo[i].description.find(target) != std::string::npos)
+			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find("Enhanced COM") == std::string::npos)
 				PortName.push_back(PortInfo[i].port.c_str());
 			if (PortName.size() >= MaxPortCount)
 				break;
@@ -107,6 +107,12 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	else if(Window_Button == 2)
 		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, NORMAL_PORTVIEWSIZE_Y));
 
+
+
+	
+	ImGui::BeginDisabled(UIdisabled);
+
+
 	WindowMode();
 	if(Window_Button == 0 || Window_Button == 1)
 		LogBoxOnOff();
@@ -124,9 +130,10 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	else
 	{
 		FlashBox();
+		ComportReset();
 	}
 	
-
+	ImGui::EndDisabled();
 	Frame_FPSBox(_io);
 	
 	ImGui::End();
@@ -250,10 +257,12 @@ void MyGUI_Interface::FlashBox()
 	}
 	if (commandOutput.empty())
 	{
+	
 		ImGui::Text("esptool is not installed");
-		if (ImGui::Button("Install esptool"))
+		if (ImGui::Button("Install esptool", ButtonSize))
 		{
 			std::system("pip install esptool");
+			Installesptool = true;
 		}
 	}
 	else
@@ -267,13 +276,27 @@ void MyGUI_Interface::FlashBox()
 		FlashFileName[1] = Text2;
 		FlashFileName[2] = Text3;
 		FlashFileName[3] = Text4;
-	
-		if (ImGui::Button("Erase And Flash"))
+		
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
+		if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
 		{
+			UIdisabled = true;
 			for (std::shared_ptr<PortBox> obj : ObjectBox)
 			{
 				obj->StartESPFlash(FlashFileName);
 			}
+		}
+		ImGui::PopStyleColor(1);
+	}
+
+
+	if (Installesptool)
+	{
+		commandOutput = executeCommand("esptool version");
+		if (!commandOutput.empty())
+		{
+			EspCheck = true;
+			Installesptool = false;
 		}
 	}
 }
@@ -288,7 +311,6 @@ std::string MyGUI_Interface::executeCommand(const std::string& command) {
 	{
 		throw std::runtime_error("_popen() failed!");
 	}
-
 
 	while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) 
 	{
@@ -347,7 +369,7 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 	ImGui::SeparatorText("Frame / FPS");
 	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
 	ImGui::Text("FPS : %.1f", _io.Framerate);
-	ImGui::Text("%s",std::to_string(MyImGui::MyImGuis->GetThreadPool()->GetWorkers().size()).c_str());
+	//ImGui::Text("%s",std::to_string(MyImGui::MyImGuis->GetThreadPool()->GetWorkers().size()).c_str());
 }
 
 
