@@ -53,7 +53,7 @@ void MyGUI_Interface::PortBoxCreate()
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
-			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find("Enhanced COM") == std::string::npos)
+			if (PortInfo[i].description.find(target) != std::string::npos )
 				PortName.push_back(PortInfo[i].port.c_str());
 			if (PortName.size() >= MaxPortCount)
 				break;
@@ -543,7 +543,7 @@ void MyGUI_Interface::ComportReset()
 {
 	if (ImGui::Button("ComPort Reset", ButtonSize))
 	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
+ 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
 			obj->RawMonitorClear();

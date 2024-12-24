@@ -36,12 +36,23 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
             std::filesystem::path filePath = exePath / _FileName[i];
             std::string writeCommand = "esptool --chip esp32 --port " + _PortNum + " --baud 921600 write_flash " + MemoryAddress[i] + " " + filePath.string();
             FILE* pipe = _popen(writeCommand.c_str(), "r");
-            while (fgets(buffer.data(), buffer.size(), pipe) != nullptr)
+           
+            while (true)
             {
+                //이거 flash예외처리
                 std::string Strings = buffer.data();
+             
+                if (fgets(buffer.data(), buffer.size(), pipe) == nullptr)
+                {
+                    TriggerEvent("Flash Failed");
+                    MyGUI_Interface::GUI->SetUIAble();
+                    return;
+                }
+                /////////////////////////////////////////////////해야함
                 TriggerEvent(Strings);
                 if (Strings.find("Hash of data") != std::string::npos && i == 3)
                 {
+                    TriggerEvent("Flash Complete");
                     MyGUI_Interface::GUI->SetUIAble();
                     return;
                 }

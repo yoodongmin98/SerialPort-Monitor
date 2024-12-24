@@ -31,6 +31,7 @@ protected:
 private:
 	bool scrollToBottom = true;
 
+	bool findlastaddress = false;
 	std::vector<std::string> MemoryAddress = { "0x1000" , "0x8000" , "0xe000" , "0x10000" };
 
 	std::function<void(const std::string&)> Event;
