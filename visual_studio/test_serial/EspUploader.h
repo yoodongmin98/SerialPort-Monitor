@@ -5,6 +5,8 @@
 #include <string>
 #include <functional>
 #include <mutex>
+#include <filesystem>
+#include <array>
 
 
 
@@ -28,6 +30,7 @@ public:
 
 	void Instance(std::string& _PortNum, std::vector<std::string>& _FileName);
 protected:
+	void EraseMemory(std::string& _PortNum);
 private:
 	bool scrollToBottom = true;
 
@@ -36,4 +39,9 @@ private:
 
 	std::function<void(const std::string&)> Event;
 	std::mutex EspMutex;
+
+	std::filesystem::path exePath;
+	std::filesystem::path filePath;
+	std::string writeCommand;
+	std::array<char, 128> buffer;
 };

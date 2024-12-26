@@ -165,6 +165,7 @@ private:
     std::vector<std::string> logs;
 
     char BootDetection[128] = "START";
+    char exceptiontarget[128] = "Enhanced COM";
     std::string Name = "PortBox";
     std::string target = "USB";
     std::string commandOutput;

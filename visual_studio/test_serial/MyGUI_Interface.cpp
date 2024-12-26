@@ -53,11 +53,10 @@ void MyGUI_Interface::PortBoxCreate()
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
-			if (PortInfo[i].description.find(target) != std::string::npos )
+			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find(exceptiontarget)==std::string::npos)
 				PortName.push_back(PortInfo[i].port.c_str());
 			if (PortName.size() >= MaxPortCount)
 				break;
-			
 		}
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
@@ -337,6 +336,8 @@ void MyGUI_Interface::RadarTypeBox()
 		else
 			ETCCount.push_back(V.description.c_str());
 	}
+	ImGui::Text("Exception PortName");
+	ImGui::InputText(" ", exceptiontarget, IM_ARRAYSIZE(exceptiontarget));
 	ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Port detected %d", PortInfo.size());
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "USBSerial detected : %d", USBSerialCount.size());
 	ImGui::Combo("USB(Serial)", &USBinfo, USBSerialCount.data(), USBSerialCount.size());

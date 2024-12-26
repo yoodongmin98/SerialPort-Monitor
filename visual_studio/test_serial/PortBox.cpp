@@ -122,9 +122,10 @@ void PortBox::SerialMonitor()
 {
 	try 
 	{
+
 		if (!my_serial.isOpen())
-			return;
-		
+				return;
+
 		bool dataReceived = false;
 
 		// 데이터 읽기
@@ -135,7 +136,7 @@ void PortBox::SerialMonitor()
 				Dataline = my_serial.readline();
 			else if (HEXMODE)
 				Dataline = my_serial.read();
-
+			
 			if (!Dataline.empty())
 			{
 				DotCount++;
