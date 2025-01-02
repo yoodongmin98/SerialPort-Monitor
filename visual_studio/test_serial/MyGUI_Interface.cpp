@@ -240,59 +240,85 @@ bool MyGUI_Interface::SelectMode()
 
 void MyGUI_Interface::FlashBox()
 {
+	//Python이랑 esptool 설치여부 확인
 	ImGui::SeparatorText("Flash Setting");
-	std::filesystem::path exePath = std::filesystem::current_path();
-	ImGui::Text("%s", exePath.string().c_str());
 
 	static char Text1[50] = "bootloader.bin";
 	static char Text2[50] = "partitions.bin";
 	static char Text3[50] = "boot_app0.bin";
 	static char Text4[50] = "firmware.bin";
 	
-	if (EspCheck)
+	if (PythonCheck)
 	{
-		commandOutput = executeCommand("esptool version");
-		EspCheck = false;
+		commandOutput = executeCommand("py -c \"import sys; print(sys.executable)\"");
+		PythonCheck = false;
 	}
 	if (commandOutput.empty())
 	{
-	
-		ImGui::Text("esptool is not installed");
-		if (ImGui::Button("Install esptool", ButtonSize))
-		{
-			std::system("pip install esptool");
-			Installesptool = true;
-		}
+		ImGui::Text("Python is not installed.");
+		ImGui::Text("Please install Python first.");
 	}
 	else
 	{
-		ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-		ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-		ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-		ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-
-		FlashFileName[0] = Text1;
-		FlashFileName[1] = Text2;
-		FlashFileName[2] = Text3;
-		FlashFileName[3] = Text4;
-		
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
-		if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
+		if (SystemPath)
 		{
-			UIdisabled = true;
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
+			size_t pos = commandOutput.find("\\python.exe");
+			if (pos != std::string::npos)
+				commandOutput = commandOutput.substr(0, pos);
+			SetEnvironmentVariable("PYTHON_HOME", commandOutput.c_str());
+			commandOutput += "\\Scripts";
+			SetEnvironmentVariable("PYTHON_Script", commandOutput.c_str());
+			SystemPath = false;
+		}
+		
+
+
+		if (EspCheck)
+		{
+			EsptoolCommand = executeCommand("esptool version");
+			EspCheck = false;
+		}
+		if (EsptoolCommand.empty())
+		{
+			ImGui::Text("esptool is not installed");
+			if (ImGui::Button("Install esptool", ButtonSize))
 			{
-				obj->StartESPFlash(FlashFileName);
+				std::system("pip install esptool");
+				Installesptool = true;
 			}
 		}
-		ImGui::PopStyleColor(1);
+		else
+		{
+			ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+			ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+			ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+			ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+
+			FlashFileName[0] = Text1;
+			FlashFileName[1] = Text2;
+			FlashFileName[2] = Text3;
+			FlashFileName[3] = Text4;
+
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
+			if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
+			{
+				UIdisabled = true;
+				for (std::shared_ptr<PortBox> obj : ObjectBox)
+				{
+					obj->StartESPFlash(FlashFileName);
+				}
+			}
+			ImGui::PopStyleColor(1);
+		}
 	}
+
+
 
 
 	if (Installesptool)
 	{
-		commandOutput = executeCommand("esptool version");
-		if (!commandOutput.empty())
+		EsptoolCommand = executeCommand("esptool version");
+		if (!EsptoolCommand.empty())
 		{
 			EspCheck = true;
 			Installesptool = false;

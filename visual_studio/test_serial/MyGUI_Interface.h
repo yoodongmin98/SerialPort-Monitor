@@ -131,8 +131,12 @@ private:
     bool ViewBool = true;
     bool FlashBool = false;
 
+    bool PythonCheck = true;
+    bool UpgradePython = false;
+    bool SystemPath = true;
     bool EspCheck = true;
     bool Installesptool = false;
+    //C:\Users\admin\AppData\Local\Programs\Python\Python310\python.exe - m pip install --upgrade pip' command.
 
     int USBinfo = 0;
     int Bluetoothinfo = 0;
@@ -169,6 +173,7 @@ private:
     std::string Name = "PortBox";
     std::string target = "USB";
     std::string commandOutput;
+    std::string EsptoolCommand;
 
     std::vector<std::shared_ptr<PortBox>> ObjectBox;
 
