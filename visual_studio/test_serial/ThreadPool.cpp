@@ -1,6 +1,7 @@
+#include "ThreadPool.h"
+
 #include <queue>
 #include <utility>
-#include "ThreadPool.h"
 
 ThreadPool* ThreadPool::TP = nullptr;
 
@@ -86,12 +87,14 @@ void ThreadPool::Resize(size_t numThreads) {
     std::lock_guard<std::mutex> lock(QueueMutex);
 
     // 쓰레드 추가
-    while (Worker.size() < numThreads) {
+    while (Worker.size() < numThreads) 
+	{
         Worker.push_back(std::thread(&ThreadPool::WorkerThread, this));
     }
 
     // 쓰레드 제거
-    while (Worker.size() > numThreads) {
+    while (Worker.size() > numThreads) 
+	{
         AddWork([this]() { stop = true; });
         Worker.back().join();
         Worker.pop_back();
