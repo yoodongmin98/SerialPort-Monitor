@@ -4,7 +4,7 @@
 //»ó¼ö
 #define ZERO 0
 #define XYZERO { 0.0f,0.0f }
-#define ThreadCount 6
+#define MYThreadCount 6
 
 
 //ImVec(color,size)

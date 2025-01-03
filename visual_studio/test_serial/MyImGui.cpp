@@ -15,7 +15,7 @@
 MyImGui* MyImGui::MyImGuis = nullptr;
 
 MyImGui::MyImGui()
-	: ThreadPools(std::make_shared<ThreadPool>(ThreadCount))
+	: ThreadPools(std::make_shared<ThreadPool>(MYThreadCount))
 {
 	MyImGuis = this;
 	MyGUI_Interfaces = std::make_shared<MyGUI_Interface>();
