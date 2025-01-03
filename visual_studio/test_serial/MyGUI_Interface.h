@@ -85,7 +85,14 @@ protected:
 
     void AllConnectBox(ImGuiIO& _io);
     bool SelectMode();
+
     void FlashBox();
+    void SystemPathSetting();
+    void FlashSettings();
+    char Text1[50] = "bootloader.bin";
+    char Text2[50] = "partitions.bin";
+    char Text3[50] = "boot_app0.bin";
+    char Text4[50] = "firmware.bin";
  
     void WindowMode();
     void WindowDrawLineSet();
@@ -136,7 +143,7 @@ private:
     bool SystemPath = true;
     bool EspCheck = true;
     bool Installesptool = false;
-    //C:\Users\admin\AppData\Local\Programs\Python\Python310\python.exe - m pip install --upgrade pip' command.
+
 
     int USBinfo = 0;
     int Bluetoothinfo = 0;

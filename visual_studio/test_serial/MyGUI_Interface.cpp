@@ -243,11 +243,6 @@ void MyGUI_Interface::FlashBox()
 	//Python이랑 esptool 설치여부 확인
 	ImGui::SeparatorText("Flash Setting");
 
-	static char Text1[50] = "bootloader.bin";
-	static char Text2[50] = "partitions.bin";
-	static char Text3[50] = "boot_app0.bin";
-	static char Text4[50] = "firmware.bin";
-	
 	if (PythonCheck)
 	{
 		commandOutput = executeCommand("py -c \"import sys; print(sys.executable)\"");
@@ -255,23 +250,12 @@ void MyGUI_Interface::FlashBox()
 	}
 	if (commandOutput.empty())
 	{
-		ImGui::Text("Python is not installed.");
-		ImGui::Text("Please install Python first.");
+		ImGui::TextColored(REDCOLOR, "Python is not installed.");
+		ImGui::TextColored(REDCOLOR, "Please install Python first.");
 	}
 	else
 	{
-		if (SystemPath)
-		{
-			size_t pos = commandOutput.find("\\python.exe");
-			if (pos != std::string::npos)
-				commandOutput = commandOutput.substr(0, pos);
-			SetEnvironmentVariable("PYTHON_HOME", commandOutput.c_str());
-			commandOutput += "\\Scripts";
-			SetEnvironmentVariable("PYTHON_Script", commandOutput.c_str());
-			SystemPath = false;
-		}
-		
-
+		SystemPathSetting();
 
 		if (EspCheck)
 		{
@@ -280,50 +264,42 @@ void MyGUI_Interface::FlashBox()
 		}
 		if (EsptoolCommand.empty())
 		{
-			ImGui::Text("esptool is not installed");
+			ImGui::TextColored(REDCOLOR, "esptool is not installed");
+			ImGui::TextColored(REDCOLOR, "Please run as administrator.");
 			if (ImGui::Button("Install esptool", ButtonSize))
 			{
 				std::system("pip install esptool");
-				Installesptool = true;
+				EspCheck = true;
 			}
 		}
 		else
-		{
-			ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-			ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-			ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-			ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-
-			FlashFileName[0] = Text1;
-			FlashFileName[1] = Text2;
-			FlashFileName[2] = Text3;
-			FlashFileName[3] = Text4;
-
-			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
-			if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
-			{
-				UIdisabled = true;
-				for (std::shared_ptr<PortBox> obj : ObjectBox)
-				{
-					obj->StartESPFlash(FlashFileName);
-				}
-			}
-			ImGui::PopStyleColor(1);
-		}
+			FlashSettings();
 	}
+}
 
 
+void MyGUI_Interface::FlashSettings()
+{
+	ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 
+	FlashFileName[0] = Text1;
+	FlashFileName[1] = Text2;
+	FlashFileName[2] = Text3;
+	FlashFileName[3] = Text4;
 
-	if (Installesptool)
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
+	if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
 	{
-		EsptoolCommand = executeCommand("esptool version");
-		if (!EsptoolCommand.empty())
+		UIdisabled = true;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
-			EspCheck = true;
-			Installesptool = false;
+			obj->StartESPFlash(FlashFileName);
 		}
 	}
+	ImGui::PopStyleColor(1);
 }
 
 
@@ -396,7 +372,6 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 	ImGui::SeparatorText("Frame / FPS");
 	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
 	ImGui::Text("FPS : %.1f", _io.Framerate);
-	//ImGui::Text("%s",std::to_string(MyImGui::MyImGuis->GetThreadPool()->GetWorkers().size()).c_str());
 }
 
 
@@ -632,4 +607,20 @@ void MyGUI_Interface::ScreenRelease()
 	PortName.clear();
 	CreateBool = true;
 	EspCheck = true;
+}
+
+
+void MyGUI_Interface::SystemPathSetting()
+{
+	if (SystemPath)
+	{
+		size_t pos = commandOutput.find("\\python.exe");
+		if (pos != std::string::npos)
+			commandOutput = commandOutput.substr(0, pos);
+		SetEnvironmentVariable("PYTHON_HOME", commandOutput.c_str());
+		commandOutput += "\\Scripts";
+		SetEnvironmentVariable("PYTHON_Script", commandOutput.c_str());
+		executeCommand("pip install --upgrade pip");
+		SystemPath = false;
+	}
 }
