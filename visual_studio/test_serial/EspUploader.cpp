@@ -39,6 +39,12 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 		}
 		writeCommand = "esptool --chip esp32 --port " + _PortNum + " --baud 921600 write_flash " + MemoryAddress[i] + " " + filePath.string();
 		FILE* pipe = _popen(writeCommand.c_str(), "r");
+		if (pipe == nullptr)
+		{
+			TriggerEvent("Shell Pipe in unavailable");
+			MyGUI_Interface::GUI->SetUIAble();
+			return;
+		}
 
 		while (fgets(buffer.data(), buffer.size(), pipe) != nullptr)
 		{
@@ -65,6 +71,12 @@ void EspUploader::EraseMemory(std::string& _PortNum)
     std::array<char, 128> Erasebuffer;
     std::string systemcmd = "esptool --port " + _PortNum + " erase_flash";
     FILE* pipes = _popen(systemcmd.c_str(), "r");
+	if (pipes == nullptr)
+	{
+		TriggerEvent("Shell Pipe in unavailable");
+		TriggerEvent("Erase Fail");
+		return;
+	}
     while (fgets(Erasebuffer.data(), Erasebuffer.size(), pipes) != nullptr)
     {
         TriggerEvent(Erasebuffer.data());
