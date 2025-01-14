@@ -68,7 +68,7 @@ public:
         return ViewBool;
     }
 
-    std::string executeCommand(const std::string& command);
+    std::string executeCommand(std::string command);
 
     const void SetUIAble()
     {

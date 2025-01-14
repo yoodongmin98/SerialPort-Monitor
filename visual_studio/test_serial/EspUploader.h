@@ -31,10 +31,12 @@ public:
 	void Instance(std::string& _PortNum, std::vector<std::string>& _FileName);
 protected:
 	void EraseMemory(std::string& _PortNum);
+	FILE* my_popen(const char* command, const char* mode);
+	void my_pclose(FILE* pipe);
+	void closeAllPipes();
 private:
 	bool scrollToBottom = true;
 
-	bool findlastaddress = false;
 	std::vector<std::string> MemoryAddress = { "0x1000" , "0x8000" , "0xe000" , "0x10000" };
 
 	std::function<void(const std::string&)> Event;
@@ -44,4 +46,6 @@ private:
 	std::filesystem::path filePath;
 	std::string writeCommand;
 	std::array<char, 128> buffer;
+
+	std::vector<FILE*> openPipes;
 };

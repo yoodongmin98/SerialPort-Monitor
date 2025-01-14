@@ -269,7 +269,7 @@ void MyGUI_Interface::FlashBox()
 			ImGui::TextColored(REDCOLOR, "Please run as administrator.");
 			if (ImGui::Button("Install esptool", ButtonSize))
 			{
-				std::system("pip install esptool");
+				std::system("pip install esptool==4.8.1");
 				EspCheck = true;
 			}
 		}
@@ -304,14 +304,15 @@ void MyGUI_Interface::FlashSettings()
 }
 
 
-std::string MyGUI_Interface::executeCommand(const std::string& command) {
+std::string MyGUI_Interface::executeCommand(std::string command) {
 	std::array<char, 128> buffer;
 	std::string result;
 
 	FILE* pipe = _popen(command.c_str(), "r");
 	if (!pipe) 
 	{
-		throw std::runtime_error("_popen() failed!");
+		std::cerr << "Error: Unable to open pipe for command: " << command << std::endl;
+		return result;
 	}
 
 	while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) 
