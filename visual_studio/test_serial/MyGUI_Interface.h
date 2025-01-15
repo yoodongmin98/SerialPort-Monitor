@@ -161,7 +161,7 @@ private:
     int DataSettingStopbit = 0; //Default
     int DataSettingParity = 0; //Default
 
-    int LogBoxYSize = 230;
+    float LogBoxYSize = 230.0f;
 
     float cellSizeX = 1200.0f; // X 크기
     float cellSizeY = 780.0f; // Y 크기

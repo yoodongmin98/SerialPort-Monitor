@@ -30,10 +30,11 @@ public:
 
 	void Instance(std::string& _PortNum, std::vector<std::string>& _FileName);
 protected:
-	void EraseMemory(std::string& _PortNum);
-	FILE* my_popen(const char* command, const char* mode);
+	void EraseMemory(std::string _PortNum);
+	FILE* my_popen(std::wstring command, const wchar_t* mode);
 	void my_pclose(FILE* pipe);
 	void closeAllPipes();
+
 private:
 	bool scrollToBottom = true;
 
@@ -44,7 +45,7 @@ private:
 
 	std::filesystem::path exePath;
 	std::filesystem::path filePath;
-	std::string writeCommand;
+	std::wstring writeCommand;
 	std::array<char, 128> buffer;
 
 	std::vector<FILE*> openPipes;

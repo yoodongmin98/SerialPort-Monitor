@@ -5,7 +5,9 @@
 #include <array>
 #include <filesystem>
 #include <iostream>
-
+#include <sstream>
+#include <string>
+#include <cstdlib> 
 
 
 EspUploader::EspUploader()
@@ -21,11 +23,13 @@ EspUploader::~EspUploader()
 
 void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _FileName)
 { 
+	//나중에 뮤텍스로 잠궈야할수도있음(서버에서 경로지정받아서 다운받게되면)
+	//싫으면 그냥 경로를 지역변수로 만들면됨 ㅇㅇ
     EraseMemory(_PortNum);
-	exePath = std::filesystem::current_path();
+	exePath = std::filesystem::current_path().wstring();
 	for (size_t i = 0; i < MemoryAddress.size(); ++i)
 	{
-		filePath = exePath / _FileName[i];
+		filePath = (std::filesystem::path(exePath) / _FileName[i]).wstring();
 		if (std::filesystem::exists(filePath)) 
 		{
 			TriggerEvent("The file exists");
@@ -37,9 +41,13 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 			return;
 		}
 
-		writeCommand = "esptool --chip esp32 --port " + _PortNum + " --baud 921600 write_flash " + MemoryAddress[i] + " " + filePath.string();
+		std::wstringstream wss;
+		wss << L"esptool --chip esp32 --port " << std::wstring(_PortNum.begin(), _PortNum.end())
+			<< L" --baud 921600 write_flash " << std::wstring(MemoryAddress[i].begin(), MemoryAddress[i].end())
+			<< L" " << filePath;
+		writeCommand = wss.str();
 
-		FILE* pipe = my_popen(writeCommand.c_str(), "r");
+		FILE* pipe = my_popen(writeCommand, L"r");
 		if (pipe == nullptr)
 		{
 			TriggerEvent("Shell Pipe in unavailable");
@@ -70,12 +78,18 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 
 
 
-void EspUploader::EraseMemory(std::string& _PortNum)
+void EspUploader::EraseMemory(std::string _PortNum)
 {
+	std::wstring wPortNum(_PortNum.size(), L'\0');
+	std::mbstowcs(&wPortNum[0], _PortNum.c_str(), _PortNum.size());
+	wPortNum.resize(std::wcslen(wPortNum.c_str())); // Null-terminator 제거
+
     std::unique_lock<std::mutex>(EspMutex);
     std::array<char, 128> Erasebuffer;
-    std::string systemcmd = "esptool --port " + _PortNum + " erase_flash";
-	FILE* pipes = my_popen(systemcmd.c_str(), "r");
+	std::wstringstream wss;
+	wss << L"esptool --port " << wPortNum << L" erase_flash";
+	std::wstring systemcmd = wss.str();
+	FILE* pipes = my_popen(systemcmd.c_str(), L"r");
 	if (pipes == nullptr)
 	{
 		TriggerEvent("Shell Pipe in unavailable");
@@ -92,9 +106,9 @@ void EspUploader::EraseMemory(std::string& _PortNum)
 }
 
 
-FILE* EspUploader::my_popen(const char* command, const char* mode) 
+FILE* EspUploader::my_popen(std::wstring command, const wchar_t* mode) 
 {
-	FILE* pipe = _popen(command, mode);
+	FILE* pipe = _wpopen(command.c_str(), mode);
 	if (pipe != nullptr) 
 	{
 		openPipes.push_back(pipe);

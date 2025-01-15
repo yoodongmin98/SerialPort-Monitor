@@ -121,9 +121,9 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 
 void PortBox::SerialMonitor() 
 {
+	//얘도 웬만하면 지역변수로 만들자 ㅇㅇ
 	try 
 	{
-
 		if (!my_serial.isOpen())
 				return;
 
@@ -163,7 +163,7 @@ void PortBox::SerialMonitor()
 					hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
 				HexLineData += hexStream.str();
 				PreHexCount++;
-				if ((PreHexCount % HexNumberCount) == 0)
+				if ((PreHexCount - HexNumberCount) == 0)
 				{
 					RawHexLog.push_back(HexLineData);
 					PreHexCount = 0;
@@ -171,12 +171,18 @@ void PortBox::SerialMonitor()
 					scrollToBottom = true;
 				}
 			}
-		
-
-			if (!Dataline.find("\n") || Dataline.empty())
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
-			else
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
+			
+			//데이터 기록
+			if (ASCIIMODE)
+			{
+				if (!Dataline.find("\n") || Dataline.empty())
+					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+				else
+					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
+			}
+			else if(HEXMODE) //여기에 줄을 구분할 방법이 필요함 ㅇㅇ 작은모드든 큰 모드든
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << HexLineData << std::endl << std::flush;
+			
 
 			if (!Dataline.empty())
 			{
@@ -214,6 +220,7 @@ void PortBox::SerialMonitor()
 		//시간을 재기 시작한 순간부터 이게 돌아가서 5초가 지나면 작동함
 		if (MissingBool) 
 		{
+			std::lock_guard<std::mutex> lock(stateMutex);
 			currentMissingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= NoDataTime) {
 				WorkingBool = false;
@@ -227,6 +234,7 @@ void PortBox::SerialMonitor()
 		// BootStart 상태에서 일정 시간이 경과하면 처리
 		if (BootStart) 
 		{
+			std::lock_guard<std::mutex> lock(stateMutex);
 			currentBootingTime = std::chrono::steady_clock::now();
 			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5) {
 				WorkingBool = false;
