@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-
+class DebugPortBox;
 class EspUploader;
 class MyGUI_Interface;
 class PortBox
@@ -156,4 +156,5 @@ private:
 
 	//EspUploader
 	std::shared_ptr<EspUploader> ESP = nullptr;
+	std::shared_ptr<DebugPortBox> D_Port = nullptr;
 };

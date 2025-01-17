@@ -32,7 +32,6 @@ MyGUI_Interface::~MyGUI_Interface()
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
-
     PortBoxCreate();
     DrawLine();
 	AllConnectBox(_io);
@@ -409,7 +408,7 @@ void MyGUI_Interface::CLIBox()
 	static char buffer[2000] = "";
 	ImGui::Text("Input CLI");
 	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	if (ImGui::Button("AllSend"))
+	if (ImGui::Button("AllSend", ButtonSize))
 	{
 		std::string CLI_Text = buffer;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)

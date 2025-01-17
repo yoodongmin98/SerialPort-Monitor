@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DebugPortBox.cpp" />
     <ClCompile Include="EspUploader.cpp" />
     <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="MyGUI_Interface.cpp" />
@@ -164,6 +165,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DebugPortBox.h" />
     <ClInclude Include="EspUploader.h" />
     <ClInclude Include="MessageBox.h" />
     <ClInclude Include="MyGUI_Interface.h" />

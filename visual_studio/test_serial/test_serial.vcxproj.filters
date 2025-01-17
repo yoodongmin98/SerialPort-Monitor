@@ -63,6 +63,9 @@
     <ClCompile Include="EspUploader.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="DebugPortBox.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -102,6 +105,9 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="EspUploader.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugPortBox.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include "MyTime.h"
 #include "PortBox.h"
 #include "ThreadPool.h"
+#include "DebugPortBox.h"
 
 #include <chrono>
 #include <functional>
@@ -29,6 +30,7 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 	: X(_X), Y(_Y), BoxName(_Name)
 {
 	ESP = std::make_shared<EspUploader>();
+	D_Port = std::make_shared<DebugPortBox>();
 	//ESP CallBack
 	SetCallBackEvent();
 }
@@ -39,12 +41,23 @@ PortBox::~PortBox()
 	CloseSerialPort();
 }
 
-
+//Test
+static int Bebug = false;
 void PortBox::Instance(std::string& _PortName)
 {
 	GUISetting();
 	DataSet();
 	CreatePortButton(_PortName);
+	//Test////////////////////////////////////////////////////
+	if (ImGui::Button("DebugTest"))
+	{
+		Bebug = !Bebug;
+	}
+	if (Bebug)
+	{
+		D_Port->Instance(_PortName,RawDataLog);
+	}
+	//Test////////////////////////////////////////////////////
 	InsertTask_WorkingCheck(_PortName);
 	CreateRowDataBox();
 }
@@ -54,6 +67,14 @@ void PortBox::GUISetting()
 {
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, PORTBOXCOLOR);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
+	//enum ImGuiCond_
+	//{
+	//	ImGuiCond_None = 0,        // No condition (always set the variable), same as _Always
+	//	ImGuiCond_Always = 1 << 0,   // No condition (always set the variable), same as _None
+	//	ImGuiCond_Once = 1 << 1,   // Set the variable once per runtime session (only the first call will succeed)
+	//	ImGuiCond_FirstUseEver = 1 << 2,   // Set the variable if the object/window has no persistently saved data (no entry in .ini file)
+	//	ImGuiCond_Appearing = 1 << 3,   // Set the variable if the object/window is appearing after being hidden/inactive (or the first time)
+	//};
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
 	PortBoxSize = MyGUI_Interface::GUI->GetcellSize();
 	ImGui::SetWindowSize(PortBoxSize);
@@ -361,7 +382,11 @@ void PortBox::CreateRowDataBox()
 			}
 		}
 
-		if (scrollToBottom)
+		float scrollY = ImGui::GetScrollY();      // 현재 스크롤 위치
+		float scrollMaxY = ImGui::GetScrollMaxY();// 스크롤 가능한 최대 위치
+		bool isAtBottom = (scrollY >= scrollMaxY);// 현재 스크롤이 맨 아래인지 확인
+
+		if (scrollToBottom && isAtBottom || (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_Enter)))
 		{
 			ImGui::SetScrollHereY(1.0f);
 			scrollToBottom = false;
