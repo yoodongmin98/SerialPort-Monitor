@@ -41,15 +41,15 @@ PortBox::~PortBox()
 	CloseSerialPort();
 }
 
-//Test
-static int Bebug = false;
+
+
 void PortBox::Instance(std::string& _PortName)
 {
 	GUISetting();
 	DataSet();
 	CreatePortButton(_PortName);
 	//Test////////////////////////////////////////////////////
-	if (ImGui::Button("DebugTest"))
+	if (ImGui::Button("Copy Frame"))
 	{
 		Bebug = !Bebug;
 	}
@@ -359,11 +359,10 @@ void PortBox::CloseSerialPort()
 void PortBox::CreateRowDataBox()
 {
 	ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-	{ //경합 방지
-		std::lock_guard<std::mutex> lock(serialMutex);
+	{ 
 		if (ASCIIMODE)
 		{
-			for (const auto& Rawlog : RawDataLog)
+			for (std::string Rawlog : RawDataLog)
 				ImGui::Text("%s", Rawlog.c_str());
 		}
 		else if (HEXMODE)
@@ -384,9 +383,10 @@ void PortBox::CreateRowDataBox()
 
 		float scrollY = ImGui::GetScrollY();      // 현재 스크롤 위치
 		float scrollMaxY = ImGui::GetScrollMaxY();// 스크롤 가능한 최대 위치
-		bool isAtBottom = (scrollY >= scrollMaxY);// 현재 스크롤이 맨 아래인지 확인
+		bool isAtBottom = (scrollY >= scrollMaxY-50);// 현재 스크롤이 맨 아래인지 확인
 
-		if (scrollToBottom && isAtBottom || (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_Enter)))
+	
+		if ((scrollToBottom && isAtBottom) || (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_Enter)))
 		{
 			ImGui::SetScrollHereY(1.0f);
 			scrollToBottom = false;

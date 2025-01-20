@@ -90,6 +90,7 @@ private:
 	bool MissingBool = false; //시간 1프레임만 적용시킬때 쓸 변수
 	bool WorkingBool = false;
 
+	bool Bebug = false;
 
 	//MODE
 	bool ASCIIMODE = true;
