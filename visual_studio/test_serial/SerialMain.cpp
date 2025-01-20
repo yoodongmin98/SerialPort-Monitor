@@ -1,5 +1,5 @@
 #include "Core.h"
-
+#include "EngineDebug.h"
 #include <fstream>
 #include <iostream>
 
@@ -11,6 +11,8 @@ int main()
     try 
     {
         std::shared_ptr<EngineCore> Cores = std::make_shared<EngineCore>();
+        EngineDebug::LeakCheck();
+        new int; //Leak Check용
         Cores->Instance();
     }
     catch (const std::exception& e) {
@@ -27,6 +29,6 @@ int main()
         std::cerr << "알수없는 오류가 발생했습니다.\n";
         return EXIT_FAILURE;
     }
-
+   
     return EXIT_SUCCESS;
 }
