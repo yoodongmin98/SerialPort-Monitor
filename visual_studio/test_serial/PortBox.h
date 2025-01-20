@@ -1,5 +1,6 @@
 #pragma once
 #include "EspUploader.h"
+#include "DebugPortBox.h"
 #include "imgui.h"
 
 #include <chrono>
@@ -69,6 +70,19 @@ protected:
 	void CloseSerialPort();
 	void CreateRowDataBox();
 	void ASCII_HEX_Setting();
+	void DebugPortSetting(std::string& _PortName);
+
+
+	void Set_X_Click_CallBackEvent()
+	{
+		this->D_Port->GetXEvent() = std::bind(&PortBox::Reset_D_Port, this);
+	}
+
+	void Reset_D_Port()
+	{
+		D_Port.reset();
+		Bebug = false;
+	}
 
 	void SetCallBackEvent()
 	{

@@ -1,4 +1,4 @@
-#include <DebugPortBox.h>
+﻿#include <DebugPortBox.h>
 
 
 
@@ -23,6 +23,14 @@ void DebugPortBox::Instance(std::string _PortName, std::deque<std::string>& _Raw
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.05f, 0.2f, 0.9f));
 	ImGui::Begin(_PortName.c_str(), nullptr , ImGuiWindowFlags_None || ImGuiWindowFlags_NoCollapse);
 	ImGui::Text(_PortName.c_str());
+	ImGui::SameLine();
+	if (ImGui::Button("X"))
+	{
+		ImGui::End();
+		ImGui::PopStyleColor(1);
+		Trigger_X_Event();
+		return;
+	}
 	if (isSizeInitialized)
 	{
 		ImGui::SetWindowSize(ImVec2{ 500.0f,500.0f });

@@ -33,6 +33,7 @@ PortBox::PortBox(int _X, int _Y, std::string _Name)
 	D_Port = std::make_shared<DebugPortBox>();
 	//ESP CallBack
 	SetCallBackEvent();
+	Set_X_Click_CallBackEvent();
 }
 
 
@@ -48,16 +49,7 @@ void PortBox::Instance(std::string& _PortName)
 	GUISetting();
 	DataSet();
 	CreatePortButton(_PortName);
-	//Test////////////////////////////////////////////////////
-	if (ImGui::Button("Copy Frame"))
-	{
-		Bebug = !Bebug;
-	}
-	if (Bebug)
-	{
-		D_Port->Instance(_PortName,RawDataLog);
-	}
-	//Test////////////////////////////////////////////////////
+	DebugPortSetting(_PortName);
 	InsertTask_WorkingCheck(_PortName);
 	CreateRowDataBox();
 }
@@ -101,15 +93,13 @@ void PortBox::CreatePortButton(std::string& _PortName)
 	if (MyGUI_Interface::GUI->GetViewBool())
 	{
 		ImGui::SameLine();
-		if (ImGui::Button("Connect"))
+		if (ImGui::Button("Conn"))
 			Connect();
 
 		ImGui::SameLine();
 
-		if (ImGui::Button("DisConnect"))
+		if (ImGui::Button("Disc"))
 			DisConnect();
-		ImGui::SameLine();
-		ImGui::Text("%d", my_serial.getBaudrate());
 	}
 	
 	if (IsLost)
@@ -454,4 +444,23 @@ void PortBox::StartESPFlash(std::vector<std::string>& _FileName)
 {
 	std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
 	MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
+}
+
+
+void PortBox::DebugPortSetting(std::string& _PortName)
+{
+	ImGui::SameLine();
+	if (ImGui::Button("+"))
+	{
+		Bebug = !Bebug;
+	}
+	if (Bebug)
+	{
+		if (nullptr == D_Port)
+		{
+			D_Port = std::make_shared<DebugPortBox>();
+			Set_X_Click_CallBackEvent();
+		}
+		D_Port->Instance(_PortName, RawDataLog);
+	}
 }
