@@ -408,9 +408,9 @@ void MyGUI_Interface::CLIBox()
 	static char buffer[2000] = "";
 	ImGui::Text("Input CLI");
 	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	CLI_Text = buffer;
 	if (ImGui::Button("AllSend", ButtonSize))
 	{
-		std::string CLI_Text = buffer;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->InputCLI(CLI_Text);

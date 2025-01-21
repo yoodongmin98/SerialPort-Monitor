@@ -21,6 +21,7 @@
 
 
 
+
 PortBox::PortBox()
 {
 	
@@ -100,6 +101,11 @@ void PortBox::CreatePortButton(std::string& _PortName)
 
 		if (ImGui::Button("Disc"))
 			DisConnect();
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("CLI"))
+			InputCLI(MyGUI_Interface::GUI->GetCLIText());
 	}
 	
 	if (IsLost)

@@ -68,8 +68,12 @@ public:
         return ViewBool;
     }
 
+    std::string& GetCLIText()
+    {
+        return CLI_Text;
+    }
     std::string executeCommand(std::string command);
-
+    
     const void SetUIAble()
     {
         UICount++;
@@ -182,6 +186,7 @@ private:
     std::string target = "USB";
     std::string commandOutput;
     std::string EsptoolCommand;
+    std::string CLI_Text;
 
     std::vector<std::shared_ptr<PortBox>> ObjectBox;
 
