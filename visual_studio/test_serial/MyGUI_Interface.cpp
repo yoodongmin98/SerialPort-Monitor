@@ -9,6 +9,7 @@
 #include <conio.h>
 #include <filesystem>
 #include <functional>
+#include <algorithm>
 
 
 
@@ -57,6 +58,7 @@ void MyGUI_Interface::PortBoxCreate()
 			if (PortName.size() >= MaxPortCount)
 				break;
 		}
+		sort(PortName.begin(), PortName.end(), std::less<>());
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			std::string SetName = Name + std::to_string(i);
@@ -413,7 +415,7 @@ void MyGUI_Interface::CLIBox()
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
-			obj->InputCLI(CLI_Text);
+			obj->InputCLI();
 		}
 	}
 }

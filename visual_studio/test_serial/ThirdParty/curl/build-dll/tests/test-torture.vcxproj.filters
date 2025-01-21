@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\build\CMakeFiles\305f0bf527b4f499c5f9ffeb0c4f6e15\test-torture.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\tests\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\CMakeFiles\test-torture" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9FDEFC4A-5425-3C1C-91A4-0E95A96D2D33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

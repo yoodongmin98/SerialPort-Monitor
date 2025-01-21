@@ -105,7 +105,7 @@ void PortBox::CreatePortButton(std::string& _PortName)
 		ImGui::SameLine();
 
 		if (ImGui::Button("CLI"))
-			InputCLI(MyGUI_Interface::GUI->GetCLIText());
+			InputCLI();
 	}
 	
 	if (IsLost)
@@ -379,7 +379,7 @@ void PortBox::CreateRowDataBox()
 
 		float scrollY = ImGui::GetScrollY();      // 현재 스크롤 위치
 		float scrollMaxY = ImGui::GetScrollMaxY();// 스크롤 가능한 최대 위치
-		bool isAtBottom = (scrollY >= scrollMaxY-50);// 현재 스크롤이 맨 아래인지 확인
+		bool isAtBottom = (scrollY >= scrollMaxY-25);// 현재 스크롤이 맨 아래인지 확인
 
 	
 		if ((scrollToBottom && isAtBottom) || (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_Enter)))
@@ -390,17 +390,16 @@ void PortBox::CreateRowDataBox()
 
 	}
 	ImGui::EndChild();
-	PortBoxSize = ImVec2{ 250 , 130 };
 	ImGui::End();
 	ImGui::PopStyleColor();
 }
 
-void PortBox::InputCLI(std::string& _CLI)
+void PortBox::InputCLI()
 {
 	{
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if(my_serial.isOpen())
-			my_serial.write(_CLI+"\n");
+			my_serial.write(MyGUI_Interface::GUI->GetCLIText() +"\n");
 	}
 }
 

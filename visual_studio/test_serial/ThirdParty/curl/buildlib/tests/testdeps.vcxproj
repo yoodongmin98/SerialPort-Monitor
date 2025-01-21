@@ -1,0 +1,1393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{147B0CB6-E291-3D84-8E02-275E09949DA8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>testdeps</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\config.in;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\config.in;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\config.in;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\config.in;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\ZERO_CHECK.vcxproj">
+      <Project>{C9B32A36-66D0-3A17-81DA-9E92595480EB}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-h2-pausing.vcxproj">
+      <Project>{2E6BB487-178D-35A1-A710-F34BEA65E36C}</Project>
+      <Name>curlt-client-h2-pausing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-h2-serverpush.vcxproj">
+      <Project>{5183EB55-8AEB-3A9B-8A9A-8D2017B871D7}</Project>
+      <Name>curlt-client-h2-serverpush</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-h2-upgrade-extreme.vcxproj">
+      <Project>{50AB1EC0-F052-3821-B9CD-052C989006B8}</Project>
+      <Name>curlt-client-h2-upgrade-extreme</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-hx-download.vcxproj">
+      <Project>{FBD7AC08-063C-3FEB-92B7-E7A047980BE4}</Project>
+      <Name>curlt-client-hx-download</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-hx-upload.vcxproj">
+      <Project>{963F9241-5757-367E-83C7-C1D8C0953A0C}</Project>
+      <Name>curlt-client-hx-upload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-tls-session-reuse.vcxproj">
+      <Project>{BB8E40F0-2373-3D4C-8733-8441E733FD18}</Project>
+      <Name>curlt-client-tls-session-reuse</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-upload-pausing.vcxproj">
+      <Project>{961041CB-37A5-33E1-8EEE-BC28288DDE2A}</Project>
+      <Name>curlt-client-upload-pausing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-ws-data.vcxproj">
+      <Project>{AF423513-E511-39FF-89A8-7CCED763208F}</Project>
+      <Name>curlt-client-ws-data</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\http\clients\curlt-client-ws-pingpong.vcxproj">
+      <Project>{4B22ED23-5E56-3A13-AB33-5206CAC885DD}</Project>
+      <Name>curlt-client-ws-pingpong</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\disabled.vcxproj">
+      <Project>{0E4147FA-A457-3619-AB2A-6D2F14E0E9F6}</Project>
+      <Name>disabled</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\getpart.vcxproj">
+      <Project>{43B96FE1-8D88-37CF-B3D2-DE5D9E2BB044}</Project>
+      <Name>getpart</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1156.vcxproj">
+      <Project>{E1D572CA-25C0-3F60-BEFF-7E5E87BF8B0C}</Project>
+      <Name>lib1156</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1301.vcxproj">
+      <Project>{06C57CE3-B5AF-34AC-AAB4-8097ABCB38ED}</Project>
+      <Name>lib1301</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1485.vcxproj">
+      <Project>{F6BBCD62-3AF5-3778-9581-351FB9F05921}</Project>
+      <Name>lib1485</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1500.vcxproj">
+      <Project>{E21C6520-62DD-3885-BB54-C078F3E57191}</Project>
+      <Name>lib1500</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1501.vcxproj">
+      <Project>{8D96ACDF-9922-3BC6-8541-78060C2788F0}</Project>
+      <Name>lib1501</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1502.vcxproj">
+      <Project>{6FEE4CD4-CD96-3FFE-93AB-C93E0AEA2E44}</Project>
+      <Name>lib1502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1503.vcxproj">
+      <Project>{47CC76EA-9F46-32EA-9D00-E06ACC55FAB2}</Project>
+      <Name>lib1503</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1504.vcxproj">
+      <Project>{277CE493-707F-3840-A39A-863DB351D517}</Project>
+      <Name>lib1504</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1505.vcxproj">
+      <Project>{FBA7FDE1-08E7-3C5C-9766-7433D15E735D}</Project>
+      <Name>lib1505</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1506.vcxproj">
+      <Project>{C9619C8F-1863-3897-A348-3DAD17847409}</Project>
+      <Name>lib1506</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1507.vcxproj">
+      <Project>{A969040F-2CFB-3116-91C8-71259BD617FD}</Project>
+      <Name>lib1507</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1508.vcxproj">
+      <Project>{78498B71-1E75-30F2-AFA5-F63F693A6709}</Project>
+      <Name>lib1508</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1509.vcxproj">
+      <Project>{F2559E4D-BC61-3390-B0E5-918A4B831FDD}</Project>
+      <Name>lib1509</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1510.vcxproj">
+      <Project>{F6055788-807C-3574-972F-73F26E1161E9}</Project>
+      <Name>lib1510</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1511.vcxproj">
+      <Project>{5C81FDEF-CF32-377C-89E7-4D4ACA425162}</Project>
+      <Name>lib1511</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1512.vcxproj">
+      <Project>{F169B9AA-287B-3888-BB2C-067EC3C0377E}</Project>
+      <Name>lib1512</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1513.vcxproj">
+      <Project>{8ACA45F6-83EA-3EB1-B178-BB067D54BE4D}</Project>
+      <Name>lib1513</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1514.vcxproj">
+      <Project>{90E0E008-FE9A-3EF4-A563-09FCB6CEC113}</Project>
+      <Name>lib1514</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1515.vcxproj">
+      <Project>{47DCFBB9-AF30-38C2-A21D-65F3800A30A5}</Project>
+      <Name>lib1515</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1517.vcxproj">
+      <Project>{87B8517E-12F5-3D07-AD73-714E8FA97904}</Project>
+      <Name>lib1517</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1518.vcxproj">
+      <Project>{9499A453-6978-329A-9D32-E07A848EDEF7}</Project>
+      <Name>lib1518</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1520.vcxproj">
+      <Project>{929F7309-59FA-3127-A8AD-CC7811484D3B}</Project>
+      <Name>lib1520</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1521.vcxproj">
+      <Project>{A0135D50-02EA-3911-8DB5-B58D99121FC1}</Project>
+      <Name>lib1521</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1522.vcxproj">
+      <Project>{92AABB29-9423-39AF-9376-5677F937CD1F}</Project>
+      <Name>lib1522</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1523.vcxproj">
+      <Project>{249F69F8-1439-3B24-A386-1616A31E8048}</Project>
+      <Name>lib1523</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1525.vcxproj">
+      <Project>{EBEAB667-C5DB-37BB-8371-0B7C93F206C1}</Project>
+      <Name>lib1525</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1526.vcxproj">
+      <Project>{1FD0D14E-311C-3E20-96A7-24E0363E06BC}</Project>
+      <Name>lib1526</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1527.vcxproj">
+      <Project>{5749272D-D7E9-35DD-8892-320F9FEC6D57}</Project>
+      <Name>lib1527</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1528.vcxproj">
+      <Project>{C60B2B27-FF35-3588-82DA-C1E8DE6A4425}</Project>
+      <Name>lib1528</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1529.vcxproj">
+      <Project>{944C0297-6EE5-3589-A931-2AC490C1C8F3}</Project>
+      <Name>lib1529</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1530.vcxproj">
+      <Project>{F8973DED-3324-39DA-9DCE-4FC73E5CE2E9}</Project>
+      <Name>lib1530</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1531.vcxproj">
+      <Project>{C06199B2-9135-3CC0-B0FD-B8D48C0CE1BF}</Project>
+      <Name>lib1531</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1532.vcxproj">
+      <Project>{01BD2C81-BBB6-3782-A75C-635FA3970C73}</Project>
+      <Name>lib1532</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1533.vcxproj">
+      <Project>{6233016E-640E-35D2-8A12-ED152575DE77}</Project>
+      <Name>lib1533</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1534.vcxproj">
+      <Project>{6ED06505-2F2F-3938-A9F3-742C1091A2EF}</Project>
+      <Name>lib1534</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1535.vcxproj">
+      <Project>{AE38E44E-E5D9-3395-877B-9B0948A66C4A}</Project>
+      <Name>lib1535</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1536.vcxproj">
+      <Project>{AA08AA09-3040-340E-9EFA-2C352C7BB429}</Project>
+      <Name>lib1536</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1537.vcxproj">
+      <Project>{48CC9CF5-87C5-3B40-84FF-A1C590B619BC}</Project>
+      <Name>lib1537</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1538.vcxproj">
+      <Project>{65B906F9-83A0-35F4-BFAF-DE275B4110B1}</Project>
+      <Name>lib1538</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1539.vcxproj">
+      <Project>{8F672F9A-FE72-31DD-BF81-E3F8DCB0FB7E}</Project>
+      <Name>lib1539</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1540.vcxproj">
+      <Project>{F2527AB7-FBBB-39A9-B0FB-700FAEBCFACB}</Project>
+      <Name>lib1540</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1541.vcxproj">
+      <Project>{6BCF7FC1-72BD-3F42-999D-CAE40DCD07AC}</Project>
+      <Name>lib1541</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1542.vcxproj">
+      <Project>{0FB7893B-B12D-3567-B4D6-C48073099E50}</Project>
+      <Name>lib1542</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1543.vcxproj">
+      <Project>{3C1C79C0-434F-30AE-8CC1-E2B4E53BE2D3}</Project>
+      <Name>lib1543</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1545.vcxproj">
+      <Project>{C4D3B176-1896-321B-89E6-2DC0EE82CCB0}</Project>
+      <Name>lib1545</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1550.vcxproj">
+      <Project>{E43C8A15-917D-3C58-81CE-903EAE7475CE}</Project>
+      <Name>lib1550</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1551.vcxproj">
+      <Project>{3D4F5ED3-8051-3900-9CF1-19DA12E1D1EB}</Project>
+      <Name>lib1551</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1552.vcxproj">
+      <Project>{F9E4F439-33C7-35F6-8887-6200B430756E}</Project>
+      <Name>lib1552</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1553.vcxproj">
+      <Project>{C2856648-FC5B-3FC0-9881-089BB5A1C31C}</Project>
+      <Name>lib1553</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1554.vcxproj">
+      <Project>{CF0D8A85-0077-3A93-892D-D07854D554C6}</Project>
+      <Name>lib1554</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1555.vcxproj">
+      <Project>{0DFA6D25-7588-3FAE-AE7B-C20792E0CF5D}</Project>
+      <Name>lib1555</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1556.vcxproj">
+      <Project>{08B848E0-2423-3C13-8B62-082E28240B5F}</Project>
+      <Name>lib1556</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1557.vcxproj">
+      <Project>{DCB7DEBF-2F56-3266-8AFD-B0F4B8708FF4}</Project>
+      <Name>lib1557</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1558.vcxproj">
+      <Project>{04FCFF64-39A3-333C-94FB-4C075DE81049}</Project>
+      <Name>lib1558</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1559.vcxproj">
+      <Project>{31145070-2CC8-3736-9AE4-9C4F57642CEB}</Project>
+      <Name>lib1559</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1560.vcxproj">
+      <Project>{D971C0C7-2B79-3EF7-853A-C01539C06315}</Project>
+      <Name>lib1560</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1564.vcxproj">
+      <Project>{4B56B05E-D652-385B-A8C9-6F31D8860B00}</Project>
+      <Name>lib1564</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1565.vcxproj">
+      <Project>{ADB26249-DD67-39C4-BF30-39E97BBA8A83}</Project>
+      <Name>lib1565</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1567.vcxproj">
+      <Project>{78B43999-4902-329E-A30A-163607D2F33B}</Project>
+      <Name>lib1567</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1568.vcxproj">
+      <Project>{6714BA29-20F2-3AE3-9EF3-454930E4A189}</Project>
+      <Name>lib1568</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1569.vcxproj">
+      <Project>{C41F2C93-B39B-305D-9D0E-2A2D6E4CFA76}</Project>
+      <Name>lib1569</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1591.vcxproj">
+      <Project>{905FC6C9-5FFC-330C-AED3-F2EF7533E3E6}</Project>
+      <Name>lib1591</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1592.vcxproj">
+      <Project>{B9DE481A-2160-38CF-A6CE-8DD946D1DED0}</Project>
+      <Name>lib1592</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1593.vcxproj">
+      <Project>{ACBC0FC4-1AE0-38BF-88DE-E37DF6B60C46}</Project>
+      <Name>lib1593</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1594.vcxproj">
+      <Project>{FE4ACF58-C23C-3C8C-904A-AFC406C7BB56}</Project>
+      <Name>lib1594</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1596.vcxproj">
+      <Project>{D20AD665-9DD1-3F23-9439-37C488D71955}</Project>
+      <Name>lib1596</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1597.vcxproj">
+      <Project>{AEF009D2-96EA-31BF-8E73-E283957AF212}</Project>
+      <Name>lib1597</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1598.vcxproj">
+      <Project>{0D1014C3-A74C-38C2-90EC-B441C2E1B793}</Project>
+      <Name>lib1598</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1662.vcxproj">
+      <Project>{6C545241-02A1-392E-9D69-7CE6F3D180A8}</Project>
+      <Name>lib1662</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1900.vcxproj">
+      <Project>{BDF4DEEF-8E40-331A-9286-E26A3DAAFF68}</Project>
+      <Name>lib1900</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1901.vcxproj">
+      <Project>{47A54E02-EA44-3B98-A2E2-30E020163FA6}</Project>
+      <Name>lib1901</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1903.vcxproj">
+      <Project>{52FD9675-2148-3D3C-A102-01626BDF4FDE}</Project>
+      <Name>lib1903</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1905.vcxproj">
+      <Project>{121C213A-A819-3E98-A7BD-FCA87FC68D21}</Project>
+      <Name>lib1905</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1906.vcxproj">
+      <Project>{70E97942-7089-3C9C-AC7B-BE2D99F7D3AF}</Project>
+      <Name>lib1906</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1907.vcxproj">
+      <Project>{6F617399-90F7-33D0-9029-FE5A8465261C}</Project>
+      <Name>lib1907</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1908.vcxproj">
+      <Project>{70A9E638-B977-3BC5-95ED-6F69CCFDCFA3}</Project>
+      <Name>lib1908</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1910.vcxproj">
+      <Project>{7ECC46DB-90C8-32D0-AC3A-C5DB2CA5858F}</Project>
+      <Name>lib1910</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1911.vcxproj">
+      <Project>{D0D31DBF-6B5C-3B9B-88BE-2252B2CD4303}</Project>
+      <Name>lib1911</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1912.vcxproj">
+      <Project>{99C1562B-D6B8-3421-A5F9-B0E0313B11C0}</Project>
+      <Name>lib1912</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1913.vcxproj">
+      <Project>{2A36EF58-780E-3FE6-98C5-2EF8A072345E}</Project>
+      <Name>lib1913</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1915.vcxproj">
+      <Project>{915787AA-DF06-3172-89B8-3F6BCC0F75B3}</Project>
+      <Name>lib1915</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1916.vcxproj">
+      <Project>{604D6FF0-5F18-3665-B741-2072DB28008C}</Project>
+      <Name>lib1916</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1917.vcxproj">
+      <Project>{92289E1E-BDBC-37BF-A3DC-8F4B45C7E785}</Project>
+      <Name>lib1917</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1918.vcxproj">
+      <Project>{3D1F2556-59D8-3FEB-8F68-365D41405B1A}</Project>
+      <Name>lib1918</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1919.vcxproj">
+      <Project>{DE3E0BD5-7225-34BA-95D4-BE2215C25091}</Project>
+      <Name>lib1919</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1933.vcxproj">
+      <Project>{8B68044B-C55A-39B5-9D45-72D188C0B654}</Project>
+      <Name>lib1933</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1934.vcxproj">
+      <Project>{5D34DE77-3393-3C26-BD52-B28D9F0A96ED}</Project>
+      <Name>lib1934</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1935.vcxproj">
+      <Project>{6CAA9D89-DA1D-388F-A19A-69D98568D806}</Project>
+      <Name>lib1935</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1936.vcxproj">
+      <Project>{B7AB7A45-6447-3680-9DB7-3C0D442415AB}</Project>
+      <Name>lib1936</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1937.vcxproj">
+      <Project>{14FA3657-636D-36EA-B1A1-8553B0A7AC20}</Project>
+      <Name>lib1937</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1938.vcxproj">
+      <Project>{B8D05893-BD4C-3127-97C7-4CE411E72E2D}</Project>
+      <Name>lib1938</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1939.vcxproj">
+      <Project>{B29D46B4-E803-3FFA-A72E-C01262DE8613}</Project>
+      <Name>lib1939</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1940.vcxproj">
+      <Project>{478ACD80-A1BA-3C07-80BC-0C7B4F05AA6D}</Project>
+      <Name>lib1940</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1945.vcxproj">
+      <Project>{A0522FC0-EA15-3EA9-BFEC-C46C133E9CB6}</Project>
+      <Name>lib1945</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1946.vcxproj">
+      <Project>{C84A11CB-CF8C-38C9-B550-F841574AE52D}</Project>
+      <Name>lib1946</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1947.vcxproj">
+      <Project>{22EC2C5B-CE7D-334D-B24B-BAAF91AEB78B}</Project>
+      <Name>lib1947</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1948.vcxproj">
+      <Project>{C5D2BE2D-FFFA-333B-A8CC-924A609F50D6}</Project>
+      <Name>lib1948</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1955.vcxproj">
+      <Project>{065EADE8-EA93-3475-9A38-54C05941708C}</Project>
+      <Name>lib1955</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1956.vcxproj">
+      <Project>{8C8F8EF5-584B-39B1-B8B6-1B4F555EC74A}</Project>
+      <Name>lib1956</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1957.vcxproj">
+      <Project>{EF08E831-FAD3-3509-B996-7492D9D0FC31}</Project>
+      <Name>lib1957</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1958.vcxproj">
+      <Project>{4D577858-DB7F-328D-BF68-5F6F76CE5908}</Project>
+      <Name>lib1958</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1959.vcxproj">
+      <Project>{A6A7E0EA-0ADF-39DE-B04A-CE7EE0068710}</Project>
+      <Name>lib1959</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1960.vcxproj">
+      <Project>{2E0B4A33-AE62-3371-8495-F9FFB7CBC3FF}</Project>
+      <Name>lib1960</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1964.vcxproj">
+      <Project>{7BA2E41D-B6F7-34B9-BEB0-821B58899C7F}</Project>
+      <Name>lib1964</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1970.vcxproj">
+      <Project>{EEAFB954-F7D7-3E06-8CB4-6E1A448BC932}</Project>
+      <Name>lib1970</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1971.vcxproj">
+      <Project>{0E09ACC4-50C2-30FF-9B84-ED7A849E9303}</Project>
+      <Name>lib1971</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1972.vcxproj">
+      <Project>{27EEDE43-2896-3F04-BDDC-4EBCF5AD2DF5}</Project>
+      <Name>lib1972</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1973.vcxproj">
+      <Project>{FC4EDA68-AB02-3F7E-BE8C-7380219EC4DB}</Project>
+      <Name>lib1973</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1974.vcxproj">
+      <Project>{46DBED87-4EFE-3EAA-9049-E80637890670}</Project>
+      <Name>lib1974</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib1975.vcxproj">
+      <Project>{E5E678BC-8DD2-3024-9CD5-A01883A4FF78}</Project>
+      <Name>lib1975</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2301.vcxproj">
+      <Project>{245CDA84-0582-3A35-B2F7-03FBF178A14F}</Project>
+      <Name>lib2301</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2302.vcxproj">
+      <Project>{A2FDC107-BCA5-365F-9AC6-91DF2AD79495}</Project>
+      <Name>lib2302</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2304.vcxproj">
+      <Project>{C856A33F-B00B-309A-9E76-A12D417C1934}</Project>
+      <Name>lib2304</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2305.vcxproj">
+      <Project>{3B08ECA5-8923-3AE0-9702-5315490BB1E4}</Project>
+      <Name>lib2305</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2306.vcxproj">
+      <Project>{BEFAA089-058B-3144-AAC6-DE105BEFEBB5}</Project>
+      <Name>lib2306</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2308.vcxproj">
+      <Project>{9ADA75CA-6DEA-3C2E-84B0-2EEE833093BE}</Project>
+      <Name>lib2308</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2309.vcxproj">
+      <Project>{1A2FC96E-C060-3709-8164-79B2F1F881E7}</Project>
+      <Name>lib2309</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2402.vcxproj">
+      <Project>{6189219F-F55C-3E77-A1B8-1BE7A1E6F86D}</Project>
+      <Name>lib2402</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2404.vcxproj">
+      <Project>{E651365C-7F9F-3235-A977-C343C9F487C6}</Project>
+      <Name>lib2404</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2405.vcxproj">
+      <Project>{E5E97215-8B6B-3C85-A575-87C59421E9C6}</Project>
+      <Name>lib2405</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib2502.vcxproj">
+      <Project>{FE8A257C-2BBD-3806-928E-7BF914EB0CDA}</Project>
+      <Name>lib2502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3010.vcxproj">
+      <Project>{DBE9EC04-CD90-36E3-AFE9-B14C7B626262}</Project>
+      <Name>lib3010</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3025.vcxproj">
+      <Project>{BC12743F-A353-3871-8072-03D0C4FA10EB}</Project>
+      <Name>lib3025</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3026.vcxproj">
+      <Project>{DA4782D1-55B4-300F-97BF-366083839991}</Project>
+      <Name>lib3026</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3027.vcxproj">
+      <Project>{F6927812-0B00-3A78-BEB7-8A2EFB728D5F}</Project>
+      <Name>lib3027</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3100.vcxproj">
+      <Project>{782AD763-03C4-3AC0-A655-CF91E0FCEE6B}</Project>
+      <Name>lib3100</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3101.vcxproj">
+      <Project>{5D312397-83D7-3484-BA1B-248D5B6D84EE}</Project>
+      <Name>lib3101</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3102.vcxproj">
+      <Project>{B44C46D1-B09D-3DDD-BDF2-481F63EE7C5B}</Project>
+      <Name>lib3102</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3103.vcxproj">
+      <Project>{3C79B5C7-E0DE-37CD-B329-EC5DD0AEE347}</Project>
+      <Name>lib3103</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib3207.vcxproj">
+      <Project>{952E67E1-33B0-31A0-ACC3-D88547B10E57}</Project>
+      <Name>lib3207</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib500.vcxproj">
+      <Project>{F88AC581-C8B5-33B7-BE03-3F8A80DD13C4}</Project>
+      <Name>lib500</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib501.vcxproj">
+      <Project>{09D7E1E4-BB28-3E51-BAA2-A62EDAC19191}</Project>
+      <Name>lib501</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib502.vcxproj">
+      <Project>{8D23B9D0-9C89-3181-800A-4EB8BE0EAF6A}</Project>
+      <Name>lib502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib503.vcxproj">
+      <Project>{927E67B2-5170-3FBE-9385-78A5524CF062}</Project>
+      <Name>lib503</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib504.vcxproj">
+      <Project>{6FA83F54-AD59-3D0E-8D9E-A63433727768}</Project>
+      <Name>lib504</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib505.vcxproj">
+      <Project>{0FFA8D67-3884-3687-9C76-44041A96A4A0}</Project>
+      <Name>lib505</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib506.vcxproj">
+      <Project>{96DF49CE-78D9-374B-94A6-8D8797FC2C47}</Project>
+      <Name>lib506</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib507.vcxproj">
+      <Project>{B2BD421E-83BB-3A75-A48B-EA3E2BDBBDEC}</Project>
+      <Name>lib507</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib508.vcxproj">
+      <Project>{E0B35ACC-2D96-399C-9D87-24EE027BBD7A}</Project>
+      <Name>lib508</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib509.vcxproj">
+      <Project>{188FECEA-57F4-3EE8-8557-C328DF1B66D4}</Project>
+      <Name>lib509</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib510.vcxproj">
+      <Project>{01B5F703-A308-3A58-895D-2807818E2813}</Project>
+      <Name>lib510</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib511.vcxproj">
+      <Project>{AC104909-853E-3DE9-8449-1B0047FCBD2E}</Project>
+      <Name>lib511</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib512.vcxproj">
+      <Project>{81A26F82-81A2-3FA6-B33E-45DDA1190C17}</Project>
+      <Name>lib512</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib513.vcxproj">
+      <Project>{0F8EFF95-D2CF-3699-AAFA-B4663274AB29}</Project>
+      <Name>lib513</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib514.vcxproj">
+      <Project>{40E7731E-5A0A-3A4F-85B8-D6BA8D688EEE}</Project>
+      <Name>lib514</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib515.vcxproj">
+      <Project>{F0932F7F-13D4-377C-8CE0-B28F8BF73CA1}</Project>
+      <Name>lib515</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib516.vcxproj">
+      <Project>{D9003843-3031-3411-952E-BD275DAA2F49}</Project>
+      <Name>lib516</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib517.vcxproj">
+      <Project>{025F4F6C-11FD-3B51-BBC6-3973F135FD5C}</Project>
+      <Name>lib517</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib518.vcxproj">
+      <Project>{7A3B0BAB-1D23-3E77-9691-395D63FBCB9B}</Project>
+      <Name>lib518</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib519.vcxproj">
+      <Project>{D365D70E-C646-302C-ADBF-FBAD4C0D291A}</Project>
+      <Name>lib519</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib520.vcxproj">
+      <Project>{36EDFA01-CC0B-30CF-88AB-C4D1D45C0F3C}</Project>
+      <Name>lib520</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib521.vcxproj">
+      <Project>{D5C17BE9-0581-3BA1-9562-5301310AD9E9}</Project>
+      <Name>lib521</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib523.vcxproj">
+      <Project>{355DE05E-EEB9-3F47-8F38-92ADE4655789}</Project>
+      <Name>lib523</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib524.vcxproj">
+      <Project>{49417EEB-F557-3353-800D-765DA4DA1D15}</Project>
+      <Name>lib524</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib525.vcxproj">
+      <Project>{505A252E-BF38-3F25-8564-A7C55BC22310}</Project>
+      <Name>lib525</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib526.vcxproj">
+      <Project>{451BBD5D-D4C2-3EA8-9B28-B94A2F28ECDF}</Project>
+      <Name>lib526</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib527.vcxproj">
+      <Project>{0D9F6627-1534-3B5B-B3CF-AF4B80A3B191}</Project>
+      <Name>lib527</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib529.vcxproj">
+      <Project>{7099F6EE-5749-370B-9917-FACD4780E941}</Project>
+      <Name>lib529</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib530.vcxproj">
+      <Project>{81C2FABE-AE01-3E35-9BA6-89B74F750AA1}</Project>
+      <Name>lib530</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib532.vcxproj">
+      <Project>{3EF56DE3-C2A6-3F46-AED2-35C35570A505}</Project>
+      <Name>lib532</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib533.vcxproj">
+      <Project>{A37382EC-B480-305A-8D9E-A0E33C2CAD20}</Project>
+      <Name>lib533</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib536.vcxproj">
+      <Project>{9437F138-624B-320D-99C3-E82A6BBA2C42}</Project>
+      <Name>lib536</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib537.vcxproj">
+      <Project>{36E80C28-38CA-3D72-BC2A-EB8826317BED}</Project>
+      <Name>lib537</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib539.vcxproj">
+      <Project>{128413A6-94CB-3EFB-BBD1-4716342ECF76}</Project>
+      <Name>lib539</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib540.vcxproj">
+      <Project>{C52B8BCA-C8E9-3EC7-8159-A13B509D59CF}</Project>
+      <Name>lib540</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib541.vcxproj">
+      <Project>{EDCB1E64-EF7C-36B4-897D-D5C2A61597F0}</Project>
+      <Name>lib541</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib542.vcxproj">
+      <Project>{20A369CA-89BA-3EB3-837E-A57C6CC7E4AC}</Project>
+      <Name>lib542</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib543.vcxproj">
+      <Project>{E5D8A414-9D26-350A-8A05-1C50F04143CE}</Project>
+      <Name>lib543</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib544.vcxproj">
+      <Project>{6944AA82-8CAE-3BD6-81F0-7BED97A4BDFC}</Project>
+      <Name>lib544</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib545.vcxproj">
+      <Project>{F758F276-E440-3429-905A-56F6C08EF365}</Project>
+      <Name>lib545</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib547.vcxproj">
+      <Project>{D6F9B666-325F-3CA3-97C5-74240BB3FC82}</Project>
+      <Name>lib547</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib548.vcxproj">
+      <Project>{C3D14AD8-5C7C-32C4-984F-48022CE75A6C}</Project>
+      <Name>lib548</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib549.vcxproj">
+      <Project>{0B226F55-1DBA-3FC1-AF54-6E2B73817856}</Project>
+      <Name>lib549</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib552.vcxproj">
+      <Project>{6DF2FD1E-6065-3981-8F74-098553F0C31C}</Project>
+      <Name>lib552</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib553.vcxproj">
+      <Project>{F8573293-6258-3E59-A830-638C347F3231}</Project>
+      <Name>lib553</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib554.vcxproj">
+      <Project>{0917508C-BD4D-3355-9CCF-DF2AD1CB8FD0}</Project>
+      <Name>lib554</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib555.vcxproj">
+      <Project>{11D65060-1FEF-31EB-BAA9-485C27FE5CDC}</Project>
+      <Name>lib555</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib556.vcxproj">
+      <Project>{E664642F-C506-3827-AC54-DADBF1E52BDB}</Project>
+      <Name>lib556</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib557.vcxproj">
+      <Project>{AC086031-87B1-3FD1-A88C-352D8BA38592}</Project>
+      <Name>lib557</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib558.vcxproj">
+      <Project>{B3E34805-6C57-357E-B211-074DBD109F0F}</Project>
+      <Name>lib558</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib559.vcxproj">
+      <Project>{93FAFB0F-7314-3347-B2A6-08F46FEA9E20}</Project>
+      <Name>lib559</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib560.vcxproj">
+      <Project>{F7A97CAD-A21A-34B6-8120-9711111E8426}</Project>
+      <Name>lib560</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib562.vcxproj">
+      <Project>{A8D8334D-D3A3-3E9D-9393-BFCB86778AFE}</Project>
+      <Name>lib562</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib564.vcxproj">
+      <Project>{DD2A0326-BE16-3401-8D3B-65B9947D13E2}</Project>
+      <Name>lib564</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib565.vcxproj">
+      <Project>{D71A309A-D10E-3E5A-89EE-872B515EE3FF}</Project>
+      <Name>lib565</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib566.vcxproj">
+      <Project>{5AFF7FA8-4FB4-37ED-99FF-D059B248FF24}</Project>
+      <Name>lib566</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib567.vcxproj">
+      <Project>{B7EAC20C-8CB7-3417-A800-B0D7119F0860}</Project>
+      <Name>lib567</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib568.vcxproj">
+      <Project>{FFF2AE19-34F9-3D7A-A133-C785BDFD81F6}</Project>
+      <Name>lib568</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib569.vcxproj">
+      <Project>{B75670AC-4A0C-3014-80E6-E13407C5DB76}</Project>
+      <Name>lib569</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib570.vcxproj">
+      <Project>{2C2A8FCC-3F74-3B0F-AD1C-289A0E00501F}</Project>
+      <Name>lib570</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib571.vcxproj">
+      <Project>{636278A6-6326-363E-A663-9D2789B5189C}</Project>
+      <Name>lib571</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib572.vcxproj">
+      <Project>{060B0572-15BF-39C3-9B49-A0B6E348F5B1}</Project>
+      <Name>lib572</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib573.vcxproj">
+      <Project>{E8A2E8D8-4523-37DD-81F3-1E4F2268927C}</Project>
+      <Name>lib573</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib574.vcxproj">
+      <Project>{CBAC4684-853A-3618-8753-8E84A5BB538B}</Project>
+      <Name>lib574</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib575.vcxproj">
+      <Project>{45652380-FADF-3A90-ACAB-BA6FCA28036B}</Project>
+      <Name>lib575</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib576.vcxproj">
+      <Project>{EADDF391-654C-3448-895C-AA2946688FEC}</Project>
+      <Name>lib576</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib578.vcxproj">
+      <Project>{80800843-6219-3E69-A0C7-77A81E280112}</Project>
+      <Name>lib578</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib579.vcxproj">
+      <Project>{E09B54A0-EE0D-3D5B-881E-32FC3138EA31}</Project>
+      <Name>lib579</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib582.vcxproj">
+      <Project>{F9766393-67D2-3557-80E9-744E928717CE}</Project>
+      <Name>lib582</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib583.vcxproj">
+      <Project>{7E360DFD-BCB2-3D2A-97E6-F7AAB26610AB}</Project>
+      <Name>lib583</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib584.vcxproj">
+      <Project>{92B633C3-B8DD-30FA-87C2-F02D27856C74}</Project>
+      <Name>lib584</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib585.vcxproj">
+      <Project>{6A9DE315-5F6A-3765-B3A3-6DB5CF4D6FC5}</Project>
+      <Name>lib585</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib586.vcxproj">
+      <Project>{28996E7C-8DFD-3EC7-8329-49027ACA9D3A}</Project>
+      <Name>lib586</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib587.vcxproj">
+      <Project>{A5875CDB-D220-336D-B7CD-49699E59364A}</Project>
+      <Name>lib587</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib589.vcxproj">
+      <Project>{052D8148-1F9B-3FE4-A299-7DA25A3EEAC4}</Project>
+      <Name>lib589</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib590.vcxproj">
+      <Project>{E0817EE1-C364-3A24-955C-EF180B94DAD7}</Project>
+      <Name>lib590</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib591.vcxproj">
+      <Project>{BBF4FF84-7AF1-3C5E-9798-5E3EAB065348}</Project>
+      <Name>lib591</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib597.vcxproj">
+      <Project>{40AD20D6-47DE-36AB-B0A8-5E77370DFE76}</Project>
+      <Name>lib597</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib598.vcxproj">
+      <Project>{A27B0737-3519-3936-B407-4451D7311D68}</Project>
+      <Name>lib598</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib599.vcxproj">
+      <Project>{6CAACD5D-3999-3BE7-9197-2505F06EF23C}</Project>
+      <Name>lib599</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib643.vcxproj">
+      <Project>{B7F9F46D-6904-3F7E-8CA8-D3475F13D112}</Project>
+      <Name>lib643</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib645.vcxproj">
+      <Project>{352DB8B0-7678-3D49-AAAB-E213AB1C2415}</Project>
+      <Name>lib645</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib650.vcxproj">
+      <Project>{883ECF31-6DAD-3A29-90B7-E72610043924}</Project>
+      <Name>lib650</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib651.vcxproj">
+      <Project>{1433707C-4E68-3ACC-AE99-6A8636650EB2}</Project>
+      <Name>lib651</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib652.vcxproj">
+      <Project>{D373BA96-57A8-3AA0-BB24-35C638AD385D}</Project>
+      <Name>lib652</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib653.vcxproj">
+      <Project>{6880E8A0-D71E-3874-8E1A-9C781C69CEB1}</Project>
+      <Name>lib653</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib654.vcxproj">
+      <Project>{2FC1CEE2-56D2-33E0-B88F-BD627C09704E}</Project>
+      <Name>lib654</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib655.vcxproj">
+      <Project>{5F3699D9-E95E-34CB-B819-CB6224AC04E4}</Project>
+      <Name>lib655</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib658.vcxproj">
+      <Project>{5CAB0413-A15C-3F4B-8319-6ABEA3605F68}</Project>
+      <Name>lib658</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib659.vcxproj">
+      <Project>{E1F923D4-B3A8-362F-AC1D-62E81425D91D}</Project>
+      <Name>lib659</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib661.vcxproj">
+      <Project>{27776367-7FB0-315A-B300-0E47C8089BA2}</Project>
+      <Name>lib661</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib666.vcxproj">
+      <Project>{4CF82664-BB81-33E1-8962-D2D489262B5F}</Project>
+      <Name>lib666</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib667.vcxproj">
+      <Project>{AC834234-959B-3700-817C-AAAAC9DB9997}</Project>
+      <Name>lib667</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib668.vcxproj">
+      <Project>{F520D384-9E3D-35AC-855F-1F4198CC3B72}</Project>
+      <Name>lib668</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib670.vcxproj">
+      <Project>{DC26696D-B157-3A68-8ED3-A761199C0549}</Project>
+      <Name>lib670</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib671.vcxproj">
+      <Project>{4A9C4F7C-2B19-3134-B52D-FF12A6EA6BBF}</Project>
+      <Name>lib671</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib672.vcxproj">
+      <Project>{E6640612-C99D-3921-8D05-BAF07C7EB012}</Project>
+      <Name>lib672</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib673.vcxproj">
+      <Project>{26AB12A4-323B-3330-9DAF-F04636819A51}</Project>
+      <Name>lib673</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib674.vcxproj">
+      <Project>{DB5FAAE0-1027-339C-9850-E8304B224E34}</Project>
+      <Name>lib674</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib676.vcxproj">
+      <Project>{BC9897B0-DF33-3CD9-8DD3-6EA697010F51}</Project>
+      <Name>lib676</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib677.vcxproj">
+      <Project>{1C18B829-CDA6-32AF-801C-DADA0607B432}</Project>
+      <Name>lib677</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\lib678.vcxproj">
+      <Project>{54123B01-2B6D-3CFD-B656-4C39A56D447F}</Project>
+      <Name>lib678</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\libauthretry.vcxproj">
+      <Project>{56F441CA-4CD9-3D5B-A7DB-BFBA2DC6328F}</Project>
+      <Name>libauthretry</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\libntlmconnect.vcxproj">
+      <Project>{DF7FBE6B-0AE4-35D3-B1F1-081AE047AB4B}</Project>
+      <Name>libntlmconnect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\libtest\libprereq.vcxproj">
+      <Project>{FAF08D70-F512-3AA3-8920-9E055D4C47D1}</Project>
+      <Name>libprereq</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\mqttd.vcxproj">
+      <Project>{EEFE2A17-F4F6-3B7D-8305-B1272C6321A3}</Project>
+      <Name>mqttd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\resolve.vcxproj">
+      <Project>{68CC11E0-8854-3A2B-BE31-A279952989B3}</Project>
+      <Name>resolve</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\rtspd.vcxproj">
+      <Project>{29F239C4-A98F-3136-BAB2-C8726B04EF00}</Project>
+      <Name>rtspd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\sockfilt.vcxproj">
+      <Project>{249F600C-2B9A-3913-ADFB-004F14B6E532}</Project>
+      <Name>sockfilt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\socksd.vcxproj">
+      <Project>{13B52286-197F-3A72-8C78-2E5D1EE98F08}</Project>
+      <Name>socksd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\sws.vcxproj">
+      <Project>{B715DB95-2377-3DFA-9517-28CB7156886C}</Project>
+      <Name>sws</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\server\tftpd.vcxproj">
+      <Project>{B8D013F3-0CFD-3438-B4F9-7C1137AE14B1}</Project>
+      <Name>tftpd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1300.vcxproj">
+      <Project>{33ECFFB9-64C3-31F1-B701-7004FA50DBA3}</Project>
+      <Name>unit1300</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1302.vcxproj">
+      <Project>{BB92CED5-9D10-320C-A2EB-BAE6E2CC0464}</Project>
+      <Name>unit1302</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1303.vcxproj">
+      <Project>{CF6FA3FA-6726-3711-9EFD-CC4B9DCFE9C8}</Project>
+      <Name>unit1303</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1304.vcxproj">
+      <Project>{EE6D7590-DE05-38A9-B991-9A7C8A7529C2}</Project>
+      <Name>unit1304</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1305.vcxproj">
+      <Project>{C83B901D-A753-32CF-BBBC-D2E9737FB4DB}</Project>
+      <Name>unit1305</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1307.vcxproj">
+      <Project>{8B083A05-06DF-388B-918F-52A699FE1CE4}</Project>
+      <Name>unit1307</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1308.vcxproj">
+      <Project>{5C41AE86-DBE1-3BF3-9837-B507434D22CB}</Project>
+      <Name>unit1308</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1309.vcxproj">
+      <Project>{71BC1360-5C1A-3DD2-B141-85B76AEF54C8}</Project>
+      <Name>unit1309</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1323.vcxproj">
+      <Project>{BB1C0481-EFB6-3342-BF73-33CD87994C37}</Project>
+      <Name>unit1323</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1330.vcxproj">
+      <Project>{8D06CCAE-2CB9-3B30-9D57-F30FBC193DD4}</Project>
+      <Name>unit1330</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1394.vcxproj">
+      <Project>{7B0359F8-D6FC-3C18-921D-665ABD47DCE6}</Project>
+      <Name>unit1394</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1395.vcxproj">
+      <Project>{FB51259D-B6BA-3EB4-A0F0-73BA9DF9EBF8}</Project>
+      <Name>unit1395</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1396.vcxproj">
+      <Project>{78D81D3A-AC8A-326D-ABD2-A32E63098BB1}</Project>
+      <Name>unit1396</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1397.vcxproj">
+      <Project>{9EB00CD5-BA62-361D-8690-AF39ED319BD5}</Project>
+      <Name>unit1397</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1398.vcxproj">
+      <Project>{60D06424-C996-3409-BAE4-11A492AA2B9C}</Project>
+      <Name>unit1398</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1399.vcxproj">
+      <Project>{133BFC72-F393-3CF1-86B5-FDFD4ADDFA1D}</Project>
+      <Name>unit1399</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1600.vcxproj">
+      <Project>{FB4B3EE9-E644-3B5F-A6B8-B2A816B8B7B0}</Project>
+      <Name>unit1600</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1601.vcxproj">
+      <Project>{969B231E-D553-365C-B607-8907BFDD6C7A}</Project>
+      <Name>unit1601</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1602.vcxproj">
+      <Project>{94789FD7-B7B8-386A-A0D3-5E46A4DEDB20}</Project>
+      <Name>unit1602</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1603.vcxproj">
+      <Project>{BBCE78D8-7257-3DAC-A6E8-823E768162EE}</Project>
+      <Name>unit1603</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1604.vcxproj">
+      <Project>{DD50DE7A-149F-386D-AD01-3411C681B6F0}</Project>
+      <Name>unit1604</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1605.vcxproj">
+      <Project>{E5CF37EA-BBF8-3C7D-87B6-DF009CBDB56A}</Project>
+      <Name>unit1605</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1606.vcxproj">
+      <Project>{37B7BF68-E821-3EB7-AAF7-C0E5CBFCB19B}</Project>
+      <Name>unit1606</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1607.vcxproj">
+      <Project>{65057A38-3D68-3827-929E-D16C68083389}</Project>
+      <Name>unit1607</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1608.vcxproj">
+      <Project>{3912FB07-9CC1-38C6-BA0A-6F3DD0328A6F}</Project>
+      <Name>unit1608</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1609.vcxproj">
+      <Project>{C1A22B09-E5DA-3F91-8E6D-59B32EFC4DC6}</Project>
+      <Name>unit1609</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1610.vcxproj">
+      <Project>{9177A472-8705-3858-B4E8-6E32B7C4CDE5}</Project>
+      <Name>unit1610</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1611.vcxproj">
+      <Project>{59E8DABC-92B2-38C1-8643-ABE8275FC450}</Project>
+      <Name>unit1611</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1612.vcxproj">
+      <Project>{006CA942-6CC6-337F-8C68-FD729B9A8309}</Project>
+      <Name>unit1612</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1614.vcxproj">
+      <Project>{77599BE4-BE7E-3C3C-8E90-4F3BDC9BDC54}</Project>
+      <Name>unit1614</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1615.vcxproj">
+      <Project>{A8763241-F6B5-39AD-9F84-BB9BC3F09797}</Project>
+      <Name>unit1615</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1616.vcxproj">
+      <Project>{AB2391A9-F0F5-37D5-A55B-B95D553A0CC2}</Project>
+      <Name>unit1616</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1620.vcxproj">
+      <Project>{724617DD-D788-3B66-B4FD-A483C95048CE}</Project>
+      <Name>unit1620</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1621.vcxproj">
+      <Project>{B24F5BFD-BE1C-330A-A22B-F5FB2F8C0829}</Project>
+      <Name>unit1621</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1650.vcxproj">
+      <Project>{F5959D1E-2480-3D2F-943C-DED2E348F0BB}</Project>
+      <Name>unit1650</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1651.vcxproj">
+      <Project>{297449DA-B384-3502-A1E1-BDF1B5365DCC}</Project>
+      <Name>unit1651</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1652.vcxproj">
+      <Project>{7CC4CA8D-8E63-3F67-8A24-E277B498B5E4}</Project>
+      <Name>unit1652</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1653.vcxproj">
+      <Project>{B1D356AF-D843-3CF5-BED3-5080F9BD84C9}</Project>
+      <Name>unit1653</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1654.vcxproj">
+      <Project>{D050832A-F2BC-3901-9496-0BD401277246}</Project>
+      <Name>unit1654</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1655.vcxproj">
+      <Project>{E35361D2-76CD-3D14-A8CA-77B5435F9236}</Project>
+      <Name>unit1655</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1656.vcxproj">
+      <Project>{257EFC13-AA7A-33C8-B570-D4BE895D25FF}</Project>
+      <Name>unit1656</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1660.vcxproj">
+      <Project>{1775CDA0-A32C-3B0B-A784-F6B4A5B68B74}</Project>
+      <Name>unit1660</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1661.vcxproj">
+      <Project>{80C523F4-A0DD-3E6F-9C5C-628565B96588}</Project>
+      <Name>unit1661</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit1663.vcxproj">
+      <Project>{53B37361-D1FF-361D-AFD1-4833FFAA4BA6}</Project>
+      <Name>unit1663</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit2600.vcxproj">
+      <Project>{0DC37EDC-38CF-3303-AB6D-DA65C5950456}</Project>
+      <Name>unit2600</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit2601.vcxproj">
+      <Project>{85A31A3D-344C-3B56-9AF9-1099CE7C8DA9}</Project>
+      <Name>unit2601</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit2602.vcxproj">
+      <Project>{592386EB-784A-314E-BA47-CCC553DBA797}</Project>
+      <Name>unit2602</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit2603.vcxproj">
+      <Project>{91107F48-48A8-3EFE-BBAF-211DC545FF48}</Project>
+      <Name>unit2603</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit2604.vcxproj">
+      <Project>{75915460-7315-3196-9778-FA16742F0330}</Project>
+      <Name>unit2604</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit3200.vcxproj">
+      <Project>{73D7D33C-1F32-356A-810D-2E9C800A369A}</Project>
+      <Name>unit3200</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\unit\unit3205.vcxproj">
+      <Project>{A310B0C8-2915-3D23-8699-7183CECF7750}</Project>
+      <Name>unit3205</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

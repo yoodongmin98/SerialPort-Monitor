@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\CMakeFiles\e71fe750d11f1524875201186d14ab31\test-full.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\tests\CMakeFiles\test-full" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{576FA69C-6254-3D83-A352-16810ECB4B56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

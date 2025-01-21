@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\mprintf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\nonblock.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\strtoofft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\warnless.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\timediff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\dynbuf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\strdup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\strcase.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\curl_multibyte.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\getpart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\base64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\memdebug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\tftpd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\curlx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\nonblock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\strtoofft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\warnless.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\timediff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\curl_ctype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\dynbuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\strdup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\curl_multibyte.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\getpart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\server_setup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\curl_base64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\lib\memdebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\server_sockaddr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\tftp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\tests\server\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{399979CA-EB71-3400-AC8F-578A843FC7CF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9D4F4156-D6C4-382E-A761-AD2F61A4DBBE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

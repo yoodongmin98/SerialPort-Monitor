@@ -1,0 +1,1393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EE9E744F-181C-31E8-917F-8AA8550F585A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>testdeps</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\tests\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\Downloads\curl-8.11.1\tests\config.in;C:\Users\admin\Downloads\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\Downloads\curl-8.11.1\tests\config.in;C:\Users\admin\Downloads\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\Downloads\curl-8.11.1\tests\config.in;C:\Users\admin\Downloads\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/tests/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/tests/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\Downloads\curl-8.11.1\tests\config.in;C:\Users\admin\Downloads\curl-8.11.1\tests\configurehelp.pm.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\tests\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\ZERO_CHECK.vcxproj">
+      <Project>{F6BA6042-EDE1-3116-986F-696EA26E67A7}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-h2-pausing.vcxproj">
+      <Project>{12BCB0A7-89E6-304A-AA49-6363FA2FAD9B}</Project>
+      <Name>curlt-client-h2-pausing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-h2-serverpush.vcxproj">
+      <Project>{C17B3835-E74D-37C8-9756-5628E7D76BE7}</Project>
+      <Name>curlt-client-h2-serverpush</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-h2-upgrade-extreme.vcxproj">
+      <Project>{874CE648-8A89-334E-A771-5B61B0210DE8}</Project>
+      <Name>curlt-client-h2-upgrade-extreme</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-hx-download.vcxproj">
+      <Project>{A25D2C62-0570-3186-9913-DD10925338B9}</Project>
+      <Name>curlt-client-hx-download</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-hx-upload.vcxproj">
+      <Project>{2A4CC0E8-BD26-3B53-9A92-359C826C6F12}</Project>
+      <Name>curlt-client-hx-upload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-tls-session-reuse.vcxproj">
+      <Project>{FF62ADC8-8D11-322E-9987-5E7EC6CEA580}</Project>
+      <Name>curlt-client-tls-session-reuse</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-upload-pausing.vcxproj">
+      <Project>{1A51C970-C29E-3369-9A41-E146529315B3}</Project>
+      <Name>curlt-client-upload-pausing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-ws-data.vcxproj">
+      <Project>{B7AF868A-503A-33F2-8F28-6E5A826DDC6B}</Project>
+      <Name>curlt-client-ws-data</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\http\clients\curlt-client-ws-pingpong.vcxproj">
+      <Project>{2A81DF05-F566-319A-8335-B27DAB2AFB51}</Project>
+      <Name>curlt-client-ws-pingpong</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\disabled.vcxproj">
+      <Project>{72ED4A76-8D44-3043-94E5-E69B42F59B56}</Project>
+      <Name>disabled</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\getpart.vcxproj">
+      <Project>{6BFCD324-E03B-37D5-A1C4-EEC94A215C11}</Project>
+      <Name>getpart</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1156.vcxproj">
+      <Project>{FF4D9B9E-2727-32D4-BBC1-187601871DBF}</Project>
+      <Name>lib1156</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1301.vcxproj">
+      <Project>{117BF29E-AEF8-35DB-B88B-89B460800A15}</Project>
+      <Name>lib1301</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1485.vcxproj">
+      <Project>{B77B77DA-C216-342C-A4B6-2F677F25418E}</Project>
+      <Name>lib1485</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1500.vcxproj">
+      <Project>{59CEF150-EC3A-30F5-BB4D-C7E87BF81660}</Project>
+      <Name>lib1500</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1501.vcxproj">
+      <Project>{B0E836CC-334B-370C-A8E3-16ED0A0D6C07}</Project>
+      <Name>lib1501</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1502.vcxproj">
+      <Project>{F2921CEA-0832-3959-A3AA-66D865D2E39D}</Project>
+      <Name>lib1502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1503.vcxproj">
+      <Project>{2DDC382A-BF90-385B-8DEA-7901D5FEBDF3}</Project>
+      <Name>lib1503</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1504.vcxproj">
+      <Project>{80B9014D-58C2-3AFE-A815-CCEDB5D0F240}</Project>
+      <Name>lib1504</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1505.vcxproj">
+      <Project>{818A606D-D78D-327B-BF2C-5B62178BE4D9}</Project>
+      <Name>lib1505</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1506.vcxproj">
+      <Project>{FE9E32A9-BEA1-39AA-AECE-F88DAF09EC33}</Project>
+      <Name>lib1506</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1507.vcxproj">
+      <Project>{948B5435-D246-379E-AFE8-17974738F629}</Project>
+      <Name>lib1507</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1508.vcxproj">
+      <Project>{B21A04BD-652A-32C7-B0D6-39EA4E3ABD44}</Project>
+      <Name>lib1508</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1509.vcxproj">
+      <Project>{BDC0C157-8190-36A7-9734-BD708F788200}</Project>
+      <Name>lib1509</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1510.vcxproj">
+      <Project>{FB60060B-3B60-34E4-BF60-D50CCDCDFF1B}</Project>
+      <Name>lib1510</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1511.vcxproj">
+      <Project>{DB81EE85-4E34-314D-9C02-B1319A3B2DEF}</Project>
+      <Name>lib1511</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1512.vcxproj">
+      <Project>{E247FF4C-303B-3B9F-A913-6F7CF7E58F29}</Project>
+      <Name>lib1512</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1513.vcxproj">
+      <Project>{5F2D7ADE-B35D-3EFF-9323-D905A23F6C2F}</Project>
+      <Name>lib1513</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1514.vcxproj">
+      <Project>{2C312BF0-884D-3C9A-BAC3-AA1872028586}</Project>
+      <Name>lib1514</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1515.vcxproj">
+      <Project>{6B0A3BC5-3938-374B-B53A-3ACE5B2D964A}</Project>
+      <Name>lib1515</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1517.vcxproj">
+      <Project>{9CFE8733-C1BC-38DF-A397-D58D52FC1E5D}</Project>
+      <Name>lib1517</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1518.vcxproj">
+      <Project>{903C19E0-6895-30E3-A1A1-6E4BD7CFBCA7}</Project>
+      <Name>lib1518</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1520.vcxproj">
+      <Project>{8CBA6CCE-7054-364B-8136-46F0E1AF2C0F}</Project>
+      <Name>lib1520</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1521.vcxproj">
+      <Project>{305116A6-259A-3523-84B8-62BC4A1D9D28}</Project>
+      <Name>lib1521</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1522.vcxproj">
+      <Project>{8FD49B29-82A5-33DF-A668-0876F3FE2460}</Project>
+      <Name>lib1522</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1523.vcxproj">
+      <Project>{0C50C829-85FC-3F1C-B3EA-D7CC6C0ED091}</Project>
+      <Name>lib1523</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1525.vcxproj">
+      <Project>{F541EA86-6958-3825-B722-1849842FFE3B}</Project>
+      <Name>lib1525</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1526.vcxproj">
+      <Project>{F0E3DA94-0F91-3A80-8C97-D8308C4BDB3F}</Project>
+      <Name>lib1526</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1527.vcxproj">
+      <Project>{54736946-453F-38F3-8541-90B72A24B73A}</Project>
+      <Name>lib1527</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1528.vcxproj">
+      <Project>{9DADEB4D-4C37-3312-903F-01B9145ABD84}</Project>
+      <Name>lib1528</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1529.vcxproj">
+      <Project>{9F6D849F-2714-3D8C-84B4-6248C050BC95}</Project>
+      <Name>lib1529</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1530.vcxproj">
+      <Project>{7C0BD459-EB18-3B22-9630-F9CD483674CA}</Project>
+      <Name>lib1530</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1531.vcxproj">
+      <Project>{BD50F872-A769-3CAE-97EC-8F613354583E}</Project>
+      <Name>lib1531</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1532.vcxproj">
+      <Project>{7E4A7ABD-BAFB-38B8-A84D-4A788C8F477B}</Project>
+      <Name>lib1532</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1533.vcxproj">
+      <Project>{AAD563C0-AF43-3A76-AC10-F5755695C6AE}</Project>
+      <Name>lib1533</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1534.vcxproj">
+      <Project>{0319CB7D-5184-379D-A27F-CFB8F41BA0E8}</Project>
+      <Name>lib1534</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1535.vcxproj">
+      <Project>{8E901E2C-C345-356E-8466-0C745A765AD8}</Project>
+      <Name>lib1535</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1536.vcxproj">
+      <Project>{B26F233A-AD31-3DF7-9241-2B11DF741A26}</Project>
+      <Name>lib1536</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1537.vcxproj">
+      <Project>{44EE43A1-5399-381C-A99B-D55CE0EBC6B8}</Project>
+      <Name>lib1537</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1538.vcxproj">
+      <Project>{A5561439-DA34-361D-8D6F-8484D7AD8677}</Project>
+      <Name>lib1538</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1539.vcxproj">
+      <Project>{9ED08DDA-460E-34C1-B390-BF291516A23E}</Project>
+      <Name>lib1539</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1540.vcxproj">
+      <Project>{27F2AC5C-C9C5-338A-AE5F-830680F10B0F}</Project>
+      <Name>lib1540</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1541.vcxproj">
+      <Project>{347FFABA-443F-324A-A6A0-CB2D6AE94C5B}</Project>
+      <Name>lib1541</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1542.vcxproj">
+      <Project>{AA391234-C635-3758-9935-D81267608112}</Project>
+      <Name>lib1542</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1543.vcxproj">
+      <Project>{0E0EC45A-EECE-3DD8-BEEF-FB88AE3DD6AD}</Project>
+      <Name>lib1543</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1545.vcxproj">
+      <Project>{63CD2969-F6D5-3C58-BE4A-E57361CCDB88}</Project>
+      <Name>lib1545</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1550.vcxproj">
+      <Project>{E4F0BD77-7E4A-31CF-B5F0-1DE703D9EF06}</Project>
+      <Name>lib1550</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1551.vcxproj">
+      <Project>{24C27590-30E5-3BE1-92F1-6F593FF4B0DC}</Project>
+      <Name>lib1551</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1552.vcxproj">
+      <Project>{27B783BD-DD38-302C-ACE5-FF0D109745F4}</Project>
+      <Name>lib1552</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1553.vcxproj">
+      <Project>{FB628403-BD92-31C2-85C4-BBF58CB65D10}</Project>
+      <Name>lib1553</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1554.vcxproj">
+      <Project>{A84EBDF6-E5C4-3F48-9721-C2CB54C51146}</Project>
+      <Name>lib1554</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1555.vcxproj">
+      <Project>{58A2F5B6-FDEC-3F52-AC3D-FF0E9C01C743}</Project>
+      <Name>lib1555</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1556.vcxproj">
+      <Project>{355549AE-CC59-3FF1-8389-62763E85C2EA}</Project>
+      <Name>lib1556</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1557.vcxproj">
+      <Project>{5E0041B3-2EED-3D97-9801-3CE04FD46C84}</Project>
+      <Name>lib1557</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1558.vcxproj">
+      <Project>{DC3B5DBB-E03E-3563-B712-5098E75B4761}</Project>
+      <Name>lib1558</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1559.vcxproj">
+      <Project>{9558A118-3EB7-39F0-804D-0C831DF23C9C}</Project>
+      <Name>lib1559</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1560.vcxproj">
+      <Project>{59A12E3E-7E86-3712-AFCE-B964B29E1F0E}</Project>
+      <Name>lib1560</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1564.vcxproj">
+      <Project>{7C9EC9C3-97D3-35BC-88FE-4EE9C20468C2}</Project>
+      <Name>lib1564</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1565.vcxproj">
+      <Project>{81F14299-334D-3A7F-9BD0-738C5C35C7BA}</Project>
+      <Name>lib1565</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1567.vcxproj">
+      <Project>{2468B3B9-4D40-38AD-9DA3-3A1ADCE8CACA}</Project>
+      <Name>lib1567</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1568.vcxproj">
+      <Project>{93786B4B-CA5F-3B4C-BFEE-A209B09BEA07}</Project>
+      <Name>lib1568</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1569.vcxproj">
+      <Project>{4A593DFF-EA94-34C7-A301-38AD51DF698D}</Project>
+      <Name>lib1569</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1591.vcxproj">
+      <Project>{DB26C9FA-7034-3369-BF83-7EFC44362FA4}</Project>
+      <Name>lib1591</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1592.vcxproj">
+      <Project>{A580B76B-96BF-3B78-AD62-4767A08F1A53}</Project>
+      <Name>lib1592</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1593.vcxproj">
+      <Project>{CD9E3224-E6B7-3FCC-9EDB-E69D56362610}</Project>
+      <Name>lib1593</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1594.vcxproj">
+      <Project>{5C2E838E-73F8-35AB-B7C7-E2014B96CA13}</Project>
+      <Name>lib1594</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1596.vcxproj">
+      <Project>{0787EE3C-DA2E-3945-BB47-04F7AD802B60}</Project>
+      <Name>lib1596</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1597.vcxproj">
+      <Project>{D3A7B103-9897-3F6A-88FE-15FCAA22CEAB}</Project>
+      <Name>lib1597</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1598.vcxproj">
+      <Project>{3CB99A91-727B-3402-A29D-2B5745929B52}</Project>
+      <Name>lib1598</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1662.vcxproj">
+      <Project>{1DF1DF89-2D75-35E7-A457-E9168BCCC2C3}</Project>
+      <Name>lib1662</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1900.vcxproj">
+      <Project>{DD9DBC0E-2EB4-3336-81D8-F274A0B90288}</Project>
+      <Name>lib1900</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1901.vcxproj">
+      <Project>{071A3654-3B3C-333E-BEF8-D6F57E221AC3}</Project>
+      <Name>lib1901</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1903.vcxproj">
+      <Project>{0DB0D3C5-1768-3C48-8AB0-7846277310CE}</Project>
+      <Name>lib1903</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1905.vcxproj">
+      <Project>{02F8D09D-B51D-37BD-ADAF-46B34E5F86CB}</Project>
+      <Name>lib1905</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1906.vcxproj">
+      <Project>{13DE76AA-F396-309E-8E22-3643FEDFEBF7}</Project>
+      <Name>lib1906</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1907.vcxproj">
+      <Project>{033B9A1B-DE5D-35AD-B39B-351660D52B1B}</Project>
+      <Name>lib1907</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1908.vcxproj">
+      <Project>{0D142AB9-3AF0-3B1C-870B-E7D08FAFEC88}</Project>
+      <Name>lib1908</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1910.vcxproj">
+      <Project>{C30DC787-C161-377E-A291-DFF1BF671516}</Project>
+      <Name>lib1910</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1911.vcxproj">
+      <Project>{74A5BB4F-18A7-3EA2-B14E-4745474E6CD0}</Project>
+      <Name>lib1911</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1912.vcxproj">
+      <Project>{CDEB68AB-A957-3323-A6EF-412DAE44A372}</Project>
+      <Name>lib1912</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1913.vcxproj">
+      <Project>{B542BE3B-F1B4-3B79-8F2D-060BCD462B78}</Project>
+      <Name>lib1913</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1915.vcxproj">
+      <Project>{7B5C2637-7211-3F5E-A343-F8ADABEC73B2}</Project>
+      <Name>lib1915</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1916.vcxproj">
+      <Project>{B549C6CD-F0F0-3A7C-A18B-54E9713A4C49}</Project>
+      <Name>lib1916</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1917.vcxproj">
+      <Project>{29E26098-BE5A-3DC4-9AE2-3B069673A9B8}</Project>
+      <Name>lib1917</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1918.vcxproj">
+      <Project>{0F7829C8-8C06-36B6-8F1F-9CBC1447E38C}</Project>
+      <Name>lib1918</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1919.vcxproj">
+      <Project>{847AA367-7D68-3CEE-BF7B-5B9C944CA12B}</Project>
+      <Name>lib1919</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1933.vcxproj">
+      <Project>{4360AC5F-C0DB-3643-BCFF-64BEB867124A}</Project>
+      <Name>lib1933</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1934.vcxproj">
+      <Project>{983B57B1-D590-3FE7-A600-6F031F496399}</Project>
+      <Name>lib1934</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1935.vcxproj">
+      <Project>{1141992D-1262-30BC-AD36-EA27CC0F7E81}</Project>
+      <Name>lib1935</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1936.vcxproj">
+      <Project>{8105B6A6-EA8A-3B40-B912-655BBA63842B}</Project>
+      <Name>lib1936</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1937.vcxproj">
+      <Project>{2BD9CC6A-300D-3D62-B93B-1E3A0FCBE8D0}</Project>
+      <Name>lib1937</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1938.vcxproj">
+      <Project>{ED14C1C9-F30A-3617-8A9F-22AA46565BC7}</Project>
+      <Name>lib1938</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1939.vcxproj">
+      <Project>{907465CC-4841-3379-9ECC-CDAB6B4EB4F8}</Project>
+      <Name>lib1939</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1940.vcxproj">
+      <Project>{F4DDD25F-C670-30F3-8416-E913DCF05E70}</Project>
+      <Name>lib1940</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1945.vcxproj">
+      <Project>{43EC3C5A-FE58-3A76-836F-47CED9EE63C8}</Project>
+      <Name>lib1945</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1946.vcxproj">
+      <Project>{696F9F42-70AD-3469-8873-508C660B6314}</Project>
+      <Name>lib1946</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1947.vcxproj">
+      <Project>{52346D42-C133-3F09-A258-40584575C779}</Project>
+      <Name>lib1947</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1948.vcxproj">
+      <Project>{4027613A-DD4E-33EF-808E-BC807D87F493}</Project>
+      <Name>lib1948</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1955.vcxproj">
+      <Project>{CAFD726F-B163-3F4E-8604-4C24045A969F}</Project>
+      <Name>lib1955</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1956.vcxproj">
+      <Project>{39AE1E24-F3B7-3ED0-A906-79111FE17A99}</Project>
+      <Name>lib1956</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1957.vcxproj">
+      <Project>{0F295660-7BE8-383C-88E4-A2F9C23B73F2}</Project>
+      <Name>lib1957</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1958.vcxproj">
+      <Project>{F1D88F70-4C0A-3C0C-9D9E-AD9390E5FD82}</Project>
+      <Name>lib1958</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1959.vcxproj">
+      <Project>{50CAF0AF-7845-3A52-BE14-699E82621766}</Project>
+      <Name>lib1959</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1960.vcxproj">
+      <Project>{C4295131-0CA9-384A-BF55-4153EF6182AF}</Project>
+      <Name>lib1960</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1964.vcxproj">
+      <Project>{31137CFC-8271-3E07-A724-AD4625293888}</Project>
+      <Name>lib1964</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1970.vcxproj">
+      <Project>{714AE966-30C0-3238-9484-251BF0B0EF93}</Project>
+      <Name>lib1970</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1971.vcxproj">
+      <Project>{FEA8D27F-3AFB-31A7-A55D-119FCEDE9154}</Project>
+      <Name>lib1971</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1972.vcxproj">
+      <Project>{661E1553-CD44-3F74-8B8F-5D0F8D93F333}</Project>
+      <Name>lib1972</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1973.vcxproj">
+      <Project>{4297D327-1BC4-346A-A946-5F33C8E53EDD}</Project>
+      <Name>lib1973</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1974.vcxproj">
+      <Project>{35F5F8CF-BD85-3DA4-A02D-F8864B5E8763}</Project>
+      <Name>lib1974</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib1975.vcxproj">
+      <Project>{6BE4CD0C-B3A4-3682-9F77-FF9717B00AA3}</Project>
+      <Name>lib1975</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2301.vcxproj">
+      <Project>{4981E740-0C33-382C-8D0B-9D9E35F5BBF1}</Project>
+      <Name>lib2301</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2302.vcxproj">
+      <Project>{29015592-907B-306D-B904-139B86B529A4}</Project>
+      <Name>lib2302</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2304.vcxproj">
+      <Project>{EAD9BEF1-6792-3567-B19B-48D3B298A07A}</Project>
+      <Name>lib2304</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2305.vcxproj">
+      <Project>{65477652-0876-3683-897B-D25A14E7819E}</Project>
+      <Name>lib2305</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2306.vcxproj">
+      <Project>{B633F6A5-ACFC-3D46-9D7F-5881EA4CF048}</Project>
+      <Name>lib2306</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2308.vcxproj">
+      <Project>{FCCBEF73-4D18-3487-9D4E-B69175B6D8B4}</Project>
+      <Name>lib2308</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2309.vcxproj">
+      <Project>{C687A7C1-D7ED-3C19-AADB-BE846E907E72}</Project>
+      <Name>lib2309</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2402.vcxproj">
+      <Project>{041DA096-1866-32FD-B488-76BA019E77F4}</Project>
+      <Name>lib2402</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2404.vcxproj">
+      <Project>{F842F3BF-807F-342C-9A3E-7068DD0B05CC}</Project>
+      <Name>lib2404</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2405.vcxproj">
+      <Project>{A0EB5F06-7818-3303-8A0C-318D169B2907}</Project>
+      <Name>lib2405</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib2502.vcxproj">
+      <Project>{554156EE-89C1-39EE-B22D-88375580B6F1}</Project>
+      <Name>lib2502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3010.vcxproj">
+      <Project>{949E9B0B-5A98-3246-AB4E-53781C49C078}</Project>
+      <Name>lib3010</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3025.vcxproj">
+      <Project>{9BCADEB1-8346-3A33-8564-1B9FEDB2C9D8}</Project>
+      <Name>lib3025</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3026.vcxproj">
+      <Project>{C6822C8C-5969-320D-AC0D-AE08CE42548B}</Project>
+      <Name>lib3026</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3027.vcxproj">
+      <Project>{F4047FDD-3BC4-3EB1-87E2-C11C5F811C87}</Project>
+      <Name>lib3027</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3100.vcxproj">
+      <Project>{95C9D029-ED5D-3466-A71C-3553F398B04E}</Project>
+      <Name>lib3100</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3101.vcxproj">
+      <Project>{28FA74A4-B521-3A78-A3BE-8055F8F1C786}</Project>
+      <Name>lib3101</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3102.vcxproj">
+      <Project>{56561CA9-1964-32DD-816E-1C36E18E2185}</Project>
+      <Name>lib3102</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3103.vcxproj">
+      <Project>{C6192AF6-8ACD-3CFE-857A-17E0F58E054D}</Project>
+      <Name>lib3103</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib3207.vcxproj">
+      <Project>{C366722E-36D0-331A-9F4F-6A983E64D1B9}</Project>
+      <Name>lib3207</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib500.vcxproj">
+      <Project>{4B30FC5C-DC5E-31DB-994D-E1FE1FAF9153}</Project>
+      <Name>lib500</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib501.vcxproj">
+      <Project>{BD109320-EB19-3C4B-9C81-A92F6BCF9AC3}</Project>
+      <Name>lib501</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib502.vcxproj">
+      <Project>{845B2585-B15A-3D1B-9D9E-003A084C9F2B}</Project>
+      <Name>lib502</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib503.vcxproj">
+      <Project>{D349B33A-D350-329F-A85F-4DCD8C8D5AA4}</Project>
+      <Name>lib503</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib504.vcxproj">
+      <Project>{01096705-BAF8-3EDB-9A68-440FFDC92A24}</Project>
+      <Name>lib504</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib505.vcxproj">
+      <Project>{32E38008-2226-306B-9A66-99E1692E7B93}</Project>
+      <Name>lib505</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib506.vcxproj">
+      <Project>{01382166-426F-3DD0-A2DC-B8729003C9D1}</Project>
+      <Name>lib506</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib507.vcxproj">
+      <Project>{43F72DD8-2D38-346E-B275-14C20E4B0F13}</Project>
+      <Name>lib507</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib508.vcxproj">
+      <Project>{D6FA9160-07AC-37BA-8C44-8E583C3A1421}</Project>
+      <Name>lib508</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib509.vcxproj">
+      <Project>{856D447B-59EF-39A9-8DB3-C480878D42DB}</Project>
+      <Name>lib509</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib510.vcxproj">
+      <Project>{4DC750EE-EB15-3E9E-8641-E4CBDBA47C06}</Project>
+      <Name>lib510</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib511.vcxproj">
+      <Project>{4F7FE6FB-090B-3B54-BE11-330F5FFC89DF}</Project>
+      <Name>lib511</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib512.vcxproj">
+      <Project>{DAFCF8B5-EF61-353E-97C4-F3792D21C4DE}</Project>
+      <Name>lib512</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib513.vcxproj">
+      <Project>{38C759C8-21F7-304F-9D5B-957913B0C521}</Project>
+      <Name>lib513</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib514.vcxproj">
+      <Project>{190C3689-14FB-3E13-ACA5-FFC6BAB8B744}</Project>
+      <Name>lib514</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib515.vcxproj">
+      <Project>{4D5DB632-7CD6-3CD9-B21E-052A7D116EAF}</Project>
+      <Name>lib515</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib516.vcxproj">
+      <Project>{AA6E9008-2FDE-322D-9940-A72CF5AB648F}</Project>
+      <Name>lib516</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib517.vcxproj">
+      <Project>{E7151D80-51DC-34B3-A85D-C112B38EEB14}</Project>
+      <Name>lib517</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib518.vcxproj">
+      <Project>{29EB285C-6E39-3DF9-8A3E-FBCFCB71D058}</Project>
+      <Name>lib518</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib519.vcxproj">
+      <Project>{8B1795F8-5F4F-301C-8A62-78A11D3E25FA}</Project>
+      <Name>lib519</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib520.vcxproj">
+      <Project>{6DAD5A3E-421B-35AA-9873-15B25FB6E9A1}</Project>
+      <Name>lib520</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib521.vcxproj">
+      <Project>{6AB85FB2-B0A5-30F1-8F3D-5F75DB745BA6}</Project>
+      <Name>lib521</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib523.vcxproj">
+      <Project>{55A71F72-215E-341E-A48B-09C69E03B52E}</Project>
+      <Name>lib523</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib524.vcxproj">
+      <Project>{922A58E1-63A5-37B6-A8D1-EC1F9CCFFA8A}</Project>
+      <Name>lib524</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib525.vcxproj">
+      <Project>{6371FCB2-9FB2-31B4-A707-C8B16A7B6B87}</Project>
+      <Name>lib525</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib526.vcxproj">
+      <Project>{9EA58408-B9CD-392E-AFCF-619A63F06AA3}</Project>
+      <Name>lib526</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib527.vcxproj">
+      <Project>{F314BEFB-CE3A-3B27-AD29-1636C7B5998E}</Project>
+      <Name>lib527</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib529.vcxproj">
+      <Project>{2C344586-5B9E-396D-8CA7-780DE8D49E72}</Project>
+      <Name>lib529</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib530.vcxproj">
+      <Project>{CE62D956-C406-3976-9742-9C8002BF5936}</Project>
+      <Name>lib530</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib532.vcxproj">
+      <Project>{679F3789-B752-3B27-9FF8-61B8B78377F4}</Project>
+      <Name>lib532</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib533.vcxproj">
+      <Project>{606CFADC-F8AB-3C33-81F2-982C5C357FC6}</Project>
+      <Name>lib533</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib536.vcxproj">
+      <Project>{CB43864D-C5DA-3A5C-B70B-71BDEC98CC14}</Project>
+      <Name>lib536</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib537.vcxproj">
+      <Project>{69128A23-682C-3E70-A6D8-E759A395F0EE}</Project>
+      <Name>lib537</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib539.vcxproj">
+      <Project>{9A2255E0-7209-3D98-BCD6-1F9FAF25E523}</Project>
+      <Name>lib539</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib540.vcxproj">
+      <Project>{C04DBF7A-6126-3948-9966-901C2D757D71}</Project>
+      <Name>lib540</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib541.vcxproj">
+      <Project>{A55A4150-9E0A-38C5-8E2C-2D39D641C92E}</Project>
+      <Name>lib541</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib542.vcxproj">
+      <Project>{F5CA550B-893D-3D62-875B-470BCA62C980}</Project>
+      <Name>lib542</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib543.vcxproj">
+      <Project>{B57E250E-4A96-3798-8E02-4FB7EB64B465}</Project>
+      <Name>lib543</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib544.vcxproj">
+      <Project>{7C2CDF4F-254D-30C0-83FF-33ECCDBC41C3}</Project>
+      <Name>lib544</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib545.vcxproj">
+      <Project>{8B40CC4E-CD51-38B3-9DB5-95CC928525C9}</Project>
+      <Name>lib545</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib547.vcxproj">
+      <Project>{093741F1-FAEE-3139-B0D3-F72746DE1DC9}</Project>
+      <Name>lib547</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib548.vcxproj">
+      <Project>{5EE5D5DE-C33A-31CF-8433-649CE00E5343}</Project>
+      <Name>lib548</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib549.vcxproj">
+      <Project>{BA6FA864-A5FF-3BD8-8C2E-D74EB0D1EA14}</Project>
+      <Name>lib549</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib552.vcxproj">
+      <Project>{403D1654-A119-3ABF-8353-120C4E53B9B4}</Project>
+      <Name>lib552</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib553.vcxproj">
+      <Project>{1EC5DC91-F230-3623-81BA-37A076DA557C}</Project>
+      <Name>lib553</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib554.vcxproj">
+      <Project>{B86FC37A-C922-3BE2-86AE-A3280EFF4838}</Project>
+      <Name>lib554</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib555.vcxproj">
+      <Project>{3F0AD3E8-D7E2-3BA0-8509-5BE8132CD3BF}</Project>
+      <Name>lib555</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib556.vcxproj">
+      <Project>{D4C3630D-BC53-31BD-982D-BA647750EEF5}</Project>
+      <Name>lib556</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib557.vcxproj">
+      <Project>{0F355E97-BDEC-30D3-9128-66F8C0CCE2FE}</Project>
+      <Name>lib557</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib558.vcxproj">
+      <Project>{9AE8ECD5-F4DB-3255-9B7B-08779C60338F}</Project>
+      <Name>lib558</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib559.vcxproj">
+      <Project>{572CA284-09CD-3880-B1D6-1980FD4F64D5}</Project>
+      <Name>lib559</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib560.vcxproj">
+      <Project>{03669BAB-08F4-39DF-8FF6-32DB3ACE35E0}</Project>
+      <Name>lib560</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib562.vcxproj">
+      <Project>{9443D776-4F18-3F39-A6C5-A4B51D4A1375}</Project>
+      <Name>lib562</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib564.vcxproj">
+      <Project>{D04496C7-F459-395B-B18A-3F75886223DC}</Project>
+      <Name>lib564</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib565.vcxproj">
+      <Project>{764BBBFA-6823-37E5-997D-3AD11813D6A6}</Project>
+      <Name>lib565</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib566.vcxproj">
+      <Project>{5F747673-8FA1-3EC3-B77A-F9367022E655}</Project>
+      <Name>lib566</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib567.vcxproj">
+      <Project>{825F41AD-568E-38C2-9129-FBB4A29F5E72}</Project>
+      <Name>lib567</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib568.vcxproj">
+      <Project>{11BE86BF-01AE-35D0-918F-00D44590F5B7}</Project>
+      <Name>lib568</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib569.vcxproj">
+      <Project>{15ABB11B-6363-3805-A37D-CE338B2624E0}</Project>
+      <Name>lib569</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib570.vcxproj">
+      <Project>{3BD73B08-A0ED-365A-97DD-3D2127F36295}</Project>
+      <Name>lib570</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib571.vcxproj">
+      <Project>{17A4CBCC-942E-321D-A2D5-444F7119286B}</Project>
+      <Name>lib571</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib572.vcxproj">
+      <Project>{E82FFDAC-26C1-36EE-B515-1FBD3585933D}</Project>
+      <Name>lib572</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib573.vcxproj">
+      <Project>{1827D8D1-C8A4-3692-B2ED-D547271DDDD0}</Project>
+      <Name>lib573</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib574.vcxproj">
+      <Project>{4721BD62-F149-3806-BE0D-77BB4903996C}</Project>
+      <Name>lib574</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib575.vcxproj">
+      <Project>{BE273BAF-8DA4-3E2F-B151-4119055EADAC}</Project>
+      <Name>lib575</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib576.vcxproj">
+      <Project>{B656D6F6-9E34-3F5C-8A2B-C4009D1CAAB7}</Project>
+      <Name>lib576</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib578.vcxproj">
+      <Project>{CE1C7496-D888-3E8D-BA0C-FADB0376B1BB}</Project>
+      <Name>lib578</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib579.vcxproj">
+      <Project>{C9503122-32FA-3099-82F2-241E3F09ECA9}</Project>
+      <Name>lib579</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib582.vcxproj">
+      <Project>{D9634C35-B3A4-354E-A759-68185AFBD6F0}</Project>
+      <Name>lib582</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib583.vcxproj">
+      <Project>{264291C3-B748-3A9C-AE9A-BDF2CE8D1A19}</Project>
+      <Name>lib583</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib584.vcxproj">
+      <Project>{0996F1F1-6D5E-3EE2-BA63-E49411F1AC5C}</Project>
+      <Name>lib584</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib585.vcxproj">
+      <Project>{3922AABB-A696-357E-8719-A23FD1B10F0E}</Project>
+      <Name>lib585</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib586.vcxproj">
+      <Project>{8961EF14-78BF-3144-BE83-C8B54B892CB7}</Project>
+      <Name>lib586</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib587.vcxproj">
+      <Project>{8E2B867B-5516-34DC-8EAA-90365DB5B99C}</Project>
+      <Name>lib587</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib589.vcxproj">
+      <Project>{79FBEF64-B8D4-3A5F-8B2E-C2B9B278DA86}</Project>
+      <Name>lib589</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib590.vcxproj">
+      <Project>{E1E2078E-A68E-3625-AD0F-103D263415C0}</Project>
+      <Name>lib590</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib591.vcxproj">
+      <Project>{771EE154-EB10-3C3F-ABD6-5D019ABEC953}</Project>
+      <Name>lib591</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib597.vcxproj">
+      <Project>{44428A67-E37D-3800-8982-8DC32DB43BC2}</Project>
+      <Name>lib597</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib598.vcxproj">
+      <Project>{8DA69B9F-FF5D-3184-A0F9-F1DFECD59933}</Project>
+      <Name>lib598</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib599.vcxproj">
+      <Project>{6C5543D3-CD09-39C3-AEB9-25C859F6068A}</Project>
+      <Name>lib599</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib643.vcxproj">
+      <Project>{EBFA71E3-3B52-3C69-A8DC-08946888EC52}</Project>
+      <Name>lib643</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib645.vcxproj">
+      <Project>{F8491250-AD26-3BCE-8E41-A2127E7BDDA9}</Project>
+      <Name>lib645</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib650.vcxproj">
+      <Project>{579E369E-02B5-3B7D-BD7B-79ADF4C36B96}</Project>
+      <Name>lib650</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib651.vcxproj">
+      <Project>{8162E0C2-96BD-310D-9CBF-133A57A2ED99}</Project>
+      <Name>lib651</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib652.vcxproj">
+      <Project>{8109AE5B-6EBF-3ED4-A2CC-C81147297005}</Project>
+      <Name>lib652</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib653.vcxproj">
+      <Project>{375A7DA5-6C49-31DE-BD10-B01741E424AF}</Project>
+      <Name>lib653</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib654.vcxproj">
+      <Project>{BB126608-A57D-33B1-9AFD-6549971388C4}</Project>
+      <Name>lib654</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib655.vcxproj">
+      <Project>{320E1957-E35E-3EEE-8012-98978515F15B}</Project>
+      <Name>lib655</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib658.vcxproj">
+      <Project>{18243704-C14D-3BB4-9ADA-CD104B28749C}</Project>
+      <Name>lib658</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib659.vcxproj">
+      <Project>{B8BA205D-389F-30E0-B5BC-0F8CD10F7812}</Project>
+      <Name>lib659</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib661.vcxproj">
+      <Project>{7E2F9ABF-1174-3E78-8515-537398984F6A}</Project>
+      <Name>lib661</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib666.vcxproj">
+      <Project>{C4B7EF60-1AAE-3EFD-854C-1B9815C8E704}</Project>
+      <Name>lib666</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib667.vcxproj">
+      <Project>{6F1B1E8C-329C-327B-9DF7-D8E2C1C2D52E}</Project>
+      <Name>lib667</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib668.vcxproj">
+      <Project>{064F1146-9637-3324-81E4-6F83A6CF6A73}</Project>
+      <Name>lib668</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib670.vcxproj">
+      <Project>{324B2430-5C9E-321A-A0E8-B082CCE2DCCD}</Project>
+      <Name>lib670</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib671.vcxproj">
+      <Project>{9EA79A83-4D1C-3F6A-935C-DD1D009D02A7}</Project>
+      <Name>lib671</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib672.vcxproj">
+      <Project>{F067A271-F429-33A6-A4B4-81E48000E7FC}</Project>
+      <Name>lib672</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib673.vcxproj">
+      <Project>{44878F20-F92A-31DA-940F-54C32E9D3025}</Project>
+      <Name>lib673</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib674.vcxproj">
+      <Project>{9A06989F-0EE9-32E2-AD4D-DB4AF2167B05}</Project>
+      <Name>lib674</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib676.vcxproj">
+      <Project>{DD09AC45-860E-314D-80F9-9C8846304023}</Project>
+      <Name>lib676</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib677.vcxproj">
+      <Project>{C6A41B7A-5EEF-3091-A041-2BE094471265}</Project>
+      <Name>lib677</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\lib678.vcxproj">
+      <Project>{246FE422-8EF7-3517-BD6D-9E8EFF081429}</Project>
+      <Name>lib678</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\libauthretry.vcxproj">
+      <Project>{BDC17DE9-E419-3FFB-8547-98E2A704B6E0}</Project>
+      <Name>libauthretry</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\libntlmconnect.vcxproj">
+      <Project>{E18646C1-9BD8-309D-A53A-5A2A9FD40C2C}</Project>
+      <Name>libntlmconnect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\libtest\libprereq.vcxproj">
+      <Project>{D3C2DCCD-38AE-3132-A7A2-B946985B86C9}</Project>
+      <Name>libprereq</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\mqttd.vcxproj">
+      <Project>{772C1329-F203-3D61-B8A8-76FD48723265}</Project>
+      <Name>mqttd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\resolve.vcxproj">
+      <Project>{54738D8F-CDD8-341F-8192-4E11A5B73DC0}</Project>
+      <Name>resolve</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\rtspd.vcxproj">
+      <Project>{B2BDD8A1-2D18-380C-8EE1-BEEBEF1F7EEE}</Project>
+      <Name>rtspd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\sockfilt.vcxproj">
+      <Project>{616D5BD0-32DD-378F-9789-870221BEFC84}</Project>
+      <Name>sockfilt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\socksd.vcxproj">
+      <Project>{FA2F7219-D3B4-3A79-841E-D749201A7417}</Project>
+      <Name>socksd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\sws.vcxproj">
+      <Project>{A6D50653-1C5D-3B79-91E4-450AEF64EC7C}</Project>
+      <Name>sws</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\server\tftpd.vcxproj">
+      <Project>{F8EE72AA-84C8-38DB-BAF7-E0F17087E7FC}</Project>
+      <Name>tftpd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1300.vcxproj">
+      <Project>{4F14E685-E7FA-3C41-B697-A82B807C96BB}</Project>
+      <Name>unit1300</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1302.vcxproj">
+      <Project>{0280384D-FA82-32D7-8576-084817DC4CC1}</Project>
+      <Name>unit1302</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1303.vcxproj">
+      <Project>{CB03F25E-8331-3594-ACA9-C030443FA9C8}</Project>
+      <Name>unit1303</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1304.vcxproj">
+      <Project>{7AA13CC4-3D8A-331A-AD43-CDBC837DACCF}</Project>
+      <Name>unit1304</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1305.vcxproj">
+      <Project>{C115BC2C-0017-3AD3-963E-FA6F7EB85814}</Project>
+      <Name>unit1305</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1307.vcxproj">
+      <Project>{3450A9FE-1135-3BA1-8829-F45DD3F8444E}</Project>
+      <Name>unit1307</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1308.vcxproj">
+      <Project>{0F5CCF20-DFC1-3CD9-BC2A-23AEF42DE026}</Project>
+      <Name>unit1308</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1309.vcxproj">
+      <Project>{9DFC068A-F09C-3B71-BFB8-CF88FA32ACC4}</Project>
+      <Name>unit1309</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1323.vcxproj">
+      <Project>{80EB8A8F-295F-396B-B66C-0DD6F3F086E0}</Project>
+      <Name>unit1323</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1330.vcxproj">
+      <Project>{1CCB78F2-4C20-3348-8E57-0A06A5087691}</Project>
+      <Name>unit1330</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1394.vcxproj">
+      <Project>{E764CB6F-80FC-36EE-B4CF-4E5F658144E5}</Project>
+      <Name>unit1394</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1395.vcxproj">
+      <Project>{454F01BB-A93A-3923-BF94-2E50F812968F}</Project>
+      <Name>unit1395</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1396.vcxproj">
+      <Project>{2C469087-37CB-374E-A331-048F7F2D0979}</Project>
+      <Name>unit1396</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1397.vcxproj">
+      <Project>{149B7B03-EA6C-36C3-940C-BBAC4924E253}</Project>
+      <Name>unit1397</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1398.vcxproj">
+      <Project>{CBCD08CF-0DFE-315E-AC31-BF3AD68EF5F7}</Project>
+      <Name>unit1398</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1399.vcxproj">
+      <Project>{3BDFF913-7811-3616-ADD1-B2EAFCF41044}</Project>
+      <Name>unit1399</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1600.vcxproj">
+      <Project>{CF0E0BC9-BA18-3AB2-A334-D523C5EDEAF4}</Project>
+      <Name>unit1600</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1601.vcxproj">
+      <Project>{4A177394-8CF1-3494-8DA9-4A9493EB4E90}</Project>
+      <Name>unit1601</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1602.vcxproj">
+      <Project>{B4F309BA-91FE-3368-8817-F2BD73FF5466}</Project>
+      <Name>unit1602</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1603.vcxproj">
+      <Project>{D07B5576-E6E8-359C-A7EA-1CA4B24DD89D}</Project>
+      <Name>unit1603</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1604.vcxproj">
+      <Project>{D25B7C29-CAB1-31D1-8F1F-F3CAD1D39577}</Project>
+      <Name>unit1604</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1605.vcxproj">
+      <Project>{F172AB86-894D-3B10-8AE8-4C37D7DBE3D3}</Project>
+      <Name>unit1605</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1606.vcxproj">
+      <Project>{2DAE3E55-18A9-3853-83E2-A158B31D00C3}</Project>
+      <Name>unit1606</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1607.vcxproj">
+      <Project>{B8EB3DD8-A760-3FA0-AB3A-F246F9EA9ECD}</Project>
+      <Name>unit1607</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1608.vcxproj">
+      <Project>{5E9090C8-F09B-3906-A774-D4F60EA6E54D}</Project>
+      <Name>unit1608</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1609.vcxproj">
+      <Project>{904F180F-FB06-3055-9B15-6EA2D62131F0}</Project>
+      <Name>unit1609</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1610.vcxproj">
+      <Project>{2FFC62CF-C70B-3BB1-9C38-001B0C21FF52}</Project>
+      <Name>unit1610</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1611.vcxproj">
+      <Project>{CC5E8932-326A-36DF-86A0-7BF7360A1634}</Project>
+      <Name>unit1611</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1612.vcxproj">
+      <Project>{4D817BAE-93E3-3813-9AED-F7575B6D1123}</Project>
+      <Name>unit1612</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1614.vcxproj">
+      <Project>{4A784B68-77E8-375B-BC9C-212BF213BBE3}</Project>
+      <Name>unit1614</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1615.vcxproj">
+      <Project>{E3B2C7CA-D8AD-3051-A7A6-7A5C4A288CA1}</Project>
+      <Name>unit1615</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1616.vcxproj">
+      <Project>{A5932954-2EF5-343A-8873-7E4C5D61A32A}</Project>
+      <Name>unit1616</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1620.vcxproj">
+      <Project>{CA894E19-C05D-3D3B-B608-52F27D64BE59}</Project>
+      <Name>unit1620</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1621.vcxproj">
+      <Project>{A4539A9D-D2AA-34B7-8666-0F89B0353E77}</Project>
+      <Name>unit1621</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1650.vcxproj">
+      <Project>{7BABA01C-05F0-3EBB-B527-C7D40F7BE37E}</Project>
+      <Name>unit1650</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1651.vcxproj">
+      <Project>{516429AE-A593-34B1-861B-322FF2098FE3}</Project>
+      <Name>unit1651</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1652.vcxproj">
+      <Project>{A55DB63E-DA2E-3A7D-8410-2BBD90B0E995}</Project>
+      <Name>unit1652</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1653.vcxproj">
+      <Project>{B4850ED5-20EF-300F-8004-0BC8D46B6327}</Project>
+      <Name>unit1653</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1654.vcxproj">
+      <Project>{C5AB6258-E3CE-3686-9324-35863E518786}</Project>
+      <Name>unit1654</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1655.vcxproj">
+      <Project>{A5A1F1B5-FF52-3689-8EE2-69AEB9D7B8C4}</Project>
+      <Name>unit1655</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1656.vcxproj">
+      <Project>{19D4B97F-1713-3CB9-811F-99772A2DE70A}</Project>
+      <Name>unit1656</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1660.vcxproj">
+      <Project>{8AB55C71-A098-3E38-BB7A-C145E378EE8D}</Project>
+      <Name>unit1660</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1661.vcxproj">
+      <Project>{AED91E44-40DC-3B0A-A11B-21727B506A21}</Project>
+      <Name>unit1661</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit1663.vcxproj">
+      <Project>{910D9AEC-E801-3E90-9396-F54FC99912F6}</Project>
+      <Name>unit1663</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit2600.vcxproj">
+      <Project>{0FFCFCDF-FC0D-3D2D-B477-75922FFD620D}</Project>
+      <Name>unit2600</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit2601.vcxproj">
+      <Project>{26FED82C-ED85-30AC-96D5-5D01687F6CAE}</Project>
+      <Name>unit2601</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit2602.vcxproj">
+      <Project>{5C690511-1881-3572-9CA6-54E60391ED3D}</Project>
+      <Name>unit2602</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit2603.vcxproj">
+      <Project>{72D0837F-1FD6-3EC6-BC97-DA403F4D6644}</Project>
+      <Name>unit2603</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit2604.vcxproj">
+      <Project>{51080546-7EE3-3BD4-99AD-2A2F02A3CEC1}</Project>
+      <Name>unit2604</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit3200.vcxproj">
+      <Project>{D4EAD20F-7251-3C9F-B253-D16C47B16342}</Project>
+      <Name>unit3200</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\tests\unit\unit3205.vcxproj">
+      <Project>{0EB9D468-7C7C-3359-A961-FF72EB4E7032}</Project>
+      <Name>unit3205</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

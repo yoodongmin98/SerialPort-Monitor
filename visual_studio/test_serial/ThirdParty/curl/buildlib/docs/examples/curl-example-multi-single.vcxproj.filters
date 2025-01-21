@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\multi-single.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9D4F4156-D6C4-382E-A761-AD2F61A4DBBE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BF10BCC3-0847-3111-977C-883E1D65C804}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>curl-examples</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1 -BC:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build --check-stamp-file C:/Users/admin/PersonalWorkSpace/Code/TestProgram/visual_studio/test_serial/ThirdParty/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\ZERO_CHECK.vcxproj">
+      <Project>{C9B32A36-66D0-3A17-81DA-9E92595480EB}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-10-at-a-time.vcxproj">
+      <Project>{BB8DD036-459C-3083-B302-649385BB9768}</Project>
+      <Name>curl-example-10-at-a-time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-address-scope.vcxproj">
+      <Project>{70F50789-1F50-338D-967B-81E8CFBFE41B}</Project>
+      <Name>curl-example-address-scope</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-altsvc.vcxproj">
+      <Project>{FF6A5C16-7821-3399-9311-81CEDB5FBF1F}</Project>
+      <Name>curl-example-altsvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-anyauthput.vcxproj">
+      <Project>{3F1DA430-43C2-30C2-8106-8EC8FD0E9BE0}</Project>
+      <Name>curl-example-anyauthput</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-certinfo.vcxproj">
+      <Project>{6F6DC6A0-0A2E-3C36-931B-6CBC4CFDC691}</Project>
+      <Name>curl-example-certinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-chkspeed.vcxproj">
+      <Project>{1D1C6C9C-B262-3CBD-B28D-C3FCF5B4BE41}</Project>
+      <Name>curl-example-chkspeed</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-connect-to.vcxproj">
+      <Project>{31E58A65-1921-333E-9394-1E3D12061CC8}</Project>
+      <Name>curl-example-connect-to</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-cookie_interface.vcxproj">
+      <Project>{D6B49122-1AB2-366E-8973-28EA26677D49}</Project>
+      <Name>curl-example-cookie_interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-debug.vcxproj">
+      <Project>{CCFCEA66-801C-3A32-8B7D-B22BD53F6A78}</Project>
+      <Name>curl-example-debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-default-scheme.vcxproj">
+      <Project>{0859D537-4C07-3416-B847-41141EEB94D7}</Project>
+      <Name>curl-example-default-scheme</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-externalsocket.vcxproj">
+      <Project>{2F265ED0-7D46-3F1E-B7FF-E6AB9B2CDADC}</Project>
+      <Name>curl-example-externalsocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-fileupload.vcxproj">
+      <Project>{65AE344A-368B-38ED-9108-DBB3D0395793}</Project>
+      <Name>curl-example-fileupload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftp-wildcard.vcxproj">
+      <Project>{292E786F-8F23-337E-83A1-71A35FB067C3}</Project>
+      <Name>curl-example-ftp-wildcard</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpget.vcxproj">
+      <Project>{619CB22E-1AE3-308B-8D17-E1FEAFE61827}</Project>
+      <Name>curl-example-ftpget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpgetinfo.vcxproj">
+      <Project>{D0DE525C-E978-3C8F-BCBD-BCE4C470567A}</Project>
+      <Name>curl-example-ftpgetinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpgetresp.vcxproj">
+      <Project>{8DFE2A2F-3071-3CC7-9D01-8312F2F3DBE0}</Project>
+      <Name>curl-example-ftpgetresp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpsget.vcxproj">
+      <Project>{E53FFF9A-0638-3279-B24C-57729B185409}</Project>
+      <Name>curl-example-ftpsget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpupload.vcxproj">
+      <Project>{334289A6-2771-3342-8168-54E8C2136AF8}</Project>
+      <Name>curl-example-ftpupload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpuploadfrommem.vcxproj">
+      <Project>{21A4064D-4D15-3059-B7F7-AC132293A47B}</Project>
+      <Name>curl-example-ftpuploadfrommem</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ftpuploadresume.vcxproj">
+      <Project>{3443AF83-D444-3775-A530-2EDDBC62823A}</Project>
+      <Name>curl-example-ftpuploadresume</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-getinfo.vcxproj">
+      <Project>{4E734FAE-6DE8-3CC4-80DD-68A2BD4A13AC}</Project>
+      <Name>curl-example-getinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-getinmemory.vcxproj">
+      <Project>{95B213AA-769F-3240-B680-73158C0F7673}</Project>
+      <Name>curl-example-getinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-getredirect.vcxproj">
+      <Project>{A7E30045-1E4C-394C-8E25-3F4579B110EE}</Project>
+      <Name>curl-example-getredirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-getreferrer.vcxproj">
+      <Project>{DA7B4CFF-82AF-3A32-BFE9-0DA8AC092142}</Project>
+      <Name>curl-example-getreferrer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-headerapi.vcxproj">
+      <Project>{311F4C8C-FCEB-37F1-86D8-71EAD5762313}</Project>
+      <Name>curl-example-headerapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-hsts-preload.vcxproj">
+      <Project>{E63990DA-A396-3AAD-A089-0DC401F45251}</Project>
+      <Name>curl-example-hsts-preload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http-options.vcxproj">
+      <Project>{319DA9F1-B132-3061-B13E-057CD4FFA1AF}</Project>
+      <Name>curl-example-http-options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http-post.vcxproj">
+      <Project>{9472AC19-7ABB-36A0-8DF3-3FB78761AFBB}</Project>
+      <Name>curl-example-http-post</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http2-download.vcxproj">
+      <Project>{01D1E1A6-CD15-3BB5-B78D-25225378A396}</Project>
+      <Name>curl-example-http2-download</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http2-pushinmemory.vcxproj">
+      <Project>{AA73FD9A-3323-3459-B06E-E69F3A483194}</Project>
+      <Name>curl-example-http2-pushinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http2-serverpush.vcxproj">
+      <Project>{AC0B81FE-22B8-3A5D-82D0-BA3796D230EA}</Project>
+      <Name>curl-example-http2-serverpush</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http2-upload.vcxproj">
+      <Project>{DB5FE403-3092-364C-8FDF-5222D49DD386}</Project>
+      <Name>curl-example-http2-upload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http3.vcxproj">
+      <Project>{E9DD7B4C-BA3C-3CCC-962D-10F24500D57D}</Project>
+      <Name>curl-example-http3</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-http3-present.vcxproj">
+      <Project>{8F76AA08-CF19-3EEF-B51F-3E190552D98B}</Project>
+      <Name>curl-example-http3-present</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-httpcustomheader.vcxproj">
+      <Project>{5E958F04-60BA-3263-8BBE-85900985F098}</Project>
+      <Name>curl-example-httpcustomheader</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-httpput.vcxproj">
+      <Project>{3B9E46AA-7B2C-3C5C-A9B5-FB5622C2DB56}</Project>
+      <Name>curl-example-httpput</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-httpput-postfields.vcxproj">
+      <Project>{C38ABB4F-49CB-3F2A-B4E7-B0B3CE4F9306}</Project>
+      <Name>curl-example-httpput-postfields</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-https.vcxproj">
+      <Project>{CDA518EE-A8A2-34DB-AE64-BAF1B8A222C1}</Project>
+      <Name>curl-example-https</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-append.vcxproj">
+      <Project>{61FCE922-6CDB-356F-93C3-01B754FD62EC}</Project>
+      <Name>curl-example-imap-append</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-authzid.vcxproj">
+      <Project>{34261DCE-1173-3570-AACA-E1591D249247}</Project>
+      <Name>curl-example-imap-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-copy.vcxproj">
+      <Project>{AAE1D738-BCE2-3608-895A-4BB1D376EA4E}</Project>
+      <Name>curl-example-imap-copy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-create.vcxproj">
+      <Project>{888ADB58-FBF3-368A-8A64-A6F9BC6C34D5}</Project>
+      <Name>curl-example-imap-create</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-delete.vcxproj">
+      <Project>{96AA043C-E097-3965-8F59-A90CBBEBA56F}</Project>
+      <Name>curl-example-imap-delete</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-examine.vcxproj">
+      <Project>{7928108B-933D-35A1-BEC0-33FC9C7D83B6}</Project>
+      <Name>curl-example-imap-examine</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-fetch.vcxproj">
+      <Project>{80CA7240-D337-3F0C-AECF-930EDAE36CD0}</Project>
+      <Name>curl-example-imap-fetch</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-list.vcxproj">
+      <Project>{B056565A-7481-3EB8-AF0D-35E4A5A409AD}</Project>
+      <Name>curl-example-imap-list</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-lsub.vcxproj">
+      <Project>{350070EA-40CC-32ED-BA8F-4F5A6ACDD467}</Project>
+      <Name>curl-example-imap-lsub</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-multi.vcxproj">
+      <Project>{72C7A053-2678-3342-AC76-5F67331139EC}</Project>
+      <Name>curl-example-imap-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-noop.vcxproj">
+      <Project>{D13509EE-9A3B-3D50-81DB-1BADED661229}</Project>
+      <Name>curl-example-imap-noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-search.vcxproj">
+      <Project>{31D7E784-7E14-33DB-ABAC-D6C31C85B4B6}</Project>
+      <Name>curl-example-imap-search</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-ssl.vcxproj">
+      <Project>{A7C15BD0-1769-38FC-93CA-F97FF6423BE6}</Project>
+      <Name>curl-example-imap-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-store.vcxproj">
+      <Project>{CD81B6AB-2C8D-3DAA-ACCB-C05A111BA7ED}</Project>
+      <Name>curl-example-imap-store</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-imap-tls.vcxproj">
+      <Project>{6274ACF4-9A3F-328C-9E37-136A9F076B5F}</Project>
+      <Name>curl-example-imap-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-interface.vcxproj">
+      <Project>{DF04ACDB-957E-36BA-8B02-9343A41A6953}</Project>
+      <Name>curl-example-interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-ipv6.vcxproj">
+      <Project>{1E9BACBE-DDF1-3475-8CF1-5213D586A666}</Project>
+      <Name>curl-example-ipv6</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-keepalive.vcxproj">
+      <Project>{BD7C6B26-070E-3BC5-ADB2-8F47AB72F91F}</Project>
+      <Name>curl-example-keepalive</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-localport.vcxproj">
+      <Project>{05F3DBE8-5E9D-3FCE-9B4E-6E4ACCB271AC}</Project>
+      <Name>curl-example-localport</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-maxconnects.vcxproj">
+      <Project>{A697B6C3-4439-330B-9CF4-24B000BA04EB}</Project>
+      <Name>curl-example-maxconnects</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-app.vcxproj">
+      <Project>{76702C3C-2DC9-3996-835A-0EF42284379D}</Project>
+      <Name>curl-example-multi-app</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-debugcallback.vcxproj">
+      <Project>{125FE96F-9280-36A7-B678-84B68445C999}</Project>
+      <Name>curl-example-multi-debugcallback</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-double.vcxproj">
+      <Project>{49960ED4-EC8E-3C69-B6B5-89A7F6D56AE8}</Project>
+      <Name>curl-example-multi-double</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-formadd.vcxproj">
+      <Project>{734845C0-2B6C-3D1C-9429-DF51A0DCC603}</Project>
+      <Name>curl-example-multi-formadd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-legacy.vcxproj">
+      <Project>{3A981120-9F46-3036-A5F7-14FA89B40E04}</Project>
+      <Name>curl-example-multi-legacy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-post.vcxproj">
+      <Project>{57248BB9-BBB6-3F3F-8E47-2E9A937D2D4C}</Project>
+      <Name>curl-example-multi-post</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-multi-single.vcxproj">
+      <Project>{91A8DFDF-5771-3A44-B855-00D64CE2083E}</Project>
+      <Name>curl-example-multi-single</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-netrc.vcxproj">
+      <Project>{B81F2093-B301-37EE-897B-78F956438AFE}</Project>
+      <Name>curl-example-netrc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-parseurl.vcxproj">
+      <Project>{CA275A6F-4A03-3F50-87E1-DAD296950C47}</Project>
+      <Name>curl-example-parseurl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-persistent.vcxproj">
+      <Project>{8A9FC321-2E18-3C8F-BB4F-EF44E058DB2B}</Project>
+      <Name>curl-example-persistent</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-authzid.vcxproj">
+      <Project>{1E92030D-FD9F-3894-93EB-8CDA161D03AD}</Project>
+      <Name>curl-example-pop3-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-dele.vcxproj">
+      <Project>{E86B1BB1-C05D-31EB-A1FB-29E38DACD1F8}</Project>
+      <Name>curl-example-pop3-dele</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-list.vcxproj">
+      <Project>{21983D95-AA1B-37BC-B23B-C1E85B2398BF}</Project>
+      <Name>curl-example-pop3-list</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-multi.vcxproj">
+      <Project>{40B5AA5E-F599-3A6A-B3FC-358DCCFA5B10}</Project>
+      <Name>curl-example-pop3-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-noop.vcxproj">
+      <Project>{8558033A-61C1-3939-B265-E7A2683ADEB4}</Project>
+      <Name>curl-example-pop3-noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-retr.vcxproj">
+      <Project>{D087F25D-C493-30FA-A68E-6381BC9A8A72}</Project>
+      <Name>curl-example-pop3-retr</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-ssl.vcxproj">
+      <Project>{F4416A43-D738-3D63-A25C-1715CF8A4066}</Project>
+      <Name>curl-example-pop3-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-stat.vcxproj">
+      <Project>{4A5F37EC-D5CA-3D08-BC9B-3A620A197526}</Project>
+      <Name>curl-example-pop3-stat</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-tls.vcxproj">
+      <Project>{E2C20C7F-68E1-30A3-A162-EA200264E9D7}</Project>
+      <Name>curl-example-pop3-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-top.vcxproj">
+      <Project>{835D8FD6-1CF4-36FB-832A-44252DA578F6}</Project>
+      <Name>curl-example-pop3-top</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-pop3-uidl.vcxproj">
+      <Project>{C333C46E-CB5C-3D01-B34F-B7B4DCBA1794}</Project>
+      <Name>curl-example-pop3-uidl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-post-callback.vcxproj">
+      <Project>{09A898A0-393D-3920-8FD2-0AAA1500B66B}</Project>
+      <Name>curl-example-post-callback</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-postinmemory.vcxproj">
+      <Project>{19C7A891-289E-3582-AD36-FC14AA99D7F3}</Project>
+      <Name>curl-example-postinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-postit2.vcxproj">
+      <Project>{DF440E8B-9C2A-3CBC-B1A1-481C8027F30D}</Project>
+      <Name>curl-example-postit2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-postit2-formadd.vcxproj">
+      <Project>{2D2E5666-233D-3845-BF6B-94C350417D50}</Project>
+      <Name>curl-example-postit2-formadd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-progressfunc.vcxproj">
+      <Project>{03121E11-85ED-3735-AEFA-F1689E0F7B6C}</Project>
+      <Name>curl-example-progressfunc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-protofeats.vcxproj">
+      <Project>{FAF61962-2467-30CC-9ECD-69D4DB9661AE}</Project>
+      <Name>curl-example-protofeats</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-range.vcxproj">
+      <Project>{D7E587E6-DF52-3505-9F3C-A5456EEC9EE6}</Project>
+      <Name>curl-example-range</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-resolve.vcxproj">
+      <Project>{537A3B8C-A12D-3634-A508-49E277C5BB53}</Project>
+      <Name>curl-example-resolve</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-rtsp-options.vcxproj">
+      <Project>{80E7EBCB-443C-3FF1-BC28-4593216CF382}</Project>
+      <Name>curl-example-rtsp-options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-sendrecv.vcxproj">
+      <Project>{3EF2C30C-8834-3718-AF95-4DA937B2742A}</Project>
+      <Name>curl-example-sendrecv</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-sepheaders.vcxproj">
+      <Project>{D6FD3CD8-97A0-3C52-9644-A30581F1BF86}</Project>
+      <Name>curl-example-sepheaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-sftpget.vcxproj">
+      <Project>{B06D2A83-90C1-3910-93E2-D5B9D4330484}</Project>
+      <Name>curl-example-sftpget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-sftpuploadresume.vcxproj">
+      <Project>{BEFE07F4-C782-3B3B-AD30-90B2C99A501B}</Project>
+      <Name>curl-example-sftpuploadresume</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-shared-connection-cache.vcxproj">
+      <Project>{FCCD23EA-E74B-3441-890E-A1F1D1C1611A}</Project>
+      <Name>curl-example-shared-connection-cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-simple.vcxproj">
+      <Project>{614BD721-53F7-3754-95F2-F929542871C5}</Project>
+      <Name>curl-example-simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-simplepost.vcxproj">
+      <Project>{4C4E52DD-9115-3767-BD60-81CF848C1A63}</Project>
+      <Name>curl-example-simplepost</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-simplessl.vcxproj">
+      <Project>{322AECD3-E288-3983-91C0-4D647EFC4A92}</Project>
+      <Name>curl-example-simplessl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-authzid.vcxproj">
+      <Project>{33D772E8-ADE0-3455-B6F6-50098D7693A1}</Project>
+      <Name>curl-example-smtp-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-expn.vcxproj">
+      <Project>{E7A9CB97-B55A-39FA-927A-69FCAF067622}</Project>
+      <Name>curl-example-smtp-expn</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-mail.vcxproj">
+      <Project>{EF62DC67-804A-3245-8995-3F36BF72EF3A}</Project>
+      <Name>curl-example-smtp-mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-mime.vcxproj">
+      <Project>{2E07BF86-30EF-397D-9EA6-33DC88CC7EBB}</Project>
+      <Name>curl-example-smtp-mime</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-multi.vcxproj">
+      <Project>{21C310A9-681C-36F5-86B1-F75A92F86F7F}</Project>
+      <Name>curl-example-smtp-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-ssl.vcxproj">
+      <Project>{B1F2B2B1-9D45-3D88-9BD0-C8E7BAB17E11}</Project>
+      <Name>curl-example-smtp-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-tls.vcxproj">
+      <Project>{AA2052E4-39EA-368A-BE69-0A786762A8B1}</Project>
+      <Name>curl-example-smtp-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-smtp-vrfy.vcxproj">
+      <Project>{98590856-5D39-3A9B-AAA8-19FB1B070FC5}</Project>
+      <Name>curl-example-smtp-vrfy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-sslbackend.vcxproj">
+      <Project>{F6B1F5D4-28E0-36CB-9CF4-55C550B2C442}</Project>
+      <Name>curl-example-sslbackend</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-unixsocket.vcxproj">
+      <Project>{108102E9-0AB0-33CE-A435-3CA3089544D2}</Project>
+      <Name>curl-example-unixsocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-url2file.vcxproj">
+      <Project>{8315370A-45D5-36FA-97B1-F4DA034C8141}</Project>
+      <Name>curl-example-url2file</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-urlapi.vcxproj">
+      <Project>{4E64EAA5-E75C-3CC9-A7A0-C227C50D9709}</Project>
+      <Name>curl-example-urlapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-websocket.vcxproj">
+      <Project>{6F9EE511-323A-39F2-B7C4-891F2F9F2C80}</Project>
+      <Name>curl-example-websocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\PersonalWorkSpace\Code\TestProgram\visual_studio\test_serial\ThirdParty\curl-8.11.1\build\docs\examples\curl-example-websocket-cb.vcxproj">
+      <Project>{BE3E1AF2-4873-36F5-A389-F8E687DD6C14}</Project>
+      <Name>curl-example-websocket-cb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

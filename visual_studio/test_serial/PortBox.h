@@ -25,7 +25,7 @@ public:
 	void Instance(std::string& _PortName);
 	void Connect();
 	void DisConnect();
-	void InputCLI(std::string& _CLI);
+	void InputCLI();
 	void StartESPFlash(std::vector<std::string>& _FileName);
 	bool IsStringNull()
 	{

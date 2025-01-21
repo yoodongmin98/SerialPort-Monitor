@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AF1CA01C-109D-33A3-8A73-DABD17C854F0}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>curl-examples</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\admin\Downloads\curl-8.11.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\docs\examples\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\Downloads\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\Downloads\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\Downloads\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/admin/Downloads/curl-8.11.1/docs/examples/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/admin/Downloads/curl-8.11.1 -BC:/Users/admin/Downloads/curl-8.11.1/build --check-stamp-file C:/Users/admin/Downloads/curl-8.11.1/build/docs/examples/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\Makefile.inc.cmake;C:\Users\admin\Downloads\curl-8.11.1\docs\examples\Makefile.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\ZERO_CHECK.vcxproj">
+      <Project>{F6BA6042-EDE1-3116-986F-696EA26E67A7}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-10-at-a-time.vcxproj">
+      <Project>{F4565A5D-5AC8-3AFA-87C8-1F1434863026}</Project>
+      <Name>curl-example-10-at-a-time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-address-scope.vcxproj">
+      <Project>{C192B28E-7B60-38FA-A22C-C68CA4EFE84C}</Project>
+      <Name>curl-example-address-scope</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-altsvc.vcxproj">
+      <Project>{451C189E-E608-308F-B274-E2FD77C0AE72}</Project>
+      <Name>curl-example-altsvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-anyauthput.vcxproj">
+      <Project>{8A4BC11B-0345-38F0-A158-1CD25129511D}</Project>
+      <Name>curl-example-anyauthput</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-certinfo.vcxproj">
+      <Project>{A1B6229A-5051-33A4-8868-30FCEEA9AB7A}</Project>
+      <Name>curl-example-certinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-chkspeed.vcxproj">
+      <Project>{4BA23047-9AC2-339A-9C59-E630FB174D1A}</Project>
+      <Name>curl-example-chkspeed</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-connect-to.vcxproj">
+      <Project>{AB395C8D-2D12-3227-BFFA-BFD7361C9FBB}</Project>
+      <Name>curl-example-connect-to</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-cookie_interface.vcxproj">
+      <Project>{4BBAAD19-15B7-3BD4-83E4-297024CBA2A2}</Project>
+      <Name>curl-example-cookie_interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-debug.vcxproj">
+      <Project>{35362B36-5D3D-3883-9EDC-CDA27BCB266C}</Project>
+      <Name>curl-example-debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-default-scheme.vcxproj">
+      <Project>{DE099EF4-3685-30C4-AB36-858E7337077A}</Project>
+      <Name>curl-example-default-scheme</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-externalsocket.vcxproj">
+      <Project>{623ADDF1-5ECF-34EF-9B3A-A6131A16A843}</Project>
+      <Name>curl-example-externalsocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-fileupload.vcxproj">
+      <Project>{DC4CD3A4-E85B-358F-BAE1-319E1EC45AB2}</Project>
+      <Name>curl-example-fileupload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftp-wildcard.vcxproj">
+      <Project>{2162DDA5-4495-312C-8E81-3A5FE8DE7E8F}</Project>
+      <Name>curl-example-ftp-wildcard</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpget.vcxproj">
+      <Project>{90EFDDEA-959E-3715-B24F-545DD2604EBD}</Project>
+      <Name>curl-example-ftpget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpgetinfo.vcxproj">
+      <Project>{C3456BEA-B0C3-39BC-90AD-F63BF16C5172}</Project>
+      <Name>curl-example-ftpgetinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpgetresp.vcxproj">
+      <Project>{3CB92DBE-1902-3B40-88D2-6B15FBA46B55}</Project>
+      <Name>curl-example-ftpgetresp</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpsget.vcxproj">
+      <Project>{A5896B73-D4BC-396C-9723-D478862BBF77}</Project>
+      <Name>curl-example-ftpsget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpupload.vcxproj">
+      <Project>{67BAEC2E-E7A7-3690-96C8-5739039135F5}</Project>
+      <Name>curl-example-ftpupload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpuploadfrommem.vcxproj">
+      <Project>{BE16DEB5-3736-3AED-9256-6AD2A70B8AAC}</Project>
+      <Name>curl-example-ftpuploadfrommem</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ftpuploadresume.vcxproj">
+      <Project>{1D80488F-AC06-3347-BE6D-6BAFA4D4527A}</Project>
+      <Name>curl-example-ftpuploadresume</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-getinfo.vcxproj">
+      <Project>{441403D6-CB02-37FD-9E51-3BA3C7750FC8}</Project>
+      <Name>curl-example-getinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-getinmemory.vcxproj">
+      <Project>{C4886A0E-69DA-3783-B2AB-68759C45BC04}</Project>
+      <Name>curl-example-getinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-getredirect.vcxproj">
+      <Project>{0ED34976-8CC3-3EAC-B10E-A938154A6E08}</Project>
+      <Name>curl-example-getredirect</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-getreferrer.vcxproj">
+      <Project>{5109B56C-A86D-37BC-B4CC-36EC3120D9FD}</Project>
+      <Name>curl-example-getreferrer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-headerapi.vcxproj">
+      <Project>{4A75E6B8-B400-361A-AF8D-FBE354818D09}</Project>
+      <Name>curl-example-headerapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-hsts-preload.vcxproj">
+      <Project>{240A6045-78F6-32F7-92A0-320F7AB91CDB}</Project>
+      <Name>curl-example-hsts-preload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http-options.vcxproj">
+      <Project>{26C588B1-FFD3-3207-A0B1-2ED462A45467}</Project>
+      <Name>curl-example-http-options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http-post.vcxproj">
+      <Project>{A0FAECC6-AE01-31E4-820A-31B8696C84B8}</Project>
+      <Name>curl-example-http-post</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http2-download.vcxproj">
+      <Project>{2A6FAB02-DC21-3176-BAF1-9914DD0E45EF}</Project>
+      <Name>curl-example-http2-download</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http2-pushinmemory.vcxproj">
+      <Project>{9BDF26E1-3FE6-3F9C-88B9-5AE258097671}</Project>
+      <Name>curl-example-http2-pushinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http2-serverpush.vcxproj">
+      <Project>{A652C0FF-8D63-3D1F-88AC-1FA1C4E36A15}</Project>
+      <Name>curl-example-http2-serverpush</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http2-upload.vcxproj">
+      <Project>{DA295890-ACBA-3B9B-BE12-B2A09FD45520}</Project>
+      <Name>curl-example-http2-upload</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http3.vcxproj">
+      <Project>{08F6C82C-602F-3B83-A321-C1C51BD214F1}</Project>
+      <Name>curl-example-http3</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-http3-present.vcxproj">
+      <Project>{7C16B9FD-E64C-3C45-AE88-DE5E5610D2C7}</Project>
+      <Name>curl-example-http3-present</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-httpcustomheader.vcxproj">
+      <Project>{B9BC3BA1-3A62-3591-AD2E-4E717757FAE6}</Project>
+      <Name>curl-example-httpcustomheader</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-httpput.vcxproj">
+      <Project>{839EE0F6-EBD7-32D0-94F5-E6AE1CD1CBC6}</Project>
+      <Name>curl-example-httpput</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-httpput-postfields.vcxproj">
+      <Project>{46B94CE3-8F5C-3447-99D8-D52190B5BBA0}</Project>
+      <Name>curl-example-httpput-postfields</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-https.vcxproj">
+      <Project>{AA293518-71B6-3404-BB7A-F5335F68BD6C}</Project>
+      <Name>curl-example-https</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-append.vcxproj">
+      <Project>{F6EE7001-9BD0-3102-8317-FEC947927DD2}</Project>
+      <Name>curl-example-imap-append</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-authzid.vcxproj">
+      <Project>{43576C59-A073-3226-AE9A-160A4C3B721B}</Project>
+      <Name>curl-example-imap-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-copy.vcxproj">
+      <Project>{5E303F21-7477-3094-995C-483AB6136B33}</Project>
+      <Name>curl-example-imap-copy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-create.vcxproj">
+      <Project>{2529CED3-F037-3587-BE08-8B465C4273A0}</Project>
+      <Name>curl-example-imap-create</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-delete.vcxproj">
+      <Project>{3F0ED9A2-D04F-35B7-8E75-0840339B807F}</Project>
+      <Name>curl-example-imap-delete</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-examine.vcxproj">
+      <Project>{AD1A055F-A92D-33B9-9F66-BAFB90856906}</Project>
+      <Name>curl-example-imap-examine</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-fetch.vcxproj">
+      <Project>{B5AC2051-86AA-3E0E-9EC3-C8B5EC9089C7}</Project>
+      <Name>curl-example-imap-fetch</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-list.vcxproj">
+      <Project>{1249C7B8-C4C8-30B4-B9EC-DEF79D47E032}</Project>
+      <Name>curl-example-imap-list</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-lsub.vcxproj">
+      <Project>{3222273E-282C-329D-B137-081FE8BCF0B1}</Project>
+      <Name>curl-example-imap-lsub</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-multi.vcxproj">
+      <Project>{D4094F0D-5A93-30E9-A2DF-D9B1D58DF01C}</Project>
+      <Name>curl-example-imap-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-noop.vcxproj">
+      <Project>{FEC57F36-6969-3C5F-AE6E-E50F0FA4F9A3}</Project>
+      <Name>curl-example-imap-noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-search.vcxproj">
+      <Project>{619AD4CB-6322-3D68-9E68-7534DFEC8D89}</Project>
+      <Name>curl-example-imap-search</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-ssl.vcxproj">
+      <Project>{E13B9FF0-079D-31EF-A45D-4B3E198A9F36}</Project>
+      <Name>curl-example-imap-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-store.vcxproj">
+      <Project>{8EDDB794-1EE4-3BED-A1FB-E2BEDE0F9674}</Project>
+      <Name>curl-example-imap-store</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-imap-tls.vcxproj">
+      <Project>{9389E31D-5BFA-3431-A290-E344B4E065C4}</Project>
+      <Name>curl-example-imap-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-interface.vcxproj">
+      <Project>{DB3065E5-7ECC-392D-8A03-844E991F7AD0}</Project>
+      <Name>curl-example-interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-ipv6.vcxproj">
+      <Project>{4DB3AA33-40E9-38CA-8579-ED943584372E}</Project>
+      <Name>curl-example-ipv6</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-keepalive.vcxproj">
+      <Project>{B8910FAB-E3B4-38D7-980E-29B30D4742B5}</Project>
+      <Name>curl-example-keepalive</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-localport.vcxproj">
+      <Project>{AFBB50E1-C580-35EC-B0D2-F0CE7955F650}</Project>
+      <Name>curl-example-localport</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-maxconnects.vcxproj">
+      <Project>{DA691679-D147-3C97-88A5-4D28B20DFC77}</Project>
+      <Name>curl-example-maxconnects</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-app.vcxproj">
+      <Project>{B8CBB188-EC0C-35AE-952D-B711495F8C19}</Project>
+      <Name>curl-example-multi-app</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-debugcallback.vcxproj">
+      <Project>{7F39E3B4-2770-3488-BA41-43724AB46F11}</Project>
+      <Name>curl-example-multi-debugcallback</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-double.vcxproj">
+      <Project>{8795C655-B58D-3B08-AD9A-CB72C3483ABD}</Project>
+      <Name>curl-example-multi-double</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-formadd.vcxproj">
+      <Project>{816B1136-1274-3FDD-AEB0-E0A0DB31183D}</Project>
+      <Name>curl-example-multi-formadd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-legacy.vcxproj">
+      <Project>{6E924ED7-F394-3E99-9F70-51114C48C50C}</Project>
+      <Name>curl-example-multi-legacy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-post.vcxproj">
+      <Project>{D79E35AC-1FFE-33CE-8DCF-8D4F083EC01F}</Project>
+      <Name>curl-example-multi-post</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-multi-single.vcxproj">
+      <Project>{17B4DE8B-1AEF-3057-9F2E-C0464C0D77C0}</Project>
+      <Name>curl-example-multi-single</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-netrc.vcxproj">
+      <Project>{4ABC695B-91D3-3789-98D3-2A8FEB174866}</Project>
+      <Name>curl-example-netrc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-parseurl.vcxproj">
+      <Project>{04C27897-B3A0-31C0-8B39-5C458937A24D}</Project>
+      <Name>curl-example-parseurl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-persistent.vcxproj">
+      <Project>{A81096E6-B59B-3218-A5BC-6CDF6D28C580}</Project>
+      <Name>curl-example-persistent</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-authzid.vcxproj">
+      <Project>{AA297319-4A24-334B-8B19-3D22ACDE4B53}</Project>
+      <Name>curl-example-pop3-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-dele.vcxproj">
+      <Project>{3AA10533-E80A-3324-85D6-8BC8F00C7E03}</Project>
+      <Name>curl-example-pop3-dele</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-list.vcxproj">
+      <Project>{B346788A-DDC2-39CD-9599-CF6D8976970C}</Project>
+      <Name>curl-example-pop3-list</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-multi.vcxproj">
+      <Project>{61C9FA66-2E27-3559-8E75-B638DD4E60FE}</Project>
+      <Name>curl-example-pop3-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-noop.vcxproj">
+      <Project>{BA4A593E-A172-30A1-8735-0EAF1D867411}</Project>
+      <Name>curl-example-pop3-noop</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-retr.vcxproj">
+      <Project>{CE7683D1-175A-3A08-A710-CB3C9B89DDE4}</Project>
+      <Name>curl-example-pop3-retr</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-ssl.vcxproj">
+      <Project>{8BFBF980-4685-3111-AE52-7C32CB0B0463}</Project>
+      <Name>curl-example-pop3-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-stat.vcxproj">
+      <Project>{55A1AEEB-5202-366D-9534-791A00D8A612}</Project>
+      <Name>curl-example-pop3-stat</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-tls.vcxproj">
+      <Project>{086251CE-4BE4-300A-90BD-97007DE0204F}</Project>
+      <Name>curl-example-pop3-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-top.vcxproj">
+      <Project>{3754E6F6-360D-3201-AAD6-2A5E5B01DCD6}</Project>
+      <Name>curl-example-pop3-top</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-pop3-uidl.vcxproj">
+      <Project>{03A830BB-F589-3331-A272-CD374F607F77}</Project>
+      <Name>curl-example-pop3-uidl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-post-callback.vcxproj">
+      <Project>{B30FB011-046D-3CCF-92FD-79D1F0C2C22C}</Project>
+      <Name>curl-example-post-callback</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-postinmemory.vcxproj">
+      <Project>{E0B91964-D3FB-3DE1-9A2D-4F368E0AF74B}</Project>
+      <Name>curl-example-postinmemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-postit2.vcxproj">
+      <Project>{A3329A96-02D7-39AF-BAF2-74E97D40EB4F}</Project>
+      <Name>curl-example-postit2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-postit2-formadd.vcxproj">
+      <Project>{D111B0AD-A061-3EB7-BFFB-66548E5DF3DF}</Project>
+      <Name>curl-example-postit2-formadd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-progressfunc.vcxproj">
+      <Project>{03C856A0-4667-3949-91C6-62ED147A732C}</Project>
+      <Name>curl-example-progressfunc</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-protofeats.vcxproj">
+      <Project>{05904951-31B1-3882-AA6A-1F72236118FA}</Project>
+      <Name>curl-example-protofeats</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-range.vcxproj">
+      <Project>{85A32721-7984-3488-83D9-C75101DC423E}</Project>
+      <Name>curl-example-range</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-resolve.vcxproj">
+      <Project>{90963DF9-0AFF-34C0-9FFA-840988B5DB8D}</Project>
+      <Name>curl-example-resolve</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-rtsp-options.vcxproj">
+      <Project>{D5EC2269-4675-3C88-BC71-9B911EA391AB}</Project>
+      <Name>curl-example-rtsp-options</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-sendrecv.vcxproj">
+      <Project>{2E1C7C9A-1FB2-35D9-97E3-8B6A46A2073B}</Project>
+      <Name>curl-example-sendrecv</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-sepheaders.vcxproj">
+      <Project>{453E8D22-6796-34BC-B5F9-561774893A8F}</Project>
+      <Name>curl-example-sepheaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-sftpget.vcxproj">
+      <Project>{456F8F8E-5132-3004-998C-4F972D15C295}</Project>
+      <Name>curl-example-sftpget</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-sftpuploadresume.vcxproj">
+      <Project>{49E80BE2-1594-3F66-B6C0-6EE269FB8542}</Project>
+      <Name>curl-example-sftpuploadresume</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-shared-connection-cache.vcxproj">
+      <Project>{89879792-8553-3E4D-AB86-FEDAC2B47A29}</Project>
+      <Name>curl-example-shared-connection-cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-simple.vcxproj">
+      <Project>{861041AC-297E-3FF1-AD7F-F213BA4B4388}</Project>
+      <Name>curl-example-simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-simplepost.vcxproj">
+      <Project>{B63D5B52-2A5A-3134-B3A0-2D73162747B0}</Project>
+      <Name>curl-example-simplepost</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-simplessl.vcxproj">
+      <Project>{F6E4B787-0F30-3420-985E-F50FFEEB6D69}</Project>
+      <Name>curl-example-simplessl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-authzid.vcxproj">
+      <Project>{20211FBD-5DC3-3B20-AFA9-EC4D9492E622}</Project>
+      <Name>curl-example-smtp-authzid</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-expn.vcxproj">
+      <Project>{AC2FE452-977C-386B-B698-7659165CC015}</Project>
+      <Name>curl-example-smtp-expn</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-mail.vcxproj">
+      <Project>{4D947FEC-46F6-3B14-AA61-2B4E84E79783}</Project>
+      <Name>curl-example-smtp-mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-mime.vcxproj">
+      <Project>{29025529-41F6-3F6C-831D-229C0D834C24}</Project>
+      <Name>curl-example-smtp-mime</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-multi.vcxproj">
+      <Project>{852B0E70-1A33-3304-9DA9-E3F19D6482DF}</Project>
+      <Name>curl-example-smtp-multi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-ssl.vcxproj">
+      <Project>{33B476D9-87B4-3DB3-A07D-0436C6885410}</Project>
+      <Name>curl-example-smtp-ssl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-tls.vcxproj">
+      <Project>{F42FC52E-B782-3840-BE2C-4CEC163B1106}</Project>
+      <Name>curl-example-smtp-tls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-smtp-vrfy.vcxproj">
+      <Project>{C5834592-F451-338F-9EB4-3C4318A267EA}</Project>
+      <Name>curl-example-smtp-vrfy</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-sslbackend.vcxproj">
+      <Project>{FEE88F66-DAAD-3A04-8557-374B7CEEEC65}</Project>
+      <Name>curl-example-sslbackend</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-unixsocket.vcxproj">
+      <Project>{EF9673FC-FEE3-36CE-B48E-7794814DEA48}</Project>
+      <Name>curl-example-unixsocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-url2file.vcxproj">
+      <Project>{2A437669-692E-3D05-805B-9E01F2DA3FB2}</Project>
+      <Name>curl-example-url2file</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-urlapi.vcxproj">
+      <Project>{82711BAA-7E52-3566-81C6-AB0F5775D42D}</Project>
+      <Name>curl-example-urlapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-websocket.vcxproj">
+      <Project>{62B04EC1-CC33-378B-991D-BC52FE0C10DE}</Project>
+      <Name>curl-example-websocket</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\examples\curl-example-websocket-cb.vcxproj">
+      <Project>{F6CBBA38-36DC-397B-8BA5-3769DD5D2D27}</Project>
+      <Name>curl-example-websocket-cb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

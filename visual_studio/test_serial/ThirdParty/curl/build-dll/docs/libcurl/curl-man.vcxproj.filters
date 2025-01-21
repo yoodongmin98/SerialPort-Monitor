@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\build\CMakeFiles\5bc77312594ccd0e4569d86beafe5654\libcurl-symbols.md.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\build\CMakeFiles\5bc77312594ccd0e4569d86beafe5654\curl_easy_cleanup.3.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\build\CMakeFiles\f83a14689a56a832640d4fa1cce3986e\curl-man.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\admin\Downloads\curl-8.11.1\docs\libcurl\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\admin\Downloads\curl-8.11.1\build\docs\libcurl\CMakeFiles\curl-man" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9FDEFC4A-5425-3C1C-91A4-0E95A96D2D33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
