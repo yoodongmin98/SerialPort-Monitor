@@ -287,6 +287,7 @@ void PortBox::PortCheck()
 		my_serial.open();
 		my_serial.setRTS(false);
 		my_serial.setDTR(false);
+		AutoCliCheck();
 	}
 	catch (const std::exception e)
 	{
@@ -467,5 +468,14 @@ void PortBox::DebugPortSetting(std::string& _PortName)
 			Set_X_Click_CallBackEvent();
 		}
 		D_Port->Instance(_PortName, RawDataLog);
+	}
+}
+
+
+void PortBox::AutoCliCheck()
+{
+	if (MyGUI_Interface::GUI->GetAutoCLI())
+	{
+		my_serial.write(MyGUI_Interface::GUI->GetCLIText() + "\n");
 	}
 }

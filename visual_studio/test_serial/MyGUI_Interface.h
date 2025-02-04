@@ -83,6 +83,10 @@ public:
             UICount = 0;
         }
     }
+    const bool GetAutoCLI()
+    {
+        return AutoCLI;
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -148,6 +152,8 @@ private:
     bool SystemPath = true;
     bool EspCheck = true;
     bool Installesptool = false;
+
+    bool AutoCLI = false;
 
 
     int USBinfo = 0;

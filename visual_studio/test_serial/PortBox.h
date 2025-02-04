@@ -65,6 +65,7 @@ protected:
 	void CreatePortButton(std::string& _PortName);
 	void InsertTask_WorkingCheck(std::string& _PortName);
 	void PortCheck();
+	void AutoCliCheck();
 
 	void SerialMonitor();
 	void CloseSerialPort();

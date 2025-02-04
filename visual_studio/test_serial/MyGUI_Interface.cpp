@@ -418,6 +418,8 @@ void MyGUI_Interface::CLIBox()
 			obj->InputCLI();
 		}
 	}
+	ImGui::SameLine();
+	ImGui::Checkbox("Auto Send", &AutoCLI);
 }
 
 void MyGUI_Interface::ASCIILineMode()
