@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serial", "serial\serial.vcxproj", "{A8517FB2-C74E-43BD-B3C6-B05D3FC11ECD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_serial", "test_serial\test_serial.vcxproj", "{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialPort Monitor", "test_serial\test_serial.vcxproj", "{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SerialPort Monitors", "SerialPort Monitor\SerialPort Monitor.vdproj", "{1FCB0EA3-5BF9-40FB-9653-2F97F292FEE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,8 +33,15 @@ Global
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|Win32.Build.0 = Release|Win32
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|x64.ActiveCfg = Release|x64
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|x64.Build.0 = Release|x64
+		{1FCB0EA3-5BF9-40FB-9653-2F97F292FEE2}.Debug|Win32.ActiveCfg = Debug
+		{1FCB0EA3-5BF9-40FB-9653-2F97F292FEE2}.Debug|x64.ActiveCfg = Debug
+		{1FCB0EA3-5BF9-40FB-9653-2F97F292FEE2}.Release|Win32.ActiveCfg = Release
+		{1FCB0EA3-5BF9-40FB-9653-2F97F292FEE2}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34956ACA-EF30-421D-8760-62976C462DA7}
 	EndGlobalSection
 EndGlobal
