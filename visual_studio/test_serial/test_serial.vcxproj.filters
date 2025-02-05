@@ -116,13 +116,5 @@
     <ClInclude Include="EngineDebug.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico" />
-    <Image Include="..\output_icon_v2.ico" />
   </ItemGroup>
 </Project>
