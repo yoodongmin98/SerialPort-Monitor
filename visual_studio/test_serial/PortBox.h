@@ -111,6 +111,8 @@ private:
 	bool ASCIIMODE = true;
 	bool HEXMODE = false;
 
+	bool HEXLOGRECORD = false;
+
 
 	//Serial Data Setting
 	int BaudRate = 921600; //Defalut

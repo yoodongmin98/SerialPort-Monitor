@@ -50,7 +50,6 @@ void PortBox::Instance(std::string& _PortName)
 	GUISetting();
 	DataSet();
 	CreatePortButton(_PortName);
-	DebugPortSetting(_PortName);
 	InsertTask_WorkingCheck(_PortName);
 	CreateRowDataBox();
 }
@@ -107,6 +106,7 @@ void PortBox::CreatePortButton(std::string& _PortName)
 		if (ImGui::Button("CLI"))
 			InputCLI();
 	}
+	DebugPortSetting(_PortName);
 	
 	if (IsLost)
 		ImGui::TextColored(REDCOLOR, "Connection Lost");
@@ -183,6 +183,7 @@ void PortBox::SerialMonitor()
 				PreHexCount++;
 				if ((PreHexCount - HexNumberCount) == 0)
 				{
+					HEXLOGRECORD = true;
 					RawHexLog.push_back(HexLineData);
 					PreHexCount = 0;
 					HexLineData.clear();
@@ -198,8 +199,12 @@ void PortBox::SerialMonitor()
 				else
 					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
 			}
-			else if(HEXMODE) //여기에 줄을 구분할 방법이 필요함 ㅇㅇ 작은모드든 큰 모드든
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << HexLineData << std::endl << std::flush;
+			else if (HEXMODE && HEXLOGRECORD)
+			{
+				//여기에 줄을 구분할 방법이 필요함 ㅇㅇ 작은모드든 큰 모드든
+				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << RawHexLog.back() << std::endl << std::flush;
+				HEXLOGRECORD = false;
+			}
 			
 
 			if (!Dataline.empty())
