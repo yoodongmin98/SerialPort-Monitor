@@ -1,6 +1,5 @@
 #include "Core.h"
 #include "EngineDebug.h"
-#include "resource.h"
 #include <fstream>
 #include <iostream>
 
