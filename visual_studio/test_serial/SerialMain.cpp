@@ -10,9 +10,9 @@ int main()
 {
     try 
     {
-        std::shared_ptr<EngineCore> Cores = std::make_shared<EngineCore>();
         EngineDebug::LeakCheck();
         new int; //Leak Check¿ë
+        std::shared_ptr<EngineCore> Cores = std::make_shared<EngineCore>();
         Cores->Instance();
     }
     catch (const std::exception& e) {

@@ -71,7 +71,7 @@ protected:
     void CreateRenderTarget();
     void CleanupRenderTarget();
 
-   
+    void RenderLoop(ImGuiIO& io);
 private:
     HWND hwnd;
     RECT rect;
