@@ -581,13 +581,21 @@ void MyGUI_Interface::LogFileCreateSelect()
 	
 	if (PortRawData)
 	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-			obj->SetCOMLogFile();
+		if (PortRawDatabool)
+		{
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+				obj->SetCOMLogFile();
+			PortRawDatabool = false;
+		}
 	}
 	else
 	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-			obj->SetCOMLofFileClose();
+		if (!PortRawDatabool)
+		{
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+				obj->SetCOMLofFileClose();
+			PortRawDatabool = true;
+		}
 	}
 }
 
@@ -629,3 +637,26 @@ void MyGUI_Interface::SystemPathSetting()
 		SystemPath = false;
 	}
 }
+
+char* MyGUI_Interface::SaveFileDialog()
+{
+	OPENFILENAME ofn;
+	char szFile[MAX_PATH] = { 0 };
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.Flags = OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;
+	ofn.lpstrDefExt = "txt";
+
+	if (GetSaveFileName(&ofn))
+		std::wcout << "파일 저장 경로: " << szFile << std::endl;
+	else
+		std::wcout << "파일 저장 취소됨" << std::endl;
+
+	return szFile;
+}
+

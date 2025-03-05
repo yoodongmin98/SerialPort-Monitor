@@ -124,7 +124,7 @@ protected:
     void LogClear();
     void LogFileCreateSelect();
     void DataSetting();
-
+    char* SaveFileDialog();
 
 
     void ScreenRelease();
@@ -139,6 +139,7 @@ private:
 
     bool LogBoxs = false;
     bool PortRawData = false;
+    bool PortRawDatabool = false;
 
     bool ClickASCII = false;
     bool ClickHEX = false;
