@@ -46,9 +46,10 @@ public:
 	{
 		HexNumberCount = _Count;
 	}
-	void SetCOMLogFile()
+	void SetCOMLogFile(char* _PATH)
 	{
 		LogFileBool = !LogFileBool;
+		SystemPATH = _PATH;
 	}
 	void SetCOMLofFileClose()
 	{
@@ -72,6 +73,7 @@ protected:
 	void CreateRowDataBox();
 	void ASCII_HEX_Setting();
 	void DebugPortSetting(std::string& _PortName);
+	std::string GetFileNameFromPath(const std::string& path);
 
 
 	void Set_X_Click_CallBackEvent()
@@ -162,6 +164,7 @@ private:
 	std::ofstream logFile;
 	bool LogFileBool = false;
 	int NoDataTime = 5;
+	char* SystemPATH;
 
 
 	//Log

@@ -140,6 +140,8 @@ private:
     bool LogBoxs = false;
     bool PortRawData = false;
     bool PortRawDatabool = false;
+    char szFile[261] = { 0 };
+    char* PATH;
 
     bool ClickASCII = false;
     bool ClickHEX = false;

@@ -1,3 +1,4 @@
+#pragma comment(lib, "comdlg32.lib")
 #include "DataFile.h"
 #include "imgui.h"
 #include "MyGUI_Interface.h"
@@ -584,7 +585,7 @@ void MyGUI_Interface::LogFileCreateSelect()
 		if (PortRawDatabool)
 		{
 			for (std::shared_ptr<PortBox> obj : ObjectBox)
-				obj->SetCOMLogFile();
+				obj->SetCOMLogFile(PATH);
 			PortRawDatabool = false;
 		}
 	}
@@ -596,6 +597,11 @@ void MyGUI_Interface::LogFileCreateSelect()
 				obj->SetCOMLofFileClose();
 			PortRawDatabool = true;
 		}
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("..."))
+	{
+		PATH = SaveFileDialog();
 	}
 }
 
@@ -641,7 +647,7 @@ void MyGUI_Interface::SystemPathSetting()
 char* MyGUI_Interface::SaveFileDialog()
 {
 	OPENFILENAME ofn;
-	char szFile[MAX_PATH] = { 0 };
+	szFile[260] = { 0 };
 
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);

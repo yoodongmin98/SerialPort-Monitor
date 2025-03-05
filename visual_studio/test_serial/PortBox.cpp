@@ -120,7 +120,10 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 		if (LogFileBool)
 		{
 			if (!logFile.is_open())
-				logFile.open("Raw_" + _PortName + +".txt", std::ios::app);
+			{
+				std::string MyPATH = GetFileNameFromPath(SystemPATH);
+				logFile.open(MyPATH + _PortName+".txt", std::ios::app);
+			}
 			LogFileBool = false;
 		}
 
@@ -483,4 +486,13 @@ void PortBox::AutoCliCheck()
 	{
 		my_serial.write(MyGUI_Interface::GUI->GetCLIText() + "\n");
 	}
+}
+
+
+std::string PortBox::GetFileNameFromPath(const std::string& path) 
+{
+	size_t pos = path.find_last_of("\\"); 
+	if (pos != std::string::npos)
+		return path.substr(0, pos + 1);
+	return path;
 }
