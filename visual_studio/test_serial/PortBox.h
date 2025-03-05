@@ -46,7 +46,7 @@ public:
 	{
 		HexNumberCount = _Count;
 	}
-	void SetCOMLogFile(char* _PATH)
+	void SetCOMLogFile(std::string _PATH)
 	{
 		LogFileBool = !LogFileBool;
 		SystemPATH = _PATH;
@@ -164,7 +164,7 @@ private:
 	std::ofstream logFile;
 	bool LogFileBool = false;
 	int NoDataTime = 5;
-	char* SystemPATH;
+	std::string SystemPATH;
 
 
 	//Log

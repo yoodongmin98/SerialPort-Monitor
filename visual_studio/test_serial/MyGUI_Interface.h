@@ -123,8 +123,9 @@ protected:
     void LogManagementBox();
     void LogClear();
     void LogFileCreateSelect();
+    void TextPATH();
     void DataSetting();
-    char* SaveFileDialog();
+    std::string SaveFileDialog();
 
 
     void ScreenRelease();
@@ -141,7 +142,7 @@ private:
     bool PortRawData = false;
     bool PortRawDatabool = false;
     char szFile[261] = { 0 };
-    char* PATH;
+    std::string PATH = "";
 
     bool ClickASCII = false;
     bool ClickHEX = false;
