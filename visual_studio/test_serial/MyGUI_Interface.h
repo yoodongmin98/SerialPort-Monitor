@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <serial/serial.h>
-
+#include <fstream>
 
 
 class PortBox;
@@ -15,6 +15,8 @@ public:
     MyGUI_Interface();
     ~MyGUI_Interface();
 
+
+    void LogFlash(std::string _PortName, std::string _Content);
 
     void Instance(ImGuiIO& _io);
     const std::vector<std::string> GetPortName()
@@ -123,7 +125,7 @@ protected:
     void LogManagementBox();
     void LogClear();
     void LogFileCreateSelect();
-    void TextPATH();
+    void TextPATH(std::string& _PATH);
     void DataSetting();
     std::string SaveFileDialog();
 
@@ -140,9 +142,11 @@ private:
 
     bool LogBoxs = false;
     bool PortRawData = false;
+    bool LogDatabool = false;
     bool PortRawDatabool = false;
     char szFile[261] = { 0 };
     std::string PATH = "";
+    std::string LogPATH = "";
 
     bool ClickASCII = false;
     bool ClickHEX = false;
@@ -206,4 +210,7 @@ private:
 
 
     std::vector<std::string> FlashFileName;
+
+    std::ofstream logFile;
+    std::string LogFileName; //로그파일로 남길 이름
 };

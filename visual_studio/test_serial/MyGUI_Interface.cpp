@@ -5,6 +5,7 @@
 #include "MyImGui.h"
 #include "PortBox.h"
 #include "ThreadPool.h"
+#include "MyTime.h"
 
 #include <array>
 #include <conio.h>
@@ -27,7 +28,10 @@ MyGUI_Interface::MyGUI_Interface()
 
 MyGUI_Interface::~MyGUI_Interface()
 {
-
+	if (logFile.is_open())
+	{
+		logFile.close();
+	}
 }
 
 
@@ -574,10 +578,35 @@ void MyGUI_Interface::LogFileCreateSelect()
 	ImGui::Checkbox("Log Box Record", &LogBoxs);
 	
 	if (LogBoxs)
-		MyImGui::MyImGuis->SetLogBoxBool();
+	{
+		if (LogDatabool)
+		{
+			if (!logFile.is_open() && !LogPATH.empty())
+				logFile.open(LogPATH + "Log.txt", std::ios::app);
+			LogDatabool = false;
+		}
+	}
 	else
-		MyImGui::MyImGuis->SetLogBoxFileClose();
+	{
+		if (!LogDatabool)
+		{
+			if (logFile.is_open())
+			{
+				logFile.close();
+			}
+			LogDatabool = true;
+		}
 	
+	}
+	//ImGui::SameLine();
+	//ImGui::SameLine();
+	//if (ImGui::Button("..."))
+	//{
+		//LogPATH = SaveFileDialog();
+	//}
+	//TextPATH(LogPATH);
+	//여기 고쳐야함
+
 	ImGui::Checkbox("PortBox RawData Record", &PortRawData);
 	
 	if (PortRawData)
@@ -603,17 +632,17 @@ void MyGUI_Interface::LogFileCreateSelect()
 	{
 		PATH = SaveFileDialog();
 	}
-	TextPATH();
+	TextPATH(PATH);
 }
 
 
-void MyGUI_Interface::TextPATH()
+void MyGUI_Interface::TextPATH(std::string& _PATH)
 {
 	std::string CopyPATH;
-	if (!PATH.empty())
+	if (!_PATH.empty())
 	{
 		size_t pos = PATH.find_last_of("\\");
-		CopyPATH = PATH.substr(0, pos + 1) + """(COM NUMBER)""";
+		CopyPATH = _PATH.substr(0, pos + 1) + "(COM NUMBER)";
 	}
 	ImGui::Text("PATH : %s", CopyPATH.c_str());
 }
@@ -680,3 +709,8 @@ std::string MyGUI_Interface::SaveFileDialog()
 	return SZFILE;
 }
 
+
+void MyGUI_Interface::LogFlash(std::string _PortName, std::string _Content)
+{
+	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
+}

@@ -6,10 +6,9 @@
 #include <tchar.h>
 #include <iostream>
 #include <vector>
-#include <string>
+
 #include <serial/serial.h>
-#include <fstream>
-#include <thread>
+
 
 
 // Data
@@ -33,7 +32,6 @@ public:
     ~MyImGui();
     void Instance();
    
-    void LogFlash(std::string _PortName, std::string _Content);
 
     std::shared_ptr<ThreadPool> GetThreadPool()
     {
@@ -47,15 +45,6 @@ public:
     {
         return height;
     }
-    void SetLogBoxBool()
-    {
-        LogFileSet = !LogFileSet;
-    }
-    void SetLogBoxFileClose()
-    {
-        if (logFile.is_open())
-            logFile.close();
-    }
     HWND& GetWindowHandle()
     {
         return hwnd;
@@ -65,7 +54,6 @@ public:
         return rect;
     }
 protected:
-    void LogFileOpen();
     bool CreateDeviceD3D(HWND hWnd);
     void CleanupDeviceD3D();
     void CreateRenderTarget();
@@ -75,15 +63,10 @@ protected:
 private:
     HWND hwnd;
     RECT rect;
-    bool LogFileSet = false;
 
     int width = 0;
     int height = 0;
 
     std::shared_ptr<MyGUI_Interface> MyGUI_Interfaces = nullptr;
     std::shared_ptr<ThreadPool> ThreadPools;
-
-   
-    std::ofstream logFile;
-    std::string LogFileName; //로그파일로 남길 이름
 };

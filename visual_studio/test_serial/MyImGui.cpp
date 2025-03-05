@@ -27,10 +27,7 @@ MyImGui::MyImGui()
 }
 MyImGui::~MyImGui()
 {
-	if (logFile.is_open())
-	{
-		logFile.close();
-	}
+	
 }
 
 void MyImGui::Instance()
@@ -131,13 +128,6 @@ void MyImGui::RenderLoop(ImGuiIO& io)
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-
-		if (LogFileSet)
-		{
-			LogFileName = "Log.txt";
-			LogFileOpen();
-			LogFileSet = false;
-		}
 
 		MyGUI_Interfaces->Instance(io);
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -250,15 +240,3 @@ void MyImGui::CleanupRenderTarget()
 	if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = nullptr; }
 }
 
-
-void MyImGui::LogFileOpen()
-{
-	//로그파일 생성
-	if(!logFile.is_open())
-		logFile.open(LogFileName, std::ios::app);
-}
-
-void MyImGui::LogFlash(std::string _PortName , std::string _Content)
-{
-	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
-}

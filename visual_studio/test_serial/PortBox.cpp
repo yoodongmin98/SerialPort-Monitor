@@ -252,7 +252,7 @@ void PortBox::SerialMonitor()
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;
-				MyImGui::MyImGuis->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
+				MyGUI_Interface::GUI->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
 				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 			}
 		}
@@ -266,7 +266,7 @@ void PortBox::SerialMonitor()
 				WorkingBool = false;
 				MissingBool = false;
 				BootStart = false;
-				MyImGui::MyImGuis->LogFlash(String, "이 부팅되었습니다.");
+				MyGUI_Interface::GUI->LogFlash(String, "이 부팅되었습니다.");
 				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
 			}
 		}
@@ -278,7 +278,7 @@ void PortBox::SerialMonitor()
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
 			IsLost = true;
-			MyImGui::MyImGuis->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
+			MyGUI_Interface::GUI->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
 			MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
 		}
 
