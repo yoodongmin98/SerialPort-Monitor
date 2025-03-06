@@ -151,7 +151,7 @@ void PortBox::SerialMonitor()
 		bool dataReceived = false;
 
 		// 데이터 읽기
-		//if (my_serial.available()) 
+		if (my_serial.available()) 
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
 			if (ASCIIMODE)
@@ -322,6 +322,7 @@ void PortBox::Connect()
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if (!my_serial.isOpen())
 		{
+			MyGUI_Interface::GUI->SetLogPathabled();
 			PortBoxBool = true;
 			IsLost = false;
 			my_serial.setPort(String);
@@ -337,6 +338,7 @@ void PortBox::Connect()
 
 void PortBox::DisConnect()
 {
+	MyGUI_Interface::GUI->SetLogPathdisabled();
 	CloseSerialPort();
 }
 

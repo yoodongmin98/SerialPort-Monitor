@@ -89,6 +89,15 @@ public:
     {
         return AutoCLI;
     }
+
+    void SetLogPathdisabled()
+    {
+        PathDisabled = false;
+    }
+    void SetLogPathabled()
+    {
+        PathDisabled = true;
+    }
 protected:
     void PortBoxCreate();
     void DrawLine();
@@ -133,6 +142,7 @@ protected:
     void ScreenRelease();
 private:
     bool UIdisabled = false;
+    bool PathDisabled = false;
     int UICount = 0;
 
     bool CreateBool = false;
