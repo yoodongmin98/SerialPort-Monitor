@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <string>
 
-// Ό³Έν :
+
 namespace EngineDebug
 {
 	void LeakCheck();

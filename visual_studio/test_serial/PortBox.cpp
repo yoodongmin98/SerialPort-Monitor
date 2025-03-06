@@ -151,7 +151,7 @@ void PortBox::SerialMonitor()
 		bool dataReceived = false;
 
 		// 데이터 읽기
-		if (my_serial.available()) 
+		//if (my_serial.available()) 
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
 			if (ASCIIMODE)
@@ -403,12 +403,27 @@ void PortBox::CreateRowDataBox()
 	ImGui::PopStyleColor();
 }
 
+
+std::vector<uint8_t> HexStringToBytes(const std::string& hex) 
+{
+	std::vector<uint8_t> bytes;
+	std::istringstream hexStream(hex);
+	std::string byteStr;
+
+	while (hexStream >> std::setw(2) >> byteStr) {
+		bytes.push_back(static_cast<uint8_t>(std::stoul(byteStr, nullptr, 16)));
+	}
+	return bytes;
+}
+
 void PortBox::InputCLI()
 {
 	{
 		std::lock_guard<std::mutex> lock(serialMutex);
-		if(my_serial.isOpen())
+		if (my_serial.isOpen())
+		{
 			my_serial.write(MyGUI_Interface::GUI->GetCLIText() +"\n");
+		}
 	}
 }
 
