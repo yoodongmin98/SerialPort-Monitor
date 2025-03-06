@@ -582,7 +582,11 @@ void MyGUI_Interface::LogFileCreateSelect()
 		if (LogDatabool)
 		{
 			if (!logFile.is_open() && !LogPATH.empty())
+			{
+				size_t pos = LogPATH.find_last_of("\\");
+				LogPATH = LogPATH.substr(0, pos + 1);
 				logFile.open(LogPATH + "Log.txt", std::ios::app);
+			}
 			LogDatabool = false;
 		}
 	}
@@ -598,14 +602,13 @@ void MyGUI_Interface::LogFileCreateSelect()
 		}
 	
 	}
-	//ImGui::SameLine();
-	//ImGui::SameLine();
-	//if (ImGui::Button("..."))
-	//{
-		//LogPATH = SaveFileDialog();
-	//}
-	//TextPATH(LogPATH);
-	//여기 고쳐야함
+	ImGui::SameLine();
+	if (ImGui::Button(" ..."))
+	{
+		LogPATH = SaveFileDialog();
+	}
+	TextPATH(LogPATH);
+
 
 	ImGui::Checkbox("PortBox RawData Record", &PortRawData);
 	
@@ -628,21 +631,24 @@ void MyGUI_Interface::LogFileCreateSelect()
 		}
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("..."))
+	if (ImGui::Button("... "))
 	{
 		PATH = SaveFileDialog();
 	}
-	TextPATH(PATH);
+	TextPATH(PATH , false);
 }
 
 
-void MyGUI_Interface::TextPATH(std::string& _PATH)
+void MyGUI_Interface::TextPATH(std::string& _PATH , const bool _IsLog)
 {
 	std::string CopyPATH;
 	if (!_PATH.empty())
 	{
-		size_t pos = PATH.find_last_of("\\");
-		CopyPATH = _PATH.substr(0, pos + 1) + "(COM NUMBER)";
+		size_t pos = _PATH.find_last_of("\\");
+		if(_IsLog)
+			CopyPATH = _PATH.substr(0, pos + 1) + "Log.txt";
+		else
+			CopyPATH = _PATH.substr(0, pos + 1) + " (COM NUMBER) ";
 	}
 	ImGui::Text("PATH : %s", CopyPATH.c_str());
 }

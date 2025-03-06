@@ -125,7 +125,7 @@ protected:
     void LogManagementBox();
     void LogClear();
     void LogFileCreateSelect();
-    void TextPATH(std::string& _PATH);
+    void TextPATH(std::string& _PATH, const bool _IsLog = true);
     void DataSetting();
     std::string SaveFileDialog();
 
