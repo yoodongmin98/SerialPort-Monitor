@@ -378,8 +378,8 @@ void MyGUI_Interface::LogManagementBox()
 void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 {
 	ImGui::SeparatorText("Frame / FPS");
-	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / _io.Framerate);
-	ImGui::Text("FPS : %.1f", _io.Framerate);
+	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
+	ImGui::Text("FPS : %.1f", ImGui::GetIO().Framerate);
 }
 
 
