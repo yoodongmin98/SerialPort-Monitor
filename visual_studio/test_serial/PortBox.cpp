@@ -339,6 +339,7 @@ void PortBox::Connect()
 void PortBox::DisConnect()
 {
 	MyGUI_Interface::GUI->SetLogPathdisabled();
+	MissingTime = std::chrono::steady_clock::time_point();
 	CloseSerialPort();
 }
 

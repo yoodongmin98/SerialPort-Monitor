@@ -129,6 +129,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib;user32.lib;gdi32.lib;winmm.lib;Advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
