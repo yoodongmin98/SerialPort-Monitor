@@ -700,7 +700,7 @@ void MyGUI_Interface::SystemPathSetting()
 std::string MyGUI_Interface::SaveFileDialog()
 {
 	OPENFILENAME ofn;
-	szFile[260] = { 0 };
+	char szFile[260] = { 0 };
 
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);

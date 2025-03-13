@@ -154,7 +154,6 @@ private:
     bool PortRawData = false;
     bool LogDatabool = false;
     bool PortRawDatabool = false;
-    char szFile[261] = { 0 };
     std::string PATH = "";
     std::string LogPATH = "";
 
