@@ -20,7 +20,7 @@ DebugPortBox::~DebugPortBox()
 
 void DebugPortBox::Instance(std::string _PortName, std::deque<std::string>& _RawDataLog)
 {
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.05f, 0.2f, 0.9f));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.3f, 0.1f, 0.1f, 0.9f));
 	ImGui::Begin(_PortName.c_str(), nullptr , ImGuiWindowFlags_None || ImGuiWindowFlags_NoCollapse);
 	ImGui::Text(_PortName.c_str());
 	ImGui::SameLine();
