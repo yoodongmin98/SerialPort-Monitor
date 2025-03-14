@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serial", "serial\serial.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialPort Monitor", "test_serial\test_serial.vcxproj", "{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SerialPort Monitor", "SerialPort Monitor\SerialPort Monitor.vdproj", "{6D4F47A3-2657-496D-8BF2-7CB23319CBC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|Win32.Build.0 = Release|Win32
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|x64.ActiveCfg = Release|x64
 		{92EE7E58-C737-41F9-B795-9B6ACF6AB0B8}.Release|x64.Build.0 = Release|x64
+		{6D4F47A3-2657-496D-8BF2-7CB23319CBC7}.Debug|Win32.ActiveCfg = Debug
+		{6D4F47A3-2657-496D-8BF2-7CB23319CBC7}.Debug|x64.ActiveCfg = Debug
+		{6D4F47A3-2657-496D-8BF2-7CB23319CBC7}.Release|Win32.ActiveCfg = Release
+		{6D4F47A3-2657-496D-8BF2-7CB23319CBC7}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
