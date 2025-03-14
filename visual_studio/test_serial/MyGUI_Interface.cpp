@@ -698,6 +698,8 @@ void MyGUI_Interface::ScreenRelease()
 	PortName.clear();
 	CreateBool = true;
 	EspCheck = true;
+	LogBoxs = false;
+	PortRawData = false;
 }
 
 
