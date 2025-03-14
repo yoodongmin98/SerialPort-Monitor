@@ -117,10 +117,8 @@ protected:
     void FlashBox();
     void SystemPathSetting();
     void FlashSettings();
-    char Text1[50] = "bootloader.bin";
-    char Text2[50] = "partitions.bin";
-    char Text3[50] = "boot_app0.bin";
-    char Text4[50] = "firmware.bin";
+    std::string ExtractFileName(std::string _FileName);
+
  
     void WindowMode();
     void WindowDrawLineSet();
@@ -145,6 +143,7 @@ protected:
     void TextPATH(std::string& _PATH, const bool _IsLog = true);
     void DataSetting();
     std::string SaveFileDialog();
+    std::string OpenFileDialog();
 
 
     void ScreenRelease();

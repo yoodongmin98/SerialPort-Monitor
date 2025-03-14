@@ -287,15 +287,30 @@ void MyGUI_Interface::FlashBox()
 
 void MyGUI_Interface::FlashSettings()
 {
-	ImGui::InputTextMultiline("0x1000", Text1, sizeof(Text1), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0x8000", Text2, sizeof(Text2), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0xe000", Text3, sizeof(Text3), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	ImGui::InputTextMultiline("0x10000", Text4, sizeof(Text4), ButtonSize, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	ImGui::PushItemWidth(150);
+	ImGui::InputText("0x1000", (char*)ExtractFileName(FlashFileName[0]).c_str(), ExtractFileName(FlashFileName[0]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
+	if (ImGui::Button("File1"))
+	{
+		FlashFileName[0] = OpenFileDialog();
+	}
+	ImGui::InputText("0x8000", (char*)ExtractFileName(FlashFileName[1]).c_str(), ExtractFileName(FlashFileName[1]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
+	if (ImGui::Button("File2"))
+	{
+		FlashFileName[1] = OpenFileDialog();
+	}
+	ImGui::InputText("0xe000", (char*)ExtractFileName(FlashFileName[2]).c_str(), ExtractFileName(FlashFileName[2]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
+	if (ImGui::Button("File3"))
+	{
+		FlashFileName[2] = OpenFileDialog();
+	}
+	ImGui::InputText("0x10000", (char*)ExtractFileName(FlashFileName[3]).c_str(), ExtractFileName(FlashFileName[3]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
+	if (ImGui::Button("File4"))
+	{
+		FlashFileName[3] = OpenFileDialog();
+	}
+	ImGui::PopItemWidth();
 
-	FlashFileName[0] = Text1;
-	FlashFileName[1] = Text2;
-	FlashFileName[2] = Text3;
-	FlashFileName[3] = Text4;
+
 
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
 	if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
@@ -307,6 +322,13 @@ void MyGUI_Interface::FlashSettings()
 		}
 	}
 	ImGui::PopStyleColor(1);
+}
+
+std::string MyGUI_Interface::ExtractFileName(std::string _FileName)
+{
+	size_t pos = _FileName.find_last_of("\\");
+	std::string filenames = (pos == std::string::npos) ? _FileName : _FileName.substr(pos + 1);
+	return filenames;
 }
 
 
@@ -716,6 +738,25 @@ std::string MyGUI_Interface::SaveFileDialog()
 	std::string SZFILE(szFile);
 
 	return SZFILE;
+}
+
+std::string MyGUI_Interface::OpenFileDialog()
+{
+	char fileName[MAX_PATH] = { 0 };
+	OPENFILENAME ofn;
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFilter = "Firmware Files\0*.bin;*.elf;*.hex\0All Files\0*.*\0";
+	ofn.lpstrFile = fileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
+
+	if (GetOpenFileName(&ofn))
+	{
+		return std::string(fileName);
+	}
+	return "";
 }
 
 

@@ -23,13 +23,19 @@ EspUploader::~EspUploader()
 
 void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _FileName)
 { 
-	//나중에 뮤텍스로 잠궈야할수도있음(서버에서 경로지정받아서 다운받게되면)
-	//싫으면 그냥 경로를 지역변수로 만들면됨 ㅇㅇ
+	//메모리 지우기
     EraseMemory(_PortNum);
+	//현재 작업중인 Directory경로 반환
 	exePath = std::filesystem::current_path().wstring();
+	// esp는 4개의 주소의 4개의 파일을 써야하니까 그만큼 반복문
 	for (size_t i = 0; i < MemoryAddress.size(); ++i)
 	{
-		filePath = (std::filesystem::path(exePath) / _FileName[i]).wstring();
+		//전달받은 파일 이름 추출
+		size_t pos = _FileName[i].find_last_of("\\");
+		std::string filenames = (pos == std::string::npos) ? _FileName[i] : _FileName[i].substr(pos + 1);
+
+		filePath = (std::filesystem::path(exePath) / filenames).wstring();
+		//파일경로가 유효한지 확인
 		if (std::filesystem::exists(filePath)) 
 		{
 			TriggerEvent("The file exists");
@@ -41,12 +47,14 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 			return;
 		}
 
+		//커맨드로 입력할 명령어 입력하는 부분
 		std::wstringstream wss;
 		wss << L"esptool --chip esp32 --port " << std::wstring(_PortNum.begin(), _PortNum.end())
 			<< L" --baud 921600 write_flash " << std::wstring(MemoryAddress[i].begin(), MemoryAddress[i].end())
 			<< L" " << filePath;
 		writeCommand = wss.str();
 
+		//shell pipe열어서 명령어 전송
 		FILE* pipe = my_popen(writeCommand, L"r");
 		if (pipe == nullptr)
 		{
@@ -56,6 +64,7 @@ void EspUploader::Instance(std::string& _PortNum, std::vector<std::string>& _Fil
 			return;
 		}
 
+		//유효하다면 버퍼에서 전송받는 데이터를 받아서 PortBox에 callback으로 데이터를 트리거 전송
 		while (fgets(buffer.data(), buffer.size(), pipe) != nullptr)
 		{
 			std::string Strings = buffer.data();
