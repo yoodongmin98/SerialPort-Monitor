@@ -322,7 +322,7 @@ void PortBox::Connect()
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if (!my_serial.isOpen())
 		{
-			MyGUI_Interface::GUI->SetLogPathabled();
+			MyGUI_Interface::GUI->PlusPathCount();
 			PortBoxBool = true;
 			IsLost = false;
 			my_serial.setPort(String);
@@ -338,7 +338,6 @@ void PortBox::Connect()
 
 void PortBox::DisConnect()
 {
-	MyGUI_Interface::GUI->SetLogPathdisabled();
 	MissingTime = std::chrono::steady_clock::time_point();
 	CloseSerialPort();
 }
@@ -354,6 +353,7 @@ void PortBox::CloseSerialPort()
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if (my_serial.isOpen())
 		{
+			MyGUI_Interface::GUI->MinusPathCount();
 			my_serial.setRTS(true);
 			my_serial.setDTR(true);
 			my_serial.close();

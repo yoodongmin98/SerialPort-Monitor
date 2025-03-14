@@ -532,7 +532,6 @@ void MyGUI_Interface::AllConnect()
 	ImGui::SeparatorText("Connect");
 	if (ImGui::Button("All Connect", ButtonSize))
 	{
-		PathDisabled = true;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			if (!obj->IsStringNull())
@@ -545,7 +544,6 @@ void MyGUI_Interface::AllDisConnect()
 {
 	if (ImGui::Button("All DisConnect", ButtonSize))
 	{
-		PathDisabled = false;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
@@ -557,7 +555,6 @@ void MyGUI_Interface::ComportReset()
 {
 	if (ImGui::Button("ComPort Reset", ButtonSize))
 	{
-		PathDisabled = false;
  		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();

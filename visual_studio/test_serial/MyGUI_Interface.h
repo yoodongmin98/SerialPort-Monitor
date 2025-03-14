@@ -90,13 +90,21 @@ public:
         return AutoCLI;
     }
 
-    void SetLogPathdisabled()
+    void PlusPathCount()
     {
-        PathDisabled = false;
+        PathCount++;
+        if (PathCount != 0)
+        {
+            PathDisabled = true;
+        }
     }
-    void SetLogPathabled()
+    void MinusPathCount()
     {
-        PathDisabled = true;
+        PathCount--;
+        if (PathCount == 0)
+        {
+            PathDisabled = false;
+        }
     }
 protected:
     void PortBoxCreate();
@@ -143,6 +151,7 @@ protected:
 private:
     bool UIdisabled = false;
     bool PathDisabled = false;
+    int PathCount = 0;
     int UICount = 0;
 
     bool CreateBool = false;
@@ -196,8 +205,8 @@ private:
     float WinSizeX = 1500.0f; //Window X크기
     float WinSizeY = 820.0f; //Window Y크기
 
-    const char* BaudrateArray[17] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
-        "115200","230400","460800","921600","1000000","1843200" };
+    const char* BaudrateArray[18] = { "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
+        "115200","230400","460800","921600","1000000","1250000","1843200"};
     const char* DatabitArray[2] = { "7","8" };
     const char* StopbitArray[2] = { "1","2" };
     const char* ParityArray[5] = { "NONE","Odd","Even","Mark","Space"};
