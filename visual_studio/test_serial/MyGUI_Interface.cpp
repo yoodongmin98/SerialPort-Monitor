@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <functional>
 #include <algorithm>
+#include "Windows.h"
 
 
 
@@ -37,6 +38,7 @@ MyGUI_Interface::~MyGUI_Interface()
 
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
+
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
 	AutoKeySetting(_io);
     PortBoxCreate();
@@ -135,7 +137,7 @@ void MyGUI_Interface::PortBoxCreate()
 			else
 				ETCCount.push_back(V.description.c_str());
 		}
-		if(MaxPortCount == 1)
+		if(MaxPortCount == 1 && USBSerialCount.size())
 			PortName.push_back(USBSerialCount[USBinfo]);
 
 		for (auto i = 0; i < PortInfo.size(); ++i)
@@ -165,9 +167,18 @@ void MyGUI_Interface::PortBoxCreate()
 
 void MyGUI_Interface::DrawLine()
 {
-	//window ÁÂÇ¥°è±âÁØ
 	ImVec2 topLeft = XYZERO;
-	ImVec2 bottomRight = ImVec2(topLeft.x + WinSizeX, topLeft.y + WinSizeY);
+	ImVec2 bottomRight;
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		bottomRight = ImVec2(topLeft.x + MyImGui::MyImGuis->GetWindowSize_X(), topLeft.y + MyImGui::MyImGuis->GetWindowSize_Y());
+	}
+	else
+	{
+		bottomRight = ImVec2(topLeft.x + WinSizeX, topLeft.y + WinSizeY);
+	}
+
+
 	ImU32 color = PORTVIEWBACKGROUND;
 	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
@@ -183,12 +194,19 @@ void MyGUI_Interface::DrawLine()
 
 void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
-	if (Window_Button == 0)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X()*0.8, ZERO), ImGuiCond_Always);
+	else if (Window_Button == 0)
 		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
 	else
 		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
+
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (Window_Button == 0)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X()*0.2, MyImGui::MyImGuis->GetWindowSize_Y()));
+	}
+	else if (Window_Button == 0)
 		ImGui::SetWindowSize(ImVec2(WinSizeX - MINI_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
 	else if(Window_Button == 1)
 		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
@@ -196,13 +214,31 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, NORMAL_PORTVIEWSIZE_Y));
 
 
-
-
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		SmallZoomDrawLine = true;
+		UIVisible = true;
+		IsWindowZoom = true;
+		cellSizeX = (MyImGui::MyImGuis->GetWindowSize_X() * 0.8) / LineSwapSize;
+		cellSizeY = (MyImGui::MyImGuis->GetWindowSize_Y() * 0.8) / (MaxPortCount / LineSwapSize);
+	}
+	else
+	{
+		IsWindowZoom = false;
+		if (SmallZoomDrawLine)
+		{
+			CreateBool = true;
+			WindowSizeSet();
+			WindowDrawLineSet();
+			SmallZoomDrawLine = false;
+		}
+	}
 	
 	ImGui::BeginDisabled(UIdisabled);
 
-
+	ImGui::BeginDisabled(IsWindowZoom);
 	WindowMode();
+	ImGui::EndDisabled();
 	if(Window_Button == 0 || Window_Button == 1)
 		LogBoxOnOff();
 	ComPortDataSetting();
@@ -277,6 +313,20 @@ void MyGUI_Interface::WindowDrawLineSet()
 void MyGUI_Interface::WindowSizeSet()
 {
 	GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+
+	if (Window_Button==0)
+	{
+		WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+	}
+	if (Window_Button == 1)
+	{
+		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+	}
+	if (Window_Button == 2)
+	{
+		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
+	}
+
 	SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
 		MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
 		WinSizeX, WinSizeY, SWP_NOZORDER | SWP_NOACTIVATE);
@@ -466,12 +516,16 @@ void MyGUI_Interface::RadarTypeBox()
 
 void MyGUI_Interface::LogManagementBox()
 {
-	if (WinSizeX > WINDOW_CHECK_SIZE)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.55f, MyImGui::MyImGuis->GetWindowSize_Y()*0.8), ImGuiCond_Always);
+	else if (WinSizeX > WINDOW_CHECK_SIZE)
 		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	else
 		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (WinSizeX > WINDOW_CHECK_SIZE)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.25f, MyImGui::MyImGuis->GetWindowSize_Y()*0.2));
+	else if (WinSizeX > WINDOW_CHECK_SIZE)
 		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
 	else
 		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
@@ -491,9 +545,14 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 
 void MyGUI_Interface::LogBox()
 {
-	ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y()*0.8), ImGuiCond_Always);
+	else
+		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
 	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (WinSizeX > WINDOW_CHECK_SIZE)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		ImGui::SetWindowSize(ImVec2(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.55f, MyImGui::MyImGuis->GetWindowSize_Y()*0.2)));
+	else if (WinSizeX > WINDOW_CHECK_SIZE)
 		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));
 	else
 		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));

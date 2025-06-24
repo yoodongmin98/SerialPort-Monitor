@@ -45,7 +45,7 @@ public:
     {
         return height;
     }
-    HWND& GetWindowHandle()
+    HWND GetWindowHandle()
     {
         return hwnd;
     }
