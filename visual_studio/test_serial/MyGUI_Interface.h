@@ -107,6 +107,8 @@ public:
         }
     }
 protected:
+    void AutoKeySetting(ImGuiIO& _io);
+    
     void PortBoxCreate();
     void DrawLine();
 

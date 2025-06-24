@@ -38,6 +38,7 @@ MyGUI_Interface::~MyGUI_Interface()
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
+	AutoKeySetting(_io);
     PortBoxCreate();
     DrawLine();
 	AllConnectBox(_io);
@@ -49,6 +50,71 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 	BoxInstance();
 }
 
+void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
+{
+	//ImGuiKey_LeftAlt
+	if (ImGui::IsKeyPressed(ImGuiKey_F) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (ViewBool)
+		{
+			FlashBool = true;
+			ViewBool = false;
+		}
+		else if (FlashBool)
+		{
+			ViewBool = true;
+			FlashBool = false;
+		}
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_R) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+			obj->RawMonitorClear();
+		}
+		ScreenRelease();
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_C) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!ViewBool)
+			return;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			if (!obj->IsStringNull())
+				obj->Connect();
+		}
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_D) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!ViewBool)
+			return;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_E) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (ViewBool)
+			return;
+		UIdisabled = true;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->StartESPFlash(FlashFileName);
+		}
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_X) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!ViewBool)
+			return;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->InputCLI();
+		}
+	}
+}
+
 
 void MyGUI_Interface::PortBoxCreate()
 {
@@ -56,12 +122,29 @@ void MyGUI_Interface::PortBoxCreate()
 	if (CreateBool)
 	{
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
+		std::vector<const char*> BluetoothPort;
+		std::vector<std::string> USBSerialCount;
+		std::vector<const char*> ETCCount;
+
+		for (serial::PortInfo& V : PortInfo)
+		{
+			if (V.description.find("Bluetooth") != std::string::npos)
+				BluetoothPort.push_back(V.description.c_str());
+			else if (V.description.find(target) != std::string::npos)
+				USBSerialCount.push_back(V.port);
+			else
+				ETCCount.push_back(V.description.c_str());
+		}
+		if(MaxPortCount == 1)
+			PortName.push_back(USBSerialCount[USBinfo]);
+
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
-			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find(exceptiontarget)==std::string::npos)
-				PortName.push_back(PortInfo[i].port.c_str());
 			if (PortName.size() >= MaxPortCount)
 				break;
+			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find(exceptiontarget)==std::string::npos)
+				PortName.push_back(PortInfo[i].port.c_str());
+		
 		}
 		sort(PortName.begin(), PortName.end(), std::less<>());
 		for (auto i = 0; i < PortName.size(); ++i)
@@ -123,7 +206,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	if(Window_Button == 0 || Window_Button == 1)
 		LogBoxOnOff();
 	ComPortDataSetting();
-	if (SelectMode())
+	SelectMode();
+	if (ViewBool)
 	{
 		AllConnect();
 		AllDisConnect();
