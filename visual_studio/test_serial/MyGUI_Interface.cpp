@@ -38,7 +38,6 @@ MyGUI_Interface::~MyGUI_Interface()
 
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
-
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
 	AutoKeySetting(_io);
     PortBoxCreate();
@@ -123,6 +122,7 @@ void MyGUI_Interface::PortBoxCreate()
 	PortInfo = serial::list_ports();
 	if (CreateBool)
 	{
+		PortName.clear();
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		std::vector<const char*> BluetoothPort;
 		std::vector<std::string> USBSerialCount;
@@ -214,25 +214,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, NORMAL_PORTVIEWSIZE_Y));
 
 
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-	{
-		SmallZoomDrawLine = true;
-		UIVisible = true;
-		IsWindowZoom = true;
-		cellSizeX = (MyImGui::MyImGuis->GetWindowSize_X() * 0.8) / LineSwapSize;
-		cellSizeY = (MyImGui::MyImGuis->GetWindowSize_Y() * 0.8) / (MaxPortCount / LineSwapSize);
-	}
-	else
-	{
-		IsWindowZoom = false;
-		if (SmallZoomDrawLine)
-		{
-			CreateBool = true;
-			WindowSizeSet();
-			WindowDrawLineSet();
-			SmallZoomDrawLine = false;
-		}
-	}
+
 	
 	ImGui::BeginDisabled(UIdisabled);
 
@@ -261,7 +243,40 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	
 	ImGui::EndDisabled();
 	Frame_FPSBox(_io);
-	
+
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		if (!SmallZoomDrawLine && FrameCounter)
+		{
+			UIVisible = true;
+			IsWindowZoom = true;
+			cellSizeX = (MyImGui::MyImGuis->GetWindowSize_X() * 0.8) / LineSwapSize;
+			std::cout << "Loop에서 Cellsize를" << cellSizeX << " 로 바꿨습니다" << std::endl;
+			cellSizeY = (MyImGui::MyImGuis->GetWindowSize_Y() * 0.8) / (MaxPortCount / LineSwapSize);
+
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+			{
+				obj->DisConnect();
+				obj->RawMonitorClear();
+			}
+			ScreenRelease();
+			SmallZoomDrawLine = true;
+		}
+		FrameCounter = true;
+	}
+	else
+	{
+		IsWindowZoom = false;
+		if (SmallZoomDrawLine)
+		{
+			FrameCounter = false;
+			UIVisible = false;
+			CreateBool = true;
+			WindowSizeSet();
+			WindowDrawLineSet();
+			SmallZoomDrawLine = false;
+		}
+	}
 	ImGui::End();
 }
 
@@ -295,13 +310,17 @@ void MyGUI_Interface::WindowMode()
 
 void MyGUI_Interface::WindowDrawLineSet()
 {
-	if (WinSizeX > WINDOW_CHECK_SIZE)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		cellSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8 / LineSwapSize;
+	else if (WinSizeX > WINDOW_CHECK_SIZE)
 		cellSizeX = NORMAL_PORTVIEWSIZE_X / LineSwapSize;
 	else
 		cellSizeX = MINI_PORTVIEWSIZE_X / LineSwapSize;
 
-	cellSizeY = MINI_PORTVIEWSIZE_Y / (MaxPortCount / LineSwapSize);
-
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+		cellSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8 / (MaxPortCount / LineSwapSize);
+	else
+		cellSizeY = MINI_PORTVIEWSIZE_Y / (MaxPortCount / LineSwapSize);
 	for (std::shared_ptr<PortBox> obj : ObjectBox)
 	{
 		obj->DisConnect();
@@ -314,18 +333,26 @@ void MyGUI_Interface::WindowSizeSet()
 {
 	GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
 
-	if (Window_Button==0)
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
 	{
-		WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+		WinSizeX = MyImGui::MyImGuis->GetWindowSize_X(); WinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
 	}
-	if (Window_Button == 1)
+	else
 	{
-		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+		if (Window_Button == 0)
+		{
+			WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+		}
+		if (Window_Button == 1)
+		{
+			WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
+		}
+		if (Window_Button == 2)
+		{
+			WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
+		}
 	}
-	if (Window_Button == 2)
-	{
-		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
-	}
+	
 
 	SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
 		MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,

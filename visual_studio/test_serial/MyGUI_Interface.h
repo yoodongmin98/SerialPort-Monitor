@@ -154,6 +154,7 @@ private:
     bool IsWindowZoom = false;
     bool SmallZoomDrawLine = false;
     bool PathDisabled = false;
+    bool FrameCounter = false;
     int PathCount = 0;
     int UICount = 0;
 
