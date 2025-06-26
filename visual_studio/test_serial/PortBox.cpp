@@ -295,6 +295,7 @@ void PortBox::PortCheck()
 		my_serial.open();
 		my_serial.setRTS(false);
 		my_serial.setDTR(false);
+		MyGUI_Interface::GUI->PlusPathCount();
 		AutoCliCheck();
 	}
 	catch (const std::exception e)
@@ -322,7 +323,6 @@ void PortBox::Connect()
 		std::lock_guard<std::mutex> lock(serialMutex);
 		if (!my_serial.isOpen())
 		{
-			MyGUI_Interface::GUI->PlusPathCount();
 			PortBoxBool = true;
 			IsLost = false;
 			my_serial.setPort(String);
@@ -474,8 +474,15 @@ void PortBox::ASCII_HEX_Setting()
 
 void PortBox::StartESPFlash(std::vector<std::string>& _FileName)
 {
-	std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
-	MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
+	if (my_serial.isOpen())
+	{
+		std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
+		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
+	}
+	else
+	{
+		MyGUI_Interface::GUI->SetUIDisable();
+	}
 }
 
 

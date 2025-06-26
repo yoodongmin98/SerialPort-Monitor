@@ -85,6 +85,10 @@ public:
             UICount = 0;
         }
     }
+    void SetUIDisable()
+    {
+        UIdisabled = false;
+    }
     const bool GetAutoCLI()
     {
         return AutoCLI;
@@ -106,6 +110,7 @@ public:
             PathDisabled = false;
         }
     }
+
 protected:
     void AutoKeySetting(ImGuiIO& _io);
     
