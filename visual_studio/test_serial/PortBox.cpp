@@ -474,15 +474,8 @@ void PortBox::ASCII_HEX_Setting()
 
 void PortBox::StartESPFlash(std::vector<std::string>& _FileName)
 {
-	if (my_serial.isOpen())
-	{
-		std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
-		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
-	}
-	else
-	{
-		MyGUI_Interface::GUI->SetUIDisable();
-	}
+	std::function<void()> Functions = std::bind(&EspUploader::Instance, ESP.get(), std::ref(String), std::ref(_FileName));
+	MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
 }
 
 

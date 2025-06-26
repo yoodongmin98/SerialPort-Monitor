@@ -53,6 +53,8 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 
 void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 {
+	if (UIdisabled)
+		return;
 	//ImGuiKey_LeftAlt
 	if (ImGui::IsKeyPressed(ImGuiKey_F) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
@@ -97,7 +99,7 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 	}
 	if (ImGui::IsKeyPressed(ImGuiKey_E) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
-		if (ViewBool)
+		if (ViewBool || PortName.empty())
 			return;
 		UIdisabled = true;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
