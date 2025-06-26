@@ -270,7 +270,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		if (SmallZoomDrawLine)
 		{
 			FrameCounter = false;
-			UIVisible = false;
+			if(Window_Button!=2)
+				UIVisible = false;
 			CreateBool = true;
 			WindowSizeSet();
 			WindowDrawLineSet();
