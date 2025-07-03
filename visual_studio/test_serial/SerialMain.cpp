@@ -8,6 +8,8 @@
 
 int main()
 {
+    //ShowWindow(GetConsoleWindow(), SW_NORMAL);
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
     try 
     {
         EngineDebug::LeakCheck();

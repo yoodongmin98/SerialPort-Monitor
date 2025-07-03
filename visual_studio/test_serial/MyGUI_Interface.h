@@ -160,6 +160,8 @@ private:
     bool SmallZoomDrawLine = false;
     bool PathDisabled = false;
     bool FrameCounter = false;
+    bool DebugMode = false;
+    bool ModeChange = false;
     int PathCount = 0;
     int UICount = 0;
 

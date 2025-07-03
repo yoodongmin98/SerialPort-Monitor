@@ -172,7 +172,7 @@ void PortBox::SerialMonitor()
 			//RawDataBox누르면 스크롤 뜨게하는거
 			if (ASCIIMODE)
 			{
-				if (RawDataLog.size() >= 1000)
+				if (RawDataLog.size() >= 100000000)
 					RawDataLog.pop_front(); 
 				RawDataLog.push_back(Dataline); 
 				scrollToBottom = true;

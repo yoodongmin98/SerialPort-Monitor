@@ -38,6 +38,24 @@ MyGUI_Interface::~MyGUI_Interface()
 
 void MyGUI_Interface::Instance(ImGuiIO& _io)
 {
+	if (DebugMode)
+	{
+		if (!ModeChange)
+		{
+			ShowWindow(GetConsoleWindow(), SW_NORMAL);
+			ModeChange = true;
+		}
+	}
+	else
+	{
+		if (ModeChange)
+		{
+			ShowWindow(GetConsoleWindow(), SW_HIDE);
+			ModeChange = false;
+		}
+
+	}
+
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
 	AutoKeySetting(_io);
     PortBoxCreate();
@@ -68,6 +86,12 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 			ViewBool = true;
 			FlashBool = false;
 		}
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+			obj->RawMonitorClear();
+		}
+		ScreenRelease();
 	}
 	if (ImGui::IsKeyPressed(ImGuiKey_R) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
@@ -115,6 +139,10 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 		{
 			obj->InputCLI();
 		}
+	}
+	if (ImGui::IsKeyPressed(ImGuiKey_F12) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		DebugMode = !DebugMode;
 	}
 }
 
@@ -253,7 +281,6 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 			UIVisible = true;
 			IsWindowZoom = true;
 			cellSizeX = (MyImGui::MyImGuis->GetWindowSize_X() * 0.8) / LineSwapSize;
-			std::cout << "Loop에서 Cellsize를" << cellSizeX << " 로 바꿨습니다" << std::endl;
 			cellSizeY = (MyImGui::MyImGuis->GetWindowSize_Y() * 0.8) / (MaxPortCount / LineSwapSize);
 
 			for (std::shared_ptr<PortBox> obj : ObjectBox)
