@@ -54,6 +54,7 @@ void MyImGui::Instance()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	ImGui::GetIO().IniFilename = nullptr;
 
 
 	ImGui_ImplWin32_Init(hwnd);
