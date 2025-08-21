@@ -170,6 +170,7 @@ private:
 	//Log
 	std::deque<std::string> RawDataLog;
 	std::vector<std::string> RawHexLog;
+	std::mutex TextMutex;
 	bool scrollToBottom = false;
 
 

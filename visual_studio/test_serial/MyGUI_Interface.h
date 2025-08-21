@@ -25,6 +25,7 @@ public:
     }
     const void AddLogBoxString(const std::string& message)
     {
+        std::lock_guard<std::mutex>lock(logmutex); //deadlock test
         logs.emplace_back(message);
         scrollToBottom = true; // 스크롤을 맨 아래로 내리기 위한 플래그
     }
@@ -222,6 +223,7 @@ private:
     const char* StopbitArray[2] = { "1","2" };
     const char* ParityArray[5] = { "NONE","Odd","Even","Mark","Space"};
     std::vector<std::string> logs;
+    std::mutex logmutex;
 
     char BootDetection[128] = "START";
     char exceptiontarget[128] = "Enhanced COM";

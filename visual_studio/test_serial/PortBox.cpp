@@ -172,6 +172,7 @@ void PortBox::SerialMonitor()
 			//RawDataBox누르면 스크롤 뜨게하는거
 			if (ASCIIMODE)
 			{
+				std::lock_guard<std::mutex> lock(TextMutex);
 				if (RawDataLog.size() >= 100000000)
 					RawDataLog.pop_front(); 
 				RawDataLog.push_back(Dataline); 
@@ -253,7 +254,9 @@ void PortBox::SerialMonitor()
 				MissingBool = false;
 				BootStart = false;
 				MyGUI_Interface::GUI->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
-				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
+				MyGUI_Interface::GUI->Add
+					
+					String("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 			}
 		}
 
