@@ -69,6 +69,9 @@
     <ClCompile Include="EngineDebug.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="CLI_Window.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -114,6 +117,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="EngineDebug.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CLI_Window.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

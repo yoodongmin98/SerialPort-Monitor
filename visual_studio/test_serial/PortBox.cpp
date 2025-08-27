@@ -127,9 +127,6 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 			LogFileBool = false;
 		}
 
- 		std::function<void()> Functions = std::bind(&PortBox::SerialMonitor, this);
-		MyImGui::MyImGuis->GetThreadPool()->AddWork(Functions);
-
 		if (WorkingBool)
 			ImGui::Text("Working%s", Dots.c_str());
 		else if (MissingBool)
@@ -172,8 +169,7 @@ void PortBox::SerialMonitor()
 			//RawDataBox누르면 스크롤 뜨게하는거
 			if (ASCIIMODE)
 			{
-				std::lock_guard<std::mutex> lock(TextMutex);
-				if (RawDataLog.size() >= 100000000)
+				if (RawDataLog.size() >= 10000)
 					RawDataLog.pop_front(); 
 				RawDataLog.push_back(Dataline); 
 				scrollToBottom = true;
@@ -185,6 +181,10 @@ void PortBox::SerialMonitor()
 					hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
 				HexLineData += hexStream.str();
 				PreHexCount++;
+
+				if (RawHexLog.size() >= 10000) RawHexLog.pop_front();
+
+
 				if ((PreHexCount - HexNumberCount) == 0)
 				{
 					HEXLOGRECORD = true;
@@ -254,9 +254,7 @@ void PortBox::SerialMonitor()
 				MissingBool = false;
 				BootStart = false;
 				MyGUI_Interface::GUI->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
-				MyGUI_Interface::GUI->Add
-					
-					String("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
+				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 			}
 		}
 
@@ -334,6 +332,19 @@ void PortBox::Connect()
 			my_serial.setTimeout(timeout);
 			ASCII_HEX_Setting();
 			PortCheck();
+
+			if (my_serial.isOpen() && !monitorRunning.exchange(true))
+			{
+				monitorThread = std::jthread([this](std::stop_token st)
+					{
+						MonitorLoop(st);
+					}
+				);
+			}
+		}
+		else
+		{
+			return;
 		}
 	}
 }
@@ -342,6 +353,14 @@ void PortBox::Connect()
 void PortBox::DisConnect()
 {
 	MissingTime = std::chrono::steady_clock::time_point();
+
+	if (monitorThread.joinable()) 
+	{
+		monitorThread.request_stop();
+		monitorThread.join();
+	}
+	monitorRunning = false;
+
 	CloseSerialPort();
 }
 
@@ -371,10 +390,15 @@ void PortBox::CreateRowDataBox()
 {
 	ImGui::BeginChild("Row Data", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 	{ 
-		if (ASCIIMODE)
+		if (ASCIIMODE) 
 		{
-			for (std::string Rawlog : RawDataLog)
-				ImGui::Text("%s", Rawlog.c_str());
+			ImGuiListClipper clipper;
+			clipper.Begin((int)RawDataLog.size());
+			while (clipper.Step())
+			{
+				for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; ++i)
+					ImGui::TextUnformatted(RawDataLog[i].c_str());
+			}
 		}
 		else if (HEXMODE)
 		{
@@ -516,4 +540,22 @@ std::string PortBox::GetFileNameFromPath(const std::string& path)
 	if (pos != std::string::npos)
 		return path.substr(0, pos + 1);
 	return path;
+}
+
+
+
+
+void PortBox::MonitorLoop(std::stop_token st)
+{
+	while (!st.stop_requested()) {
+		SerialMonitor(); // 내부에서 isOpen() 아니면 바로 return함
+
+		if (!my_serial.isOpen()) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+		else {
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+	}
+	monitorRunning = false;
 }

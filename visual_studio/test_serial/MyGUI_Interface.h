@@ -5,6 +5,7 @@
 #include <vector>
 #include <serial/serial.h>
 #include <fstream>
+#include <mutex>
 
 
 class PortBox;
@@ -127,6 +128,9 @@ protected:
     void FlashSettings();
     std::string ExtractFileName(std::string _FileName);
 
+
+    void ExportCLIMode();
+
  
     void WindowMode();
     void WindowDrawLineSet();
@@ -141,7 +145,7 @@ protected:
     void ASCIILineMode();
     void HEXLineMode();
     void Frame_FPSBox(ImGuiIO& _io);
-
+    int extract_port_number(const std::string& s);
     void BoxInstance();
 
     void LogBox();
@@ -184,6 +188,7 @@ private:
     bool SelectModes = true;
     bool ViewBool = true;
     bool FlashBool = false;
+    bool ExportBool = false;
 
     bool PythonCheck = true;
     bool UpgradePython = false;

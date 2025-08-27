@@ -11,6 +11,8 @@
 #include <serial/serial.h>
 #include <string>
 #include <vector>
+#include <atomic>
+#include <thread>
 
 class DebugPortBox;
 class EspUploader;
@@ -169,7 +171,7 @@ private:
 
 	//Log
 	std::deque<std::string> RawDataLog;
-	std::vector<std::string> RawHexLog;
+	std::deque<std::string> RawHexLog;
 	std::mutex TextMutex;
 	bool scrollToBottom = false;
 
@@ -179,4 +181,10 @@ private:
 	//EspUploader
 	std::shared_ptr<EspUploader> ESP = nullptr;
 	std::shared_ptr<DebugPortBox> D_Port = nullptr;
+
+
+	// PortBox ¸â¹ö
+	std::jthread monitorThread;
+	std::atomic<bool> monitorRunning{ false };
+	void MonitorLoop(std::stop_token st);
 };

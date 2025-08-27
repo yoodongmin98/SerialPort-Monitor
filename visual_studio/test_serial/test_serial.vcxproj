@@ -139,6 +139,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CLI_Window.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="DebugPortBox.cpp" />
     <ClCompile Include="EngineDebug.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CLI_Window.h" />
     <ClInclude Include="DataFile.h">
       <SubType>
       </SubType>

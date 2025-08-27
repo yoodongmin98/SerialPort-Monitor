@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <functional>
 #include <algorithm>
+#include <ranges>
 #include "Windows.h"
 
 
@@ -80,12 +81,21 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 		{
 			FlashBool = true;
 			ViewBool = false;
+			ExportBool = false;
 		}
 		else if (FlashBool)
 		{
 			ViewBool = true;
 			FlashBool = false;
+			ExportBool = false;
 		}
+		else if (ExportBool)
+		{
+			ExportBool = true;
+			FlashBool = false;
+			ViewBool = false;
+		}
+
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
@@ -146,6 +156,18 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 	}
 }
 
+int MyGUI_Interface::extract_port_number(const std::string& s)
+{
+	size_t i = 0;
+	while (i < s.size() && !std::isdigit(static_cast<unsigned char>(s[i]))) ++i;
+	if (i == s.size()) return INT_MAX; // 숫자 없음 -> 뒤로
+	int n = 0;
+	while (i < s.size() && std::isdigit(static_cast<unsigned char>(s[i]))) {
+		n = n * 10 + (s[i] - '0');
+		++i;
+	}
+	return n;
+}
 
 void MyGUI_Interface::PortBoxCreate()
 {
@@ -178,7 +200,11 @@ void MyGUI_Interface::PortBoxCreate()
 				PortName.push_back(PortInfo[i].port.c_str());
 		
 		}
-		sort(PortName.begin(), PortName.end(), std::less<>());
+
+		//Port Sorting
+		std::ranges::sort(PortName, {},
+			[this](const std::string& s) { return extract_port_number(s); });
+
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			std::string SetName = Name + std::to_string(i);
@@ -265,10 +291,14 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		ASCIILineMode();
 		HEXLineMode();
 	}
-	else
+	else if(FlashBool)
 	{
 		FlashBox();
 		ComportReset();
+	}
+	else if (ExportBool)
+	{
+		ExportCLIMode();
 	}
 	
 	ImGui::EndDisabled();
@@ -413,6 +443,7 @@ bool MyGUI_Interface::SelectMode()
 	{
 		ViewBool = true;
 		FlashBool = false;
+		ExportBool = false;
 		SelectModes = true;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
@@ -425,6 +456,7 @@ bool MyGUI_Interface::SelectMode()
 	{
 		ViewBool = false;
 		FlashBool = true;
+		ExportBool = false;
 		SelectModes = false;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
@@ -432,6 +464,20 @@ bool MyGUI_Interface::SelectMode()
 		}
 		ScreenRelease();
 	}
+
+	if (ImGui::Checkbox("Export Mode", &ExportBool))
+	{
+		ViewBool = false;
+		FlashBool = false;
+		ExportBool = true;
+		SelectModes = false;
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			obj->DisConnect();
+		}
+		ScreenRelease();
+	}
+
 	return SelectModes;
 }
 
@@ -523,7 +569,8 @@ std::string MyGUI_Interface::ExtractFileName(std::string _FileName)
 }
 
 
-std::string MyGUI_Interface::executeCommand(std::string command) {
+std::string MyGUI_Interface::executeCommand(std::string command) 
+{
 	std::array<char, 128> buffer;
 	std::string result;
 
@@ -965,4 +1012,9 @@ std::string MyGUI_Interface::OpenFileDialog()
 void MyGUI_Interface::LogFlash(std::string _PortName, std::string _Content)
 {
 	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
+}
+
+void MyGUI_Interface::ExportCLIMode()
+{
+	
 }
