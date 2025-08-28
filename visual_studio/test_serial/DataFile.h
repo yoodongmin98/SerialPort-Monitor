@@ -75,7 +75,7 @@
 #define Im4Olive        ImVec4(0.5f, 0.5f, 0.0f, 1.0f)
 #define Im4Teal         ImVec4(0.0f, 0.5f, 0.5f, 1.0f)
 #define Im4DarkCyan     ImVec4(0.0f, 0.55f, 0.55f, 1.0f)
-#define Im4SteelBlue    ImVec4(0.27f, 0.51f, 0.71f, 1.0f)
+#define Im4SteelBlue    ImVec4(0.27f, 0.51f, 0.71f, 0.7f)
 #define Im4Indigo       ImVec4(0.29f, 0.0f, 0.51f, 1.0f)
 #define Im4Crimson      ImVec4(0.86f, 0.08f, 0.24f, 1.0f)
 

@@ -7,7 +7,7 @@
 #include <fstream>
 #include <mutex>
 
-
+class CLI_Window;
 class PortBox;
 class MyGUI_Interface
 {
@@ -249,4 +249,6 @@ private:
 
     std::ofstream logFile;
     std::string LogFileName; //로그파일로 남길 이름
+
+    std::shared_ptr<CLI_Window> CLI_Export_Window;
 };

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <ranges>
 #include "Windows.h"
+#include "CLI_Window.h"
 
 
 
@@ -26,6 +27,7 @@ MyGUI_Interface::MyGUI_Interface()
 {
 	GUI = this;
 	FlashFileName.resize(4);
+	CLI_Export_Window = std::make_shared<CLI_Window>();
 }
 
 MyGUI_Interface::~MyGUI_Interface()
@@ -91,8 +93,8 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 		}
 		else if (ExportBool)
 		{
-			ExportBool = true;
-			FlashBool = false;
+			ExportBool = false;
+			FlashBool = true;
 			ViewBool = false;
 		}
 
@@ -1015,6 +1017,29 @@ void MyGUI_Interface::LogFlash(std::string _PortName, std::string _Content)
 }
 
 void MyGUI_Interface::ExportCLIMode()
-{
+{	
+	float CLIWinSizeX = 0.0f;
+	float CLIWinSizeY = 0.0f;
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8f;
+	}
+	else if (Window_Button == 0)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8095f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+	}	
+	else if (Window_Button == 1)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+	}
+	else if (Window_Button == 2)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.775f;
+	}
 	
+	CLI_Export_Window->Instance(CLIWinSizeX, CLIWinSizeY);
 }
