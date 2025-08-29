@@ -144,6 +144,7 @@
     <ClCompile Include="DebugPortBox.cpp" />
     <ClCompile Include="EngineDebug.cpp" />
     <ClCompile Include="EspUploader.cpp" />
+    <ClCompile Include="ExportCLI_Record.cpp" />
     <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="MyGUI_Interface.cpp" />
     <ClCompile Include="MyImGui.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="DebugPortBox.h" />
     <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EspUploader.h" />
+    <ClInclude Include="ExportCLI_Record.h" />
     <ClInclude Include="MessageBox.h" />
     <ClInclude Include="MyGUI_Interface.h" />
     <ClInclude Include="MyImGui.h" />

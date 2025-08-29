@@ -24,6 +24,10 @@ public:
     {
         return PortName;
     }
+    const  std::vector<const char*> GetUSBPortInfo()
+    {
+        return USBSerialCount;
+    }
     const void AddLogBoxString(const std::string& message)
     {
         std::lock_guard<std::mutex>lock(logmutex); //deadlock test
@@ -198,6 +202,9 @@ private:
 
     bool AutoCLI = false;
 
+    std::vector<const char*> BluetoothPort;
+    std::vector<const char*> USBSerialCount;
+    std::vector<const char*> ETCCount;
 
     int USBinfo = 0;
     int Bluetoothinfo = 0;

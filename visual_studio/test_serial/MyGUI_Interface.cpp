@@ -61,7 +61,8 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 
 	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
 	AutoKeySetting(_io);
-    PortBoxCreate();
+	if(!ExportBool)
+		PortBoxCreate();
     DrawLine();
 	AllConnectBox(_io);
 	if (UIVisible)
@@ -596,9 +597,9 @@ std::string MyGUI_Interface::executeCommand(std::string command)
 void MyGUI_Interface::RadarTypeBox()
 {
 	ImGui::SeparatorText("Radar Type");
-	std::vector<const char*> BluetoothPort;
-	std::vector<const char*> USBSerialCount;
-	std::vector<const char*> ETCCount;
+	BluetoothPort.clear();
+	USBSerialCount.clear();
+	ETCCount.clear();
 	for (serial::PortInfo& V : PortInfo)
 	{
 		if (V.description.find("Bluetooth") != std::string::npos)

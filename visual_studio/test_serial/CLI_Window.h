@@ -1,7 +1,10 @@
 #pragma once
+#include <string>
+#include <vector>
+#include <serial/serial.h>
+#include <unordered_map>
 
-
-
+class ExportCLI_Record;
 class CLI_Window
 {
 public:
@@ -20,4 +23,13 @@ protected:
 private:
 	float WindowSizeX = 0;
 	float WindowSizeY = 0;
+    std::string target = "USB";
+    std::string CLIText;
+    std::vector<serial::PortInfo> PortName;
+    std::vector<std::pair<std::string, std::string>> FullPortName;
+
+    std::string ResultString;
+
+    std::shared_ptr<ExportCLI_Record> CLI_Record;
+    std::unordered_map<std::string, std::string> resultByPort;
 };
