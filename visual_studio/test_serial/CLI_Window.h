@@ -4,6 +4,7 @@
 #include <serial/serial.h>
 #include <unordered_map>
 
+class CsvLogger;
 class ExportCLI_Record;
 class CLI_Window
 {
@@ -20,16 +21,19 @@ public:
     void Instance(const float _X, const float _Y);
 protected:
 
+    void PortUI();
+
 private:
 	float WindowSizeX = 0;
 	float WindowSizeY = 0;
     std::string target = "USB";
-    std::string CLIText;
+    std::vector<std::string> CLIText;
     std::vector<serial::PortInfo> PortName;
     std::vector<std::pair<std::string, std::string>> FullPortName;
 
     std::string ResultString;
 
     std::shared_ptr<ExportCLI_Record> CLI_Record;
+    std::shared_ptr<CsvLogger> CsvLoggers;
     std::unordered_map<std::string, std::string> resultByPort;
 };
