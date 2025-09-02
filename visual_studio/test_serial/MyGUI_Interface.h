@@ -117,6 +117,9 @@ public:
         }
     }
 
+    std::string SaveFileDialog(std::string _format);
+    std::string OpenFileDialog();
+
 protected:
     void AutoKeySetting(ImGuiIO& _io);
     
@@ -158,8 +161,7 @@ protected:
     void LogFileCreateSelect();
     void TextPATH(std::string& _PATH, const bool _IsLog = true);
     void DataSetting();
-    std::string SaveFileDialog();
-    std::string OpenFileDialog();
+
 
 
     void ScreenRelease();

@@ -20,9 +20,9 @@ public:
 
     void Instance(const float _X, const float _Y);
 protected:
-
+    void SplitPort();
     void PortUI();
-
+    void SettingUI();
 private:
 	float WindowSizeX = 0;
 	float WindowSizeY = 0;
@@ -32,6 +32,8 @@ private:
     std::vector<std::pair<std::string, std::string>> FullPortName;
 
     std::string ResultString;
+    std::string SavePaths;
+
 
     std::shared_ptr<ExportCLI_Record> CLI_Record;
     std::shared_ptr<CsvLogger> CsvLoggers;

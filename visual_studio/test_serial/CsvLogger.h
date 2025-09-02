@@ -6,7 +6,8 @@
 #include <sstream>
 #include <stdexcept>
 
-class CsvLogger 
+
+class CsvLogger final
 {
 public:
     explicit CsvLogger(const std::string& filename, std::string row_key = {})
@@ -62,6 +63,11 @@ public:
 
         cur_.assign(cols_.size(), "");
         has_any_ = false;
+    }
+
+    inline const void SetFileName(std::string _PATH)
+    {
+        filename_ = _PATH;
     }
 
 private:

@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "MyTime.h"
 
+#include <string>
 #include <array>
 #include <conio.h>
 #include <filesystem>
@@ -878,7 +879,7 @@ void MyGUI_Interface::LogFileCreateSelect()
 	ImGui::SameLine();
 	if (ImGui::Button(" ..."))
 	{
-		LogPATH = SaveFileDialog();
+		LogPATH = SaveFileDialog(".txt");
 	}
 	TextPATH(LogPATH);
 
@@ -906,7 +907,7 @@ void MyGUI_Interface::LogFileCreateSelect()
 	ImGui::SameLine();
 	if (ImGui::Button("... "))
 	{
-		PATH = SaveFileDialog();
+		PATH = SaveFileDialog(".txt");
 	}
 	TextPATH(PATH , false);
 
@@ -968,19 +969,22 @@ void MyGUI_Interface::SystemPathSetting()
 	}
 }
 
-std::string MyGUI_Interface::SaveFileDialog()
+std::string MyGUI_Interface::SaveFileDialog(std::string _format)
 {
 	OPENFILENAME ofn;
 	char szFile[260] = { 0 };
 
+	std::string A;
+	A = ("Files (*" + _format + ")\0 *" + _format + "\0All Files(*.*)\0 * .*\0").c_str();
+
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+	ofn.lpstrFilter = A.c_str();
 	ofn.lpstrFile = szFile;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;
-	ofn.lpstrDefExt = "txt";
+	ofn.lpstrDefExt = _format.c_str();
 
 	if (GetSaveFileName(&ofn))
 		std::wcout << "파일 저장 경로: " << szFile << std::endl;
