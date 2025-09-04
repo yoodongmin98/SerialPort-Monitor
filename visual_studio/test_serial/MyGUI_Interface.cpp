@@ -304,6 +304,16 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	{
 		ExportCLIMode();
 	}
+
+	ImGui::SeparatorText("Auto Key");
+	ImGui::Text("Ctrl + F = ViewMode < - > FlashMode");
+
+	ImGui::Text("(ViewMode)   Ctrl + R = ComportReset");
+	ImGui::Text("(ViewMode)   Ctrl + C = AllConnect");
+	ImGui::Text("(ViewMode)   Ctrl + D = AllDisConnect");
+	ImGui::Text("(ViewMode)   Ctrl + X = SendCLI");
+	ImGui::Text("(FlashMode)  Ctrl + E = EraseAndFlash");
+	//ImGui::Text("(ExportMode) Ctrl + E = AllExport");
 	
 	ImGui::EndDisabled();
 	Frame_FPSBox(_io);
@@ -503,10 +513,14 @@ void MyGUI_Interface::FlashBox()
 	}
 	else
 	{
-		SystemPathSetting();
-
 		if (EspCheck)
 		{
+			//ThreadPool::TP->AddWork([self = weak_from_this()] {
+			//	if (auto s = self.lock()) {
+			//		s->SystemPathSetting();
+			//	} // 없으면 조용히 스킵
+			//	});
+			SystemPathSetting();
 			EsptoolCommand = executeCommand("esptool version");
 			EspCheck = false;
 		}

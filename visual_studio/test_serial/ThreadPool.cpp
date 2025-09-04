@@ -49,6 +49,7 @@ void ThreadPool::WorkerThread()
 
 			if (stop && tasks.empty())
 			{
+				lock.unlock();
 				return;
 			}
 

@@ -26,6 +26,12 @@ protected:
 private:
 	float WindowSizeX = 0;
 	float WindowSizeY = 0;
+
+    inline static char ExportCLIbuffer[20] = "";
+    inline static char ExportCLIbuffer1[20] = "";
+    inline static char ExportCLIbuffer2[20] = "";
+    inline static char ExportCLIbuffer3[20] = "";
+
     std::string target = "USB";
     std::vector<std::string> CLIText;
     std::vector<serial::PortInfo> PortName;

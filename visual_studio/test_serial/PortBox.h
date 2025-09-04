@@ -69,14 +69,15 @@ protected:
 	void InsertTask_WorkingCheck(std::string& _PortName);
 	void PortCheck();
 	void AutoCliCheck();
+	bool TryReconnect();
 
 	void SerialMonitor();
 	void CloseSerialPort();
+	void CloseSerialPortOnError();
 	void CreateRowDataBox();
 	void ASCII_HEX_Setting();
 	void DebugPortSetting(std::string& _PortName);
 	std::string GetFileNameFromPath(const std::string& path);
-
 
 	void Set_X_Click_CallBackEvent()
 	{
@@ -187,4 +188,7 @@ private:
 	std::jthread monitorThread;
 	std::atomic<bool> monitorRunning{ false };
 	void MonitorLoop(std::stop_token st);
+
+
+	inline static int backoffMs = 500; //재연결 시도시간
 };

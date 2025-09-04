@@ -118,10 +118,7 @@ void CLI_Window::SettingUI()
 
 		ImGui::SeparatorText("INPUT CLI");
 
-		static char ExportCLIbuffer[20] = "";
-		static char ExportCLIbuffer1[20] = "";
-		static char ExportCLIbuffer2[20] = "";
-		static char ExportCLIbuffer3[20] = "";
+	
 		ImGui::InputTextMultiline("Export CLI_1", ExportCLIbuffer, sizeof(ExportCLIbuffer), ImVec2(150, 20), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
 		CLIText[0] = ExportCLIbuffer;
 		ImGui::InputTextMultiline("Export CLI_2", ExportCLIbuffer1, sizeof(ExportCLIbuffer1), ImVec2(150, 20), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
@@ -153,7 +150,6 @@ void CLI_Window::SettingUI()
 
 		ImGui::SeparatorText("");
 
-
-
 	}
 }
+

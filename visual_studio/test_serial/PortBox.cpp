@@ -14,7 +14,7 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
-#include <Windows.h>
+#include <algorithm>
 
 
 
@@ -59,14 +59,6 @@ void PortBox::GUISetting()
 {
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, PORTBOXCOLOR);
 	ImGui::SetNextWindowPos(ImVec2(X, Y), ImGuiCond_Always);
-	//enum ImGuiCond_
-	//{
-	//	ImGuiCond_None = 0,        // No condition (always set the variable), same as _Always
-	//	ImGuiCond_Always = 1 << 0,   // No condition (always set the variable), same as _None
-	//	ImGuiCond_Once = 1 << 1,   // Set the variable once per runtime session (only the first call will succeed)
-	//	ImGuiCond_FirstUseEver = 1 << 2,   // Set the variable if the object/window has no persistently saved data (no entry in .ini file)
-	//	ImGuiCond_Appearing = 1 << 3,   // Set the variable if the object/window is appearing after being hidden/inactive (or the first time)
-	//};
 	ImGui::Begin(BoxName.c_str(), nullptr, ImGuiWindowFlags_NoTitleBar);
 	PortBoxSize = MyGUI_Interface::GUI->GetcellSize();
 	ImGui::SetWindowSize(PortBoxSize);
@@ -108,7 +100,7 @@ void PortBox::CreatePortButton(std::string& _PortName)
 	}
 	DebugPortSetting(_PortName);
 	
-	if (IsLost)
+	if (IsLost && !PortBoxBool)
 		ImGui::TextColored(REDCOLOR, "Connection Lost");
 }
 
@@ -127,163 +119,230 @@ void PortBox::InsertTask_WorkingCheck(std::string& _PortName)
 			LogFileBool = false;
 		}
 
-		if (WorkingBool)
+		if (!my_serial.isOpen() && PortBoxBool && IsLost)
+			ImGui::TextColored(Im4PastelCoral, "Reconnect...");
+		else if (WorkingBool)
 			ImGui::Text("Working%s", Dots.c_str());
 		else if (MissingBool)
 			ImGui::TextColored(YELLOWCOLOR, "Missing");
 		else if (BootStart)
 			ImGui::TextColored(BLUECOLOR, "Booting");
+		
 	}
 }
 
 
-void PortBox::SerialMonitor() 
+void PortBox::SerialMonitor()
 {
-	//얘도 웬만하면 지역변수로 만들자 ㅇㅇ
-	try 
+	static auto nextAttempt = std::chrono::steady_clock::now();
+
+	try
 	{
 		if (!my_serial.isOpen())
-				return;
-
-		bool dataReceived = false;
-
-		// 데이터 읽기
-		if (my_serial.available()) 
 		{
-			std::lock_guard<std::mutex> lock(stateMutex);
-			if (ASCIIMODE)
-				Dataline = my_serial.readline();
-			else if (HEXMODE)
-				Dataline = my_serial.read();
-			
-			if (!Dataline.empty())
-			{
-				DotCount++;
-				if (DotCount > 7) 
-					DotCount = 1;
-				Dots.clear();
-				for (int i = 0; i < DotCount; ++i) 
-					Dots += ".";
-			}
-			
-			//RawDataBox누르면 스크롤 뜨게하는거
-			if (ASCIIMODE)
-			{
-				if (RawDataLog.size() >= 10000)
-					RawDataLog.pop_front(); 
-				RawDataLog.push_back(Dataline); 
-				scrollToBottom = true;
-			}
-			else if (HEXMODE)
-			{
-				hexStream.str("");
-				for (unsigned char c : Dataline)
-					hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
-				HexLineData += hexStream.str();
-				PreHexCount++;
+			//포트가 닫혀 있으면 "수신 시도"는 건너뛰고 아래의 재연결 블록으로 진행.
+		}
+		else
+		{
+			bool dataReceived = false;
 
-				if (RawHexLog.size() >= 10000) RawHexLog.pop_front();
+			// 데이터 읽기
+			if (my_serial.available())
+			{
+				std::lock_guard<std::mutex> lock(stateMutex); // 상태 갱신 보호
 
+				if (ASCIIMODE)
+					Dataline = my_serial.readline(); 
+				else if (HEXMODE)
+					Dataline = my_serial.read();
 
-				if ((PreHexCount - HexNumberCount) == 0)
+				if (!Dataline.empty())
 				{
-					HEXLOGRECORD = true;
-					RawHexLog.push_back(HexLineData);
-					PreHexCount = 0;
-					HexLineData.clear();
+					// 동작 표시(…)
+					DotCount++;
+					if (DotCount > 7) DotCount = 1;
+					Dots.clear();
+					for (int i = 0; i < DotCount; ++i) Dots += ".";
+				}
+
+				// Raw 로그 패널 데이터 적재
+				if (ASCIIMODE)
+				{
+					if (RawDataLog.size() >= 10000) RawDataLog.pop_front();
+					RawDataLog.push_back(Dataline);
 					scrollToBottom = true;
 				}
-			}
-			
-			//데이터 기록
-			if (ASCIIMODE)
-			{
-				if (!Dataline.find("\n") || Dataline.empty())
-					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
-				else
-					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
-			}
-			else if (HEXMODE && HEXLOGRECORD)
-			{
-				//여기에 줄을 구분할 방법이 필요함 ㅇㅇ 작은모드든 큰 모드든
-				logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << RawHexLog.back() << std::endl << std::flush;
-				HEXLOGRECORD = false;
-			}
-			
+				else if (HEXMODE)
+				{
+					hexStream.str("");
+					for (unsigned char c : Dataline)
+						hexStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
+					HexLineData += hexStream.str();
+					PreHexCount++;
 
-			if (!Dataline.empty())
+					if (RawHexLog.size() >= 10000) RawHexLog.pop_front();
+
+					if ((PreHexCount - HexNumberCount) == 0)
+					{
+						HEXLOGRECORD = true;
+						RawHexLog.push_back(HexLineData);
+						PreHexCount = 0;
+						HexLineData.clear();
+						scrollToBottom = true;
+					}
+				}
+
+				// 파일 로그 기록
+				if (ASCIIMODE)
+				{
+					if (!Dataline.find("\n") || Dataline.empty())
+						logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::endl << std::flush;
+					else
+						logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << Dataline << std::flush;
+				}
+				else if (HEXMODE && HEXLOGRECORD)
+				{
+					// NOTE: HEX 줄 구분은 상위 설정(HexNumberCount)에 의존.
+					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << RawHexLog.back() << std::endl << std::flush;
+					HEXLOGRECORD = false;
+				}
+
+				// 상태 갱신(Working/Missing/Boot)
+				if (!Dataline.empty())
+				{
+					dataReceived = true;
+
+					if (Dataline.find(BootingString) != std::string::npos)
+					{
+						WorkingBool = false;
+						MissingBool = false;
+						BootStart = true;
+						BootingTime = std::chrono::steady_clock::now();
+					}
+					else if (!BootStart) // 부팅 중이 아닐 때만 Working으로
+					{
+						WorkingBool = true;
+						MissingBool = false;
+						BootStart = false;
+					}
+				}
+			}
+
+			// 읽을 데이터가 없을 때 "미수신 상태" 타이머
+			if (!my_serial.available() && !BootStart)
 			{
-				dataReceived = true;
-				// 데이터가 들어오면 일단 Start를 찾는다.
-				if (Dataline.find(BootingString) != std::string::npos)
+				if (!MissingBool)
+				{
+					MissingTime = std::chrono::steady_clock::now();
+					MissingBool = true;
+				}
+			}
+
+			// 미수신 경과 체크
+			if (MissingBool)
+			{
+				std::lock_guard<std::mutex> lock(stateMutex);
+				currentMissingTime = std::chrono::steady_clock::now();
+				if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= NoDataTime)
 				{
 					WorkingBool = false;
 					MissingBool = false;
-					BootStart = true;
-					BootingTime = std::chrono::steady_clock::now();
+					BootStart = false;
+					MyGUI_Interface::GUI->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
+					MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 				}
-				else if(!BootStart) //만약 찾으면 BootStart가 true가 되므로 BootStart가 밑에서 5초 지날때까지는 여기 안들어오게해서
-					//동시 출력되는거 방지
+			}
+
+			// 부팅 완료 경과 체크
+			if (BootStart)
+			{
+				std::lock_guard<std::mutex> lock(stateMutex);
+				currentBootingTime = std::chrono::steady_clock::now();
+				if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5)
 				{
-					// 데이터가 비어있지 않으면 Working 상태
-					WorkingBool = true;
+					WorkingBool = false;
 					MissingBool = false;
 					BootStart = false;
+					MyGUI_Interface::GUI->LogFlash(String, "이 부팅되었습니다.");
+					MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
 				}
 			}
 		}
-		 
-		//읽을 데이터가 없어서 datareceived가 안바뀌고 false일때 또는 MissingBool이 true일때
-		if (!dataReceived && !BootStart)
-		{
-			//이때부터 시간을 재기 시작
-			if (!MissingBool)
-			{
-				MissingTime = std::chrono::steady_clock::now();
-				MissingBool = true;
-			}
-		}
-
-		//시간을 재기 시작한 순간부터 이게 돌아가서 5초가 지나면 작동함
-		if (MissingBool) 
-		{
-			std::lock_guard<std::mutex> lock(stateMutex);
-			currentMissingTime = std::chrono::steady_clock::now();
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentMissingTime - MissingTime).count() >= NoDataTime) {
-				WorkingBool = false;
-				MissingBool = false;
-				BootStart = false;
-				MyGUI_Interface::GUI->LogFlash(String, "의 데이터가 설정시간 이상 수신되지 않았습니다.");
-				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
-			}
-		}
-
-		// BootStart 상태에서 일정 시간이 경과하면 처리
-		if (BootStart) 
-		{
-			std::lock_guard<std::mutex> lock(stateMutex);
-			currentBootingTime = std::chrono::steady_clock::now();
-			if (std::chrono::duration_cast<std::chrono::seconds>(currentBootingTime - BootingTime).count() >= 5) {
-				WorkingBool = false;
-				MissingBool = false;
-				BootStart = false;
-				MyGUI_Interface::GUI->LogFlash(String, "이 부팅되었습니다.");
-				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
-			}
-		}
-		
 	}
 	catch (const std::exception& e)
 	{
-		// 예외 처리 및 로그 기록
+		// 끊김/예외 시 상태 플래그 갱신 + 포트만 닫고 포트명/의도(PortBoxBool)는 유지 → 자동 재연결 가능
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
 			IsLost = true;
 			MyGUI_Interface::GUI->LogFlash(String, "의 시리얼 통신이 끊겼습니다.");
 			MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
 		}
+		{
+			std::lock_guard<std::mutex> lock(serialMutex);
+			if (my_serial.isOpen())
+			{
+				my_serial.setRTS(true);
+				my_serial.setDTR(true);
+				my_serial.close(); // String/PortBoxBool은 건드리지 않음(DisConnect()와 구분)
+			}
+		}
+	}
 
-		CloseSerialPort();
+	// 자동 재연결 
+	// 조건: 포트가 닫혀 있고, 사용자가 수동으로 끈 게 아니라(PortBoxBool==true), 끊김 상태(IsLost==true)일 때만 시도
+	if (!my_serial.isOpen() && PortBoxBool && IsLost)
+	{
+		auto now = std::chrono::steady_clock::now();
+		if (now >= nextAttempt)
+		{
+			bool ok = false;
+			{
+				std::lock_guard<std::mutex> lock(serialMutex);
+				try
+				{
+					// Connect()와 동일 파라미터 재적용(PortCheck를 쓰면 내부에서 PortBoxBool을 false로 만들 수 있어 직접 처리)
+					my_serial.setPort(String);
+					my_serial.setBaudrate(BaudRate);
+					my_serial.setBytesize(serial::bytesize_t::eightbits);
+					my_serial.setTimeout(timeout);
+					ASCII_HEX_Setting();
+
+					my_serial.open();
+					my_serial.setRTS(false);
+					my_serial.setDTR(false);
+
+					ok = my_serial.isOpen();
+				}
+				catch (...) { ok = false; }
+			}
+
+			if (ok)
+			{
+				// 상태 초기화 및 알림
+				{
+					std::lock_guard<std::mutex> lock(stateMutex);
+					WorkingBool = false;
+					MissingBool = false;
+					BootStart = false;
+					IsLost = false;
+				}
+				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Auto-reconnected");
+
+				// 초기 명령 자동 전송 옵션(기존 동작 유지)
+				AutoCliCheck();
+
+				nextAttempt = now;
+			}
+			else
+			{
+				nextAttempt = now + std::chrono::milliseconds(backoffMs);
+			}
+		}
+	}
+	else
+	{
+		//딱히 필요없는데 일단 놔두기
 	}
 }
 
@@ -350,6 +409,44 @@ void PortBox::Connect()
 }
 
 
+bool PortBox::TryReconnect()
+{
+	std::lock_guard<std::mutex> lock(serialMutex);
+
+	if (my_serial.isOpen())
+		return true; 
+
+	try
+	{
+		my_serial.setPort(String);
+		my_serial.setBaudrate(BaudRate);
+		my_serial.setBytesize(serial::bytesize_t::eightbits);
+		my_serial.setTimeout(timeout);
+		ASCII_HEX_Setting();
+
+		PortCheck();
+
+		if (my_serial.isOpen())
+		{
+			{
+				std::lock_guard<std::mutex> s(stateMutex);
+				WorkingBool = false;
+				MissingBool = false;
+				BootStart = false;
+				IsLost = false;
+			}
+			MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Auto-reconnected");
+			return true;
+		}
+	}
+	catch (...)
+	{
+		return false; //포트가 사라졌거나 접근 거부 등. 다음 백오프 주기에 재시도.
+	}
+	return false;
+}
+
+
 void PortBox::DisConnect()
 {
 	MissingTime = std::chrono::steady_clock::time_point();
@@ -385,6 +482,19 @@ void PortBox::CloseSerialPort()
 	}
 }
 
+void PortBox::CloseSerialPortOnError()
+{
+	std::lock_guard<std::mutex> lock(serialMutex);
+	if (my_serial.isOpen())
+	{
+		// NOTE: 어댑터에 따라 RTS/DTR 토글이 재연결에 영향을 줄 수 있음(장비 스펙 기준). 유지.
+		my_serial.setRTS(true);
+		my_serial.setDTR(true);
+		my_serial.close();
+	}
+	// PortBoxBool, String, IsLost 유지 → MonitorLoop에서 자동 재연결 기준으로 사용.
+}
+
 
 void PortBox::CreateRowDataBox()
 {
@@ -397,7 +507,7 @@ void PortBox::CreateRowDataBox()
 			while (clipper.Step())
 			{
 				for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; ++i)
-					ImGui::TextUnformatted(RawDataLog[i].c_str());
+					ImGui::TextUnformatted(RawDataLog[i].data(), RawDataLog[i].data() + RawDataLog[i].size());
 			}
 		}
 		else if (HEXMODE)
@@ -559,3 +669,4 @@ void PortBox::MonitorLoop(std::stop_token st)
 	}
 	monitorRunning = false;
 }
+
