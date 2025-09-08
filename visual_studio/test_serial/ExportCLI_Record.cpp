@@ -89,7 +89,7 @@ std::string ExportCLI_Record::Export(const std::string _Port,const unsigned int 
     ExportSerial.write(cmd);
     ExportSerial.flush();
 
-    const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(1500);
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(2000);
 
 
     const std::string normCLI = tolower_copy([](std::string s) { rtrim_eol(s); trim_spaces(s); return s; }(_CLI));
