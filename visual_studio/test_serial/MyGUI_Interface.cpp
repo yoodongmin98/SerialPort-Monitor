@@ -26,13 +26,17 @@ MyGUI_Interface* MyGUI_Interface::GUI = nullptr;
 
 MyGUI_Interface::MyGUI_Interface()
 {
+	//static pointer instance (singletone 과 유사한 디자인패턴)
 	GUI = this;
+	//Esp Uploader에 담길 Filename 4개(Bootloader , partition , boot_app , firmware)
 	FlashFileName.resize(4);
+	//CLI Mode Instance
 	CLI_Export_Window = std::make_shared<CLI_Window>();
 }
 
 MyGUI_Interface::~MyGUI_Interface()
 {
+	//logfile 관리 ( 전체 PortBox에 대한 로그파일)
 	if (logFile.is_open())
 	{
 		logFile.close();
@@ -40,7 +44,46 @@ MyGUI_Interface::~MyGUI_Interface()
 }
 
 
+//Loop Instance
 void MyGUI_Interface::Instance(ImGuiIO& _io)
+{
+	//상단바를 제외한 윈도우의 X Y size를 받아와서 사용
+	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
+	WinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+	hwnds = MyImGui::MyImGuis->GetWindowHandle();
+	zoomed = IsZoomed(hwnds);
+
+	//디버그모드 관리
+	DebugModeSet();
+
+	//단축키 관리
+	AutoKeySetting(_io);
+
+	//CLI exportMode가 아닐때 PortBox생성 Setting ( 생성 x )
+	if(!ExportBool)
+		PortBoxCreate();
+
+	//Window GridLine생성 ( ASCII , HEX 포트 개수에 따른 라인 그리기 )
+    DrawLine();
+
+	//연결 및 설정을 관리하는 버튼들
+	AllConnectBox(_io);
+
+	//WindowMode에따라 LogBox ON/OFF여부
+	if (UIVisible)
+	{
+		//로그박스와 로그 관리박스 생성
+		LogBox();
+		LogManagementBox();
+	}
+
+	//PortBoxCreate에서 생성된 Container정보를 바탕으로 PortBox생성
+	BoxInstance();
+}
+
+
+//DebugMode(Console)을 띄우는 키를 설정합니다. (밑 AutoKeySetting참조 Ctrl + F12)
+void MyGUI_Interface::DebugModeSet()
 {
 	if (DebugMode)
 	{
@@ -57,23 +100,10 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 			ShowWindow(GetConsoleWindow(), SW_HIDE);
 			ModeChange = false;
 		}
-
 	}
-
-	WinSizeX = MyImGui::MyImGuis->GetWindowSize_X();
-	AutoKeySetting(_io);
-	if(!ExportBool)
-		PortBoxCreate();
-    DrawLine();
-	AllConnectBox(_io);
-	if (UIVisible)
-	{
-		LogBox();
-		LogManagementBox();
-	}
-	BoxInstance();
 }
 
+//단축키 세팅
 void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 {
 	if (UIdisabled)
@@ -81,6 +111,7 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 	//ImGuiKey_LeftAlt
 	if (ImGui::IsKeyPressed(ImGuiKey_F) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
+		//여기 나중에 Mode많아지면 Container에 담고 iterator로 돌리는게 나아보임
 		if (ViewBool)
 		{
 			FlashBool = true;
@@ -107,6 +138,8 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 		}
 		ScreenRelease();
 	}
+
+	//단축키 많아지면 function pointer로 바인딩해서 넘겨주는함수 만들어도 괜찮을듯
 	if (ImGui::IsKeyPressed(ImGuiKey_R) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
@@ -160,30 +193,33 @@ void MyGUI_Interface::AutoKeySetting(ImGuiIO& _io)
 	}
 }
 
-int MyGUI_Interface::extract_port_number(const std::string& s)
+//렌더링 화면 Release
+void MyGUI_Interface::ScreenRelease()
 {
-	size_t i = 0;
-	while (i < s.size() && !std::isdigit(static_cast<unsigned char>(s[i]))) ++i;
-	if (i == s.size()) return INT_MAX; // 숫자 없음 -> 뒤로
-	int n = 0;
-	while (i < s.size() && std::isdigit(static_cast<unsigned char>(s[i]))) {
-		n = n * 10 + (s[i] - '0');
-		++i;
-	}
-	return n;
+	ObjectBox.clear();
+	PortName.clear();
+	CreateBool = true;
+	EspCheck = true;
+	LogBoxs = false;
+	PortRawData = false;
 }
 
+
+/////////////////////////////////////PortBox생성
 void MyGUI_Interface::PortBoxCreate()
 {
+	//시스템 Port list가져옴
 	PortInfo = serial::list_ports();
 	if (CreateBool)
 	{
 		PortName.clear();
+		//윈도우에 그려진 라인에따라 위치를 잡아줄 변수들(PortBox 생성자 Initializer에 들어감)
 		int Xpos = ZERO, Ypos = ZERO, Count = ZERO;
 		std::vector<const char*> BluetoothPort;
 		std::vector<std::string> USBSerialCount;
 		std::vector<const char*> ETCCount;
 
+		//포트 분류(Blutooth , USB , 기타)
 		for (serial::PortInfo& V : PortInfo)
 		{
 			if (V.description.find("Bluetooth") != std::string::npos)
@@ -193,13 +229,17 @@ void MyGUI_Interface::PortBoxCreate()
 			else
 				ETCCount.push_back(V.description.c_str());
 		}
+
+		//모드에서 설정된 최대 포트개수가 1개고 USB size가 1개이상 인식되어있을 때
 		if(MaxPortCount == 1 && USBSerialCount.size())
 			PortName.push_back(USBSerialCount[USBinfo]);
 
+		//최대 포트개수까지 list를 돌면서 container에 ComName만 분류
 		for (auto i = 0; i < PortInfo.size(); ++i)
 		{
 			if (PortName.size() >= MaxPortCount)
 				break;
+			//포트 이름에서 target(USB)문자가 있고 , exceptiontarget(default : Enhanced) 가 없을 때 push 
 			if (PortInfo[i].description.find(target) != std::string::npos && PortInfo[i].description.find(exceptiontarget)==std::string::npos)
 				PortName.push_back(PortInfo[i].port.c_str());
 		
@@ -209,6 +249,7 @@ void MyGUI_Interface::PortBoxCreate()
 		std::ranges::sort(PortName, {},
 			[this](const std::string& s) { return extract_port_number(s); });
 
+		//윈도우에 그려지는 Line Size에따라 Pos를 받고 PortBox 생성자 initialize
 		for (auto i = 0; i < PortName.size(); ++i)
 		{
 			std::string SetName = Name + std::to_string(i);
@@ -217,6 +258,7 @@ void MyGUI_Interface::PortBoxCreate()
 				Xpos = ZERO; Ypos += cellSizeY; Count = ZERO;
 			}
 			Count++;
+			//생성 및 Initializer 인자 전달
 			ObjectBox.push_back(make_shared<PortBox>(Xpos, Ypos, SetName));
 			Xpos += cellSizeX;
 		}
@@ -224,7 +266,22 @@ void MyGUI_Interface::PortBoxCreate()
 	}
 }
 
+////포트 번호 추출함수
+int MyGUI_Interface::extract_port_number(const std::string& s)
+{
+	size_t i = 0;
+	while (i < s.size() && !std::isdigit(static_cast<unsigned char>(s[i]))) ++i;
+	if (i == s.size()) return INT_MAX; // 숫자 없음 -> 뒤로
+	int n = 0;
+	while (i < s.size() && std::isdigit(static_cast<unsigned char>(s[i])))
+	{
+		n = n * 10 + (s[i] - '0');
+		++i;
+	}
+	return n;
+}
 
+////////Window Portbox자리에 그려지는 Line생성(Grid)
 void MyGUI_Interface::DrawLine()
 {
 	ImVec2 topLeft = XYZERO;
@@ -254,39 +311,37 @@ void MyGUI_Interface::DrawLine()
 
 void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 {
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X()*0.8, ZERO), ImGuiCond_Always);
-	else if (Window_Button == 0)
-		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
-	else
-		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X, ZERO), ImGuiCond_Always);
+	//WindowMode에 따른 창 크기 Setting
+	if (zoomed) 
+	{
+		ImGui::SetNextWindowPos(ImVec2(WinSizeX * 0.8f, 0.0f), ImGuiCond_Always);
+		ImGui::SetNextWindowSize(ImVec2(WinSizeX * 0.2f, WinSizeY), ImGuiCond_Always);
+	}
+	else 
+	{
+		ImGui::SetNextWindowPos(ImVec2(kPosX[Window_Button], 0.0f), ImGuiCond_Always);
+		ImGui::SetNextWindowSize(ImVec2(WinSizeX - kPosX[Window_Button], kSizeY[Window_Button]), ImGuiCond_Always);
+	}
 
 	ImGui::Begin("Setting Box", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-	{
-		ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X()*0.2, MyImGui::MyImGuis->GetWindowSize_Y()));
-	}
-	else if (Window_Button == 0)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - MINI_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
-	else if(Window_Button == 1)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, MINI_PORTVIEWSIZE_Y));
-	else if(Window_Button == 2)
-		ImGui::SetWindowSize(ImVec2(WinSizeX - NORMAL_PORTVIEWSIZE_X, NORMAL_PORTVIEWSIZE_Y));
 
 
-
-	
 	ImGui::BeginDisabled(UIdisabled);
 
+	////Zoom되어있을때(윈도우 최대창일때)는 Mode UI선택 불가////
 	ImGui::BeginDisabled(IsWindowZoom);
-	WindowMode();
+	WindowModes();
 	ImGui::EndDisabled();
+	////////////////////////////////////////////////////////
+
 	if(Window_Button == 0 || Window_Button == 1)
 		LogBoxOnOff();
+
 	ComPortDataSetting();
-	SelectMode();
-	if (ViewBool)
+
+	switch (SelectMode()) 
 	{
+	case UIMode::View:
 		AllConnect();
 		AllDisConnect();
 		ComportReset();
@@ -294,26 +349,18 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		RadarTypeBox();
 		ASCIILineMode();
 		HEXLineMode();
-	}
-	else if(FlashBool)
-	{
+		break;
+
+	case UIMode::Flash:
 		FlashBox();
 		ComportReset();
-	}
-	else if (ExportBool)
-	{
+		break;
+
+	case UIMode::Export:
 		ExportCLIMode();
+		break;
 	}
-
-	ImGui::SeparatorText("Auto Key");
-	ImGui::Text("Ctrl + F = ViewMode < - > FlashMode");
-
-	ImGui::Text("(ViewMode)   Ctrl + R = ComportReset");
-	ImGui::Text("(ViewMode)   Ctrl + C = AllConnect");
-	ImGui::Text("(ViewMode)   Ctrl + D = AllDisConnect");
-	ImGui::Text("(ViewMode)   Ctrl + X = SendCLI");
-	ImGui::Text("(FlashMode)  Ctrl + E = EraseAndFlash");
-	//ImGui::Text("(ExportMode) Ctrl + E = AllExport");
+	AutoKeyHelpText();
 	
 	ImGui::EndDisabled();
 	Frame_FPSBox(_io);
@@ -354,92 +401,73 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	ImGui::End();
 }
 
-
-void MyGUI_Interface::WindowMode()
+//프로그램 윈도우 창 Mode Setting
+void MyGUI_Interface::WindowModes()
 {
+	const int prev = Window_Button;
+
 	ImGui::SeparatorText("WindowMode");
-	if (ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0))
+	ImGui::RadioButton("Window1(1500 x 820)", &Window_Button, 0);
+	ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1);
+	ImGui::RadioButton("Window3(1800 x 1050) (LogBox On)", &Window_Button, 2);
+
+	if (Window_Button != prev) 
 	{
-		WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
-		UIVisible = false;
-		WindowSizeSet();
-		WindowDrawLineSet();
-	}
-	if (ImGui::RadioButton("Window2(1800 x 820)", &Window_Button, 1))
-	{
-		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
-		UIVisible = false;
-		WindowSizeSet();
-		WindowDrawLineSet();
-	}
-	if (ImGui::RadioButton("Window3(1800 x 1050) (LogBox On)", &Window_Button, 2))
-	{
-		WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
-		UIVisible = true;
+		WinSizeX = WindowMode[Window_Button].x;
+		WinSizeY = WindowMode[Window_Button].y;
+		UIVisible = WindowMode[Window_Button].Visible;
+
 		WindowSizeSet();
 		WindowDrawLineSet();
 	}
 }
 
-
-void MyGUI_Interface::WindowDrawLineSet()
-{
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		cellSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8 / LineSwapSize;
-	else if (WinSizeX > WINDOW_CHECK_SIZE)
-		cellSizeX = NORMAL_PORTVIEWSIZE_X / LineSwapSize;
-	else
-		cellSizeX = MINI_PORTVIEWSIZE_X / LineSwapSize;
-
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		cellSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8 / (MaxPortCount / LineSwapSize);
-	else
-		cellSizeY = MINI_PORTVIEWSIZE_Y / (MaxPortCount / LineSwapSize);
-	for (std::shared_ptr<PortBox> obj : ObjectBox)
-	{
-		obj->DisConnect();
-	}
-	ScreenRelease();
-}
-
-
+/////Mode에 따라 WindowSize Setting
 void MyGUI_Interface::WindowSizeSet()
 {
-	GetWindowRect(MyImGui::MyImGuis->GetWindowHandle(), &MyImGui::MyImGuis->GetRECT());
+	GetWindowRect(hwnds, &MyImGui::MyImGuis->GetRECT());
 
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	if (!zoomed)
 	{
-		WinSizeX = MyImGui::MyImGuis->GetWindowSize_X(); WinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+		WinSizeX = WindowMode[Window_Button].x;
+		WinSizeY = WindowMode[Window_Button].y;
 	}
-	else
-	{
-		if (Window_Button == 0)
-		{
-			WinSizeX = WINDOWSIZE_SMALL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
-		}
-		if (Window_Button == 1)
-		{
-			WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_SMALL_Y;
-		}
-		if (Window_Button == 2)
-		{
-			WinSizeX = WINDOWSIZE_NORMAL_X; WinSizeY = WINDOWSIZE_NORMAL_Y;
-		}
-	}
-	
 
 	SetWindowPos(MyImGui::MyImGuis->GetWindowHandle(), nullptr,
 		MyImGui::MyImGuis->GetRECT().left, MyImGui::MyImGuis->GetRECT().top,
 		WinSizeX, WinSizeY, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
+/////Mode에 따라 창에 그려질 LineSize Setting
+void MyGUI_Interface::WindowDrawLineSet()
+{
+	// X: 확대면 WinSizeX * 0.8, 아니면 프리셋 / 열 수
+	cellSizeX = (
+		zoomed
+		? WinSizeX * 0.8f
+		: (WinSizeX > WINDOW_CHECK_SIZE ? NORMAL_PORTVIEWSIZE_X : MINI_PORTVIEWSIZE_X))
+		/ std::max(1, LineSwapSize);
+
+	// Y: 확대면 WinSizeY, 아니면 프리셋 / 행 수(0 나눗셈 방지)
+	const int cols = std::max(1, LineSwapSize);
+	const int rows = std::max(1, MaxPortCount / cols);
+	cellSizeY = (zoomed ? WinSizeY : MINI_PORTVIEWSIZE_Y) / rows;
+
+	for (auto& obj : ObjectBox)
+	{
+		obj->DisConnect();
+	}
+	ScreenRelease();
+}
+
+/////LogBox on/off
 void MyGUI_Interface::LogBoxOnOff()
 {
 	ImGui::SeparatorText("LogBox");
 	ImGui::Checkbox("LogBox ON/OFF", &UIVisible);
 }
 
-
+//연결 정보 데이터 setting (Baudrate  , Databit , Stopbit , Parity)
 void MyGUI_Interface::ComPortDataSetting()
 {
 	ImGui::SeparatorText("ComPortSetting");
@@ -450,165 +478,97 @@ void MyGUI_Interface::ComPortDataSetting()
 }
 
 
-bool MyGUI_Interface::SelectMode()
+UIMode MyGUI_Interface::SelectMode()
 {
 	ImGui::SeparatorText("Select Mode");
-	if (ImGui::Checkbox("View Mode", &ViewBool))
+
+	int m = static_cast<int>(mode_);
+	const int prev = m;
+
+	ImGui::RadioButton("View Mode", &m, static_cast<int>(UIMode::View));
+	ImGui::RadioButton("Flash Mode", &m, static_cast<int>(UIMode::Flash));
+	ImGui::RadioButton("Export Mode", &m, static_cast<int>(UIMode::Export));
+
+	if (m != prev)
 	{
-		ViewBool = true;
-		FlashBool = false;
-		ExportBool = false;
-		SelectModes = true;
+		OnModeChanged(static_cast<UIMode>(m));
+	}
+
+	return mode_;
+}
+
+
+//변경된 모드 감지
+void MyGUI_Interface::OnModeChanged(UIMode m)
+{
+	mode_ = m;
+	for (auto& obj : ObjectBox)
+	{
+		obj->DisConnect();
+	}
+	ScreenRelease();
+}
+
+////PortBox AllConnect
+void MyGUI_Interface::AllConnect()
+{
+	ImGui::SeparatorText("Connect");
+	if (ImGui::Button("All Connect", ButtonSize))
+	{
+		for (std::shared_ptr<PortBox> obj : ObjectBox)
+		{
+			if (!obj->IsStringNull())
+				obj->Connect();
+		}
+	}
+}
+
+////PortBox AllDisConnect
+void MyGUI_Interface::AllDisConnect()
+{
+	if (ImGui::Button("All DisConnect", ButtonSize))
+	{
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
 		}
-		ScreenRelease();
 	}
+}
 
-	if (ImGui::Checkbox("Flash Mode", &FlashBool))
+////PortBox AllReset
+void MyGUI_Interface::ComportReset()
+{
+	if (ImGui::Button("ComPort Reset", ButtonSize))
 	{
-		ViewBool = false;
-		FlashBool = true;
-		ExportBool = false;
-		SelectModes = false;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
 			obj->DisConnect();
+			obj->RawMonitorClear();
 		}
 		ScreenRelease();
 	}
+}
 
-	if (ImGui::Checkbox("Export Mode", &ExportBool))
+//////PortBox CLI InputBox
+void MyGUI_Interface::CLIBox()
+{
+	ImGui::SeparatorText("CLI (Write)");
+	static char buffer[2000] = "";
+	ImGui::Text("Input CLI");
+	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
+	CLI_Text = buffer;
+	if (ImGui::Button("AllSend", ButtonSize))
 	{
-		ViewBool = false;
-		FlashBool = false;
-		ExportBool = true;
-		SelectModes = false;
 		for (std::shared_ptr<PortBox> obj : ObjectBox)
 		{
-			obj->DisConnect();
-		}
-		ScreenRelease();
-	}
-
-	return SelectModes;
-}
-
-
-void MyGUI_Interface::FlashBox()
-{
-	//Python이랑 esptool 설치여부 확인
-	ImGui::SeparatorText("Flash Setting");
-
-	if (PythonCheck)
-	{
-		commandOutput = executeCommand("py -c \"import sys; print(sys.executable)\"");
-		PythonCheck = false;
-	}
-	if (commandOutput.empty())
-	{
-		ImGui::TextColored(REDCOLOR, "Python is not installed.");
-		ImGui::TextColored(REDCOLOR, "Please install Python first.");
-	}
-	else
-	{
-		if (EspCheck)
-		{
-			//ThreadPool::TP->AddWork([self = weak_from_this()] {
-			//	if (auto s = self.lock()) {
-			//		s->SystemPathSetting();
-			//	} // 없으면 조용히 스킵
-			//	});
-			SystemPathSetting();
-			EsptoolCommand = executeCommand("esptool version");
-			EspCheck = false;
-		}
-		if (EsptoolCommand.empty())
-		{
-			ImGui::TextColored(REDCOLOR, "esptool is not installed");
-			ImGui::TextColored(REDCOLOR, "Please run as administrator.");
-			if (ImGui::Button("Install esptool", ButtonSize))
-			{
-				std::system("pip install esptool==4.8.1");
-				EspCheck = true;
-			}
-		}
-		else
-			FlashSettings();
-	}
-}
-
-
-void MyGUI_Interface::FlashSettings()
-{
-	ImGui::PushItemWidth(150);
-	ImGui::InputText("0x1000", (char*)ExtractFileName(FlashFileName[0]).c_str(), ExtractFileName(FlashFileName[0]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
-	if (ImGui::Button("File1"))
-	{
-		FlashFileName[0] = OpenFileDialog();
-	}
-	ImGui::InputText("0x8000", (char*)ExtractFileName(FlashFileName[1]).c_str(), ExtractFileName(FlashFileName[1]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
-	if (ImGui::Button("File2"))
-	{
-		FlashFileName[1] = OpenFileDialog();
-	}
-	ImGui::InputText("0xe000", (char*)ExtractFileName(FlashFileName[2]).c_str(), ExtractFileName(FlashFileName[2]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
-	if (ImGui::Button("File3"))
-	{
-		FlashFileName[2] = OpenFileDialog();
-	}
-	ImGui::InputText("0x10000", (char*)ExtractFileName(FlashFileName[3]).c_str(), ExtractFileName(FlashFileName[3]).size() + 1, ImGuiInputTextFlags_ReadOnly); ImGui::SameLine();
-	if (ImGui::Button("File4"))
-	{
-		FlashFileName[3] = OpenFileDialog();
-	}
-	ImGui::PopItemWidth();
-
-
-
-	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
-	if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
-	{
-		UIdisabled = true;
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->StartESPFlash(FlashFileName);
+			obj->InputCLI();
 		}
 	}
-	ImGui::PopStyleColor(1);
+	ImGui::SameLine();
+	ImGui::Checkbox("Auto Send", &AutoCLI);
 }
 
-std::string MyGUI_Interface::ExtractFileName(std::string _FileName)
-{
-	size_t pos = _FileName.find_last_of("\\");
-	std::string filenames = (pos == std::string::npos) ? _FileName : _FileName.substr(pos + 1);
-	return filenames;
-}
-
-
-std::string MyGUI_Interface::executeCommand(std::string command) 
-{
-	std::array<char, 128> buffer;
-	std::string result;
-
-	FILE* pipe = _popen(command.c_str(), "r");
-	if (!pipe) 
-	{
-		std::cerr << "Error: Unable to open pipe for command: " << command << std::endl;
-		return result;
-	}
-
-	while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) 
-	{
-		result += buffer.data();
-	}
-
-	_pclose(pipe);
-
-	return result;
-}
-
+//// Port Type 분류표시
 void MyGUI_Interface::RadarTypeBox()
 {
 	ImGui::SeparatorText("Radar Type");
@@ -631,55 +591,233 @@ void MyGUI_Interface::RadarTypeBox()
 	ImGui::Combo("USB(Serial)", &USBinfo, USBSerialCount.data(), USBSerialCount.size());
 	ImGui::TextColored(ImVec4(0.0f, 0.9f, 0.9f, 1.0f), "Blutooth detected : %d", BluetoothPort.size());
 	ImGui::Combo("BlueTooth", &Bluetoothinfo, BluetoothPort.data(), BluetoothPort.size());
-	ImGui::TextColored(ImVec4(0.7f,0.7f, 0.95f, 1.0f), "ETC Port detected : %d", ETCCount.size());
+	ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.95f, 1.0f), "ETC Port detected : %d", ETCCount.size());
 	ImGui::Combo("ETC", &ETCinfo, ETCCount.data(), ETCCount.size());
 }
 
-
-void MyGUI_Interface::LogManagementBox()
+//ASCII_Mode Setting
+void MyGUI_Interface::ASCIILineMode()
 {
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		ImGui::SetNextWindowPos(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.55f, MyImGui::MyImGuis->GetWindowSize_Y()*0.8), ImGuiCond_Always);
-	else if (WinSizeX > WINDOW_CHECK_SIZE)
-		ImGui::SetNextWindowPos(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
-	else
-		ImGui::SetNextWindowPos(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
-	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		ImGui::SetWindowSize(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.25f, MyImGui::MyImGuis->GetWindowSize_Y()*0.2));
-	else if (WinSizeX > WINDOW_CHECK_SIZE)
-		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
-	else
-		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.3f, LogBoxYSize));
-	LogClear();
-	LogFileCreateSelect();
-	DataSetting();
-	ImGui::End();
-}
+	const int prev = ASCII_Button;
+	ImGui::SeparatorText("Data Port Mode(ASCII)");
 
-void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
-{
-	ImGui::SeparatorText("Frame / FPS");
-	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
-	ImGui::Text("FPS : %.1f", ImGui::GetIO().Framerate);
+	for (int i = 0; i < ASCII_Mode.size(); ++i) 
+	{
+		if (i % 2 == 1) ImGui::SameLine();              
+		if (ImGui::RadioButton(ASCII_Mode[i].label, &ASCII_Button, i)) 
+		{
+			LineSwapSize = ASCII_Mode[i].lineSwap;
+			MaxPortCount = ASCII_Mode[i].ports;
+		}
+	}
+
+	if (ASCII_Button != prev) 
+	{
+		HEX_Button = -1;
+		WindowDrawLineSet();                            
+	}
 }
 
 
+//HEX_Mode Setting
+void MyGUI_Interface::HEXLineMode()
+{
+	const int prev = HEX_Button;
+	ImGui::SeparatorText("Data Port Mode(HEX)");
+
+	for (int i = 0; i < HEX_Mode.size(); ++i)
+	{
+		if (i % 2 == 1) ImGui::SameLine();
+		if (ImGui::RadioButton(HEX_Mode[i].label, &HEX_Button, i))
+		{
+			LineSwapSize = HEX_Mode[i].lineSwap;
+			MaxPortCount = HEX_Mode[i].ports;
+		}
+	}
+
+	if (HEX_Button != prev)
+	{
+		ASCII_Button = -1;
+		WindowDrawLineSet();
+	}
+}
+
+//FlashMode Python설치여부 및 esptool설치여부 확인
+void MyGUI_Interface::FlashBox()
+{
+	ImGui::SeparatorText("Flash Setting");
+
+	//Python 체크
+	if (PythonCheck) 
+	{
+		commandOutput = executeCommand("py -c \"import sys; print(sys.executable)\"");
+		PythonCheck = false;
+	}
+	if (commandOutput.empty()) 
+	{
+		ImGui::TextColored(REDCOLOR, "Python is not installed.");
+		ImGui::TextColored(REDCOLOR, "Please install Python first.");
+		return;                             
+	}
+
+	//esptool 체크
+	if (EspCheck) 
+	{
+		SystemPathSetting();
+		EsptoolCommand = executeCommand("esptool version");
+		EspCheck = false;
+	}
+	if (EsptoolCommand.empty()) 
+	{
+		ImGui::TextColored(REDCOLOR, "esptool is not installed");
+		ImGui::TextColored(REDCOLOR, "Please run as administrator.");
+		if (ImGui::Button("Install esptool", ButtonSize)) 
+		{
+			std::system("pip install esptool==4.8.1");
+			EspCheck = true; 
+		}
+		return;
+	}
+
+	FlashSettings();
+}
+
+//python Script 환경변수 내부적으로 설정해주는 함수
+void MyGUI_Interface::SystemPathSetting()
+{
+	if (SystemPath)
+	{
+		size_t pos = commandOutput.find("\\python.exe");
+		if (pos != std::string::npos)
+			commandOutput = commandOutput.substr(0, pos);
+		SetEnvironmentVariable("PYTHON_HOME", commandOutput.c_str());
+		commandOutput += "\\Scripts";
+		SetEnvironmentVariable("PYTHON_Script", commandOutput.c_str());
+		executeCommand("pip install --upgrade pip");
+		SystemPath = false;
+	}
+}
+
+//////popen으로 shell단에 명령어 전송해주는 함수
+std::string MyGUI_Interface::executeCommand(std::string command)
+{
+	std::array<char, 128> buffer;
+	std::string result;
+
+	FILE* pipe = _popen(command.c_str(), "r");
+	if (!pipe)
+	{
+		std::cerr << "Error: Unable to open pipe for command: " << command << std::endl;
+		return result;
+	}
+
+	while (fgets(buffer.data(), buffer.size(), pipe) != nullptr)
+	{
+		result += buffer.data();
+	}
+
+	_pclose(pipe);
+
+	return result;
+}
+
+
+//EspUploader에 넘겨줄 파일의 주소 입력부(Bootloder 등등....)
+void MyGUI_Interface::FlashSettings()
+{
+	if (ImGui::BeginTable("flash_files", 3, ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_BordersInnerV))
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			ImGui::TableNextRow();
+
+			// Address
+			ImGui::TableSetColumnIndex(0);
+			ImGui::TextUnformatted(FAddress[i]);
+
+			// File name (read-only 표시)
+			ImGui::TableSetColumnIndex(1);
+			const std::string name = ExtractFileName(FlashFileName[i]);
+			if (name.empty())
+				ImGui::TextDisabled("<select file>");
+			else
+				ImGui::TextUnformatted(name.c_str());
+
+			// Browse button
+			ImGui::TableSetColumnIndex(2);
+			std::string btn = std::string("File") + std::to_string(i + 1);
+			if (ImGui::Button(btn.c_str())) 
+			{
+				FlashFileName[i] = OpenFileDialog();
+			}
+		}
+		ImGui::EndTable();
+	}
+
+	// 실행 버튼
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f));
+	if (ImGui::Button("Erase And Flash", ButtonSize) && !PortName.empty())
+	{
+		UIdisabled = true;
+		for (auto& obj : ObjectBox)
+		{
+			obj->StartESPFlash(FlashFileName);
+		}
+	}
+	ImGui::PopStyleColor(1);
+}
+
+
+//파일 이름 추출해주는 함수
+std::string MyGUI_Interface::ExtractFileName(std::string _FileName)
+{
+	size_t pos = _FileName.find_last_of("\\");
+	std::string filenames = (pos == std::string::npos) ? _FileName : _FileName.substr(pos + 1);
+	return filenames;
+}
+
+//CLI Mode 창 instance 함수
+void MyGUI_Interface::ExportCLIMode()
+{
+	float CLIWinSizeX = 0.0f;
+	float CLIWinSizeY = 0.0f;
+	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8f;
+	}
+	else if (Window_Button == 0)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8095f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+	}
+	else if (Window_Button == 1)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
+	}
+	else if (Window_Button == 2)
+	{
+		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
+		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.775f;
+	}
+
+	CLI_Export_Window->Instance(CLIWinSizeX, CLIWinSizeY);
+}
+
+//하단 로그박스 instance함수
 void MyGUI_Interface::LogBox()
 {
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y()*0.8), ImGuiCond_Always);
-	else
-		ImGui::SetNextWindowPos(ImVec2(0, MyImGui::MyImGuis->GetWindowSize_Y() - LogBoxYSize), ImGuiCond_Always);
-	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-		ImGui::SetWindowSize(ImVec2(ImVec2(MyImGui::MyImGuis->GetWindowSize_X() * 0.55f, MyImGui::MyImGuis->GetWindowSize_Y()*0.2)));
-	else if (WinSizeX > WINDOW_CHECK_SIZE)
-		ImGui::SetWindowSize(ImVec2(NORMAL_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));
-	else
-		ImGui::SetWindowSize(ImVec2(MINI_PORTVIEWSIZE_X * 0.7f, LogBoxYSize));
-	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+	float logY = zoomed ? (WinSizeY * 0.8f) : std::max(0.0f, WinSizeY - LogBoxYSize);
+	ImGui::SetNextWindowPos(ImVec2(0.0f, logY), ImGuiCond_Always);
 
+	float logW = zoomed ? (WinSizeX * 0.55f) : ((WinSizeX > WINDOW_CHECK_SIZE ? NORMAL_PORTVIEWSIZE_X : MINI_PORTVIEWSIZE_X) * 0.7f);
+	float logH = zoomed ? (WinSizeY * 0.2f) : LogBoxYSize;
+	ImGui::SetNextWindowSize(ImVec2(logW, logH), ImGuiCond_Always);
+
+	ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
+
+	ImGui::BeginChild("Console", ImVec2(0, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
 	for (const auto& log : logs)
 	{
@@ -695,162 +833,30 @@ void MyGUI_Interface::LogBox()
 	ImGui::End();
 }
 
-
-void MyGUI_Interface::CLIBox()
+void MyGUI_Interface::LogManagementBox()
 {
-	ImGui::SeparatorText("CLI (Write)");
-	static char buffer[2000] = "";
-	ImGui::Text("Input CLI");
-	ImGui::InputTextMultiline("##output", buffer, sizeof(buffer), ImVec2(250, 300), ImGuiInputTextFlags_None | ImGuiInputTextFlags_EscapeClearsAll);
-	CLI_Text = buffer;
-	if (ImGui::Button("AllSend", ButtonSize))
+	if (zoomed) 
 	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->InputCLI();
-		}
+		ImGui::SetNextWindowPos(ImVec2(WinSizeX * 0.55f, WinSizeY * 0.8f), ImGuiCond_Always);
+		ImGui::SetNextWindowSize(ImVec2(WinSizeX * 0.25f, WinSizeY * 0.2f), ImGuiCond_Always);
 	}
-	ImGui::SameLine();
-	ImGui::Checkbox("Auto Send", &AutoCLI);
+	else 
+	{
+		const float baseX = (WinSizeX > WINDOW_CHECK_SIZE) ? NORMAL_PORTVIEWSIZE_X : MINI_PORTVIEWSIZE_X;
+		const float posY = std::max(0.0f, WinSizeY - LogBoxYSize);
+		ImGui::SetNextWindowPos(ImVec2(baseX * 0.7f, posY), ImGuiCond_Always);
+		ImGui::SetNextWindowSize(ImVec2(baseX * 0.3f, LogBoxYSize), ImGuiCond_Always);
+	}
+	ImGui::Begin("Manage Log", nullptr, ImGuiWindowFlags_NoCollapse);
+
+	LogClear();
+	LogFileCreateSelect();
+	DataSetting();
+
+	ImGui::End();
 }
 
-void MyGUI_Interface::ASCIILineMode()
-{
-	ImGui::SeparatorText("Data Port Mode(ASCII)");
-	if(ImGui::RadioButton("ASCII 1(1port)", &ASCII_Button, 0))
-	{
-		LineSwapSize = Line_1;
-		MaxPortCount = 1;
-		ClickASCII = true;
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("ASCII 2(6Port)", &ASCII_Button, 1))
-	{
-		LineSwapSize = Line_3;
-		MaxPortCount = 6;
-		ClickASCII = true;
-	}
-	if (ImGui::RadioButton("ASCII 3(12Port)", &ASCII_Button, 2))
-	{
-		LineSwapSize = Line_4;
-		MaxPortCount = 12;
-		ClickASCII = true;
-	}
-	ImGui::SameLine();
-	if(ImGui::RadioButton("ASCII 4(30Port)", &ASCII_Button, 3))
-	{
-		LineSwapSize = Line_6;
-		MaxPortCount = 30;
-		ClickASCII = true;
-	}
-	if (ImGui::RadioButton("ASCII 5(42Port)", &ASCII_Button, 4))
-	{
-		LineSwapSize = Line_6;
-		MaxPortCount = 42;
-		ClickASCII = true;
-	}
-
-	if (ClickASCII)
-	{
-		HEX_Button = -1;
-		WindowDrawLineSet();
-		ClickASCII = false;
-	}
-}
-
-
-
-void MyGUI_Interface::HEXLineMode()
-{
-	ImGui::SeparatorText("Data Port Mode(HEX)");
-	if (ImGui::RadioButton("HEX 1(1port)", &HEX_Button, 0))
-	{
-		LineSwapSize = Line_1;
-		MaxPortCount = 1;
-		ClickHEX = true;
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("HEX 2(6Port)", &HEX_Button, 1))
-	{
-		LineSwapSize = Line_3;
-		MaxPortCount = 6;
-		ClickHEX = true;
-	}
-	if (ImGui::RadioButton("HEX 3(12Port)", &HEX_Button, 2))
-	{
-		LineSwapSize = Line_4;
-		MaxPortCount = 12;
-		ClickHEX = true;
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("HEX 4(30Port)", &HEX_Button, 3))
-	{
-		LineSwapSize = Line_6;
-		MaxPortCount = 30;
-		ClickHEX = true;
-	}
-	if (ImGui::RadioButton("HEX 5(42Port)", &HEX_Button, 4))
-	{
-		LineSwapSize = Line_6;
-		MaxPortCount = 42;
-		ClickHEX = true;
-	}
-
-	if (ClickHEX)
-	{
-		ASCII_Button = -1;
-		WindowDrawLineSet();
-		ClickHEX = false;
-	}
-}
-
-
-
-void MyGUI_Interface::BoxInstance()
-{
-	for (auto i = 0; i < PortName.size(); ++i)
-		ObjectBox[i]->Instance(PortName[i]);
-}
-
-
-
-void MyGUI_Interface::AllConnect()
-{
-	ImGui::SeparatorText("Connect");
-	if (ImGui::Button("All Connect", ButtonSize))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			if (!obj->IsStringNull())
-				obj->Connect();
-		}
-	}
-}
-
-void MyGUI_Interface::AllDisConnect()
-{
-	if (ImGui::Button("All DisConnect", ButtonSize))
-	{
-		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->DisConnect();
-		}
-	}
-}
-
-void MyGUI_Interface::ComportReset()
-{
-	if (ImGui::Button("ComPort Reset", ButtonSize))
-	{
- 		for (std::shared_ptr<PortBox> obj : ObjectBox)
-		{
-			obj->DisConnect();
-			obj->RawMonitorClear();
-		}
-		ScreenRelease();
-	}
-}
-
+//Log Clear Button
 void MyGUI_Interface::LogClear()
 {
 	if (ImGui::Button("Log Clear"))
@@ -859,12 +865,13 @@ void MyGUI_Interface::LogClear()
 	}
 }
 
+////////LogFile , LogBox(PortBox) Data Record 관련 함수
 void MyGUI_Interface::LogFileCreateSelect()
 {
 	ImGui::BeginDisabled(PathDisabled);
 	ImGui::SeparatorText("Log File Record");
 	ImGui::Checkbox("Log Box Record", &LogBoxs);
-	
+
 	if (LogBoxs)
 	{
 		if (LogDatabool)
@@ -888,7 +895,7 @@ void MyGUI_Interface::LogFileCreateSelect()
 			}
 			LogDatabool = true;
 		}
-	
+
 	}
 	ImGui::SameLine();
 	if (ImGui::Button(" ..."))
@@ -899,7 +906,7 @@ void MyGUI_Interface::LogFileCreateSelect()
 
 
 	ImGui::Checkbox("PortBox RawData Record", &PortRawData);
-	
+
 	if (PortRawData)
 	{
 		if (PortRawDatabool)
@@ -923,19 +930,19 @@ void MyGUI_Interface::LogFileCreateSelect()
 	{
 		PATH = SaveFileDialog(".txt");
 	}
-	TextPATH(PATH , false);
+	TextPATH(PATH, false);
 
 	ImGui::EndDisabled();
 }
 
-
-void MyGUI_Interface::TextPATH(std::string& _PATH , const bool _IsLog)
+//로그파일 경로 설정된 Text표시
+void MyGUI_Interface::TextPATH(std::string& _PATH, const bool _IsLog)
 {
 	std::string CopyPATH;
 	if (!_PATH.empty())
 	{
 		size_t pos = _PATH.find_last_of("\\");
-		if(_IsLog)
+		if (_IsLog)
 			CopyPATH = _PATH.substr(0, pos + 1) + "Log.txt";
 		else
 			CopyPATH = _PATH.substr(0, pos + 1) + " (COM NUMBER) ";
@@ -947,42 +954,54 @@ void MyGUI_Interface::TextPATH(std::string& _PATH , const bool _IsLog)
 void MyGUI_Interface::DataSetting()
 {
 	ImGui::SeparatorText("Data Setting");
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.2f, 0.2f, 0.8f, 1.0f));           
-	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.3f, 0.3f, 1.0f, 1.0f));    
-	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.1f, 0.1f, 0.6f, 1.0f));     
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));     
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.2f, 0.2f, 0.8f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.3f, 0.3f, 1.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.1f, 0.1f, 0.6f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
 	ImGui::SliderInt("Undetected time", &Sliderint, 3, 30);
 	ImGui::PopStyleColor(5);
 	ImGui::InputText("Boot Detection Char", BootDetection, IM_ARRAYSIZE(BootDetection));
 }
 
-void MyGUI_Interface::ScreenRelease()
+////////단축키 설명 함수
+void MyGUI_Interface::AutoKeyHelpText()
 {
-	ObjectBox.clear();
-	PortName.clear();
-	CreateBool = true;
-	EspCheck = true;
-	LogBoxs = false;
-	PortRawData = false;
+	ImGui::SeparatorText("Auto Key");
+	ImGui::Text("Ctrl + F = ViewMode < - > FlashMode");
+
+	ImGui::Text("(ViewMode)   Ctrl + R = ComportReset");
+	ImGui::Text("(ViewMode)   Ctrl + C = AllConnect");
+	ImGui::Text("(ViewMode)   Ctrl + D = AllDisConnect");
+	ImGui::Text("(ViewMode)   Ctrl + X = SendCLI");
+	ImGui::Text("(FlashMode)  Ctrl + E = EraseAndFlash");
+	//ImGui::Text("(ExportMode) Ctrl + E = AllExport");
+}
+
+//Frame표시해주는 Text
+void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
+{
+	ImGui::SeparatorText("Frame / FPS");
+	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
+	ImGui::Text("FPS : %.1f", ImGui::GetIO().Framerate);
 }
 
 
-void MyGUI_Interface::SystemPathSetting()
+//PortBox 실행 (Instancing)
+void MyGUI_Interface::BoxInstance()
 {
-	if (SystemPath)
-	{
-		size_t pos = commandOutput.find("\\python.exe");
-		if (pos != std::string::npos)
-			commandOutput = commandOutput.substr(0, pos);
-		SetEnvironmentVariable("PYTHON_HOME", commandOutput.c_str());
-		commandOutput += "\\Scripts";
-		SetEnvironmentVariable("PYTHON_Script", commandOutput.c_str());
-		executeCommand("pip install --upgrade pip");
-		SystemPath = false;
-	}
+	for (auto i = 0; i < PortName.size(); ++i)
+		ObjectBox[i]->Instance(PortName[i]);
 }
 
+
+
+
+
+
+///////////////////////////////Helper Function///////////////////////////////
+
+//파일저장위치 설정 함수
 std::string MyGUI_Interface::SaveFileDialog(std::string _format)
 {
 	OPENFILENAME ofn;
@@ -1010,6 +1029,7 @@ std::string MyGUI_Interface::SaveFileDialog(std::string _format)
 	return SZFILE;
 }
 
+//파일오픈위치 설정 함수
 std::string MyGUI_Interface::OpenFileDialog()
 {
 	char fileName[MAX_PATH] = { 0 };
@@ -1030,35 +1050,8 @@ std::string MyGUI_Interface::OpenFileDialog()
 }
 
 
+//로그파일에 남길 string입력 함수
 void MyGUI_Interface::LogFlash(std::string _PortName, std::string _Content)
 {
 	logFile << "\r [" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "]" << _PortName + _Content << std::flush;
-}
-
-void MyGUI_Interface::ExportCLIMode()
-{	
-	float CLIWinSizeX = 0.0f;
-	float CLIWinSizeY = 0.0f;
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-	{
-		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8f;
-		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8f;
-	}
-	else if (Window_Button == 0)
-	{
-		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8095f;
-		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
-	}	
-	else if (Window_Button == 1)
-	{
-		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
-		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
-	}
-	else if (Window_Button == 2)
-	{
-		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
-		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.775f;
-	}
-	
-	CLI_Export_Window->Instance(CLIWinSizeX, CLIWinSizeY);
 }

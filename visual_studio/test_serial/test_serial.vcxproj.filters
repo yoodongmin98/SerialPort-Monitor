@@ -78,6 +78,9 @@
     <ClCompile Include="CsvLogger.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="STProgrammer.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imgui.h">
@@ -132,6 +135,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="CsvLogger.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="STProgrammer.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
