@@ -10,12 +10,18 @@
 #include "DataFile.h"
 
 
-
+enum class WinMode : uint8_t
+{
+    _1500x820,
+    _1800x820,
+    _1800x1050
+};
 enum class UIMode : uint8_t
 {
     View = 0,
-    Flash = 1,
-    Export = 2,
+    Flash_ESP = 1,
+    Flash_STM = 2,
+    Export = 3,
 };
 
 class LineModePreset 
@@ -34,6 +40,7 @@ public:
 };
 
 
+class STProgrammer;
 class CLI_Window;
 class PortBox;
 class MyGUI_Interface
@@ -176,12 +183,14 @@ protected:
     void RadarTypeBox();
     void ASCIILineMode();
     void HEXLineMode();
-    void FlashBox();
+    void FlashBox_ESP();
     void SystemPathSetting();
     std::string executeCommand(std::string command);
     void FlashSettings();
     std::string ExtractFileName(std::string _FileName);
+    void FlashBox_STM();
     void ExportCLIMode();
+    std::pair<float, float> GetDisplaySize();
     void LogBox();
     void LogManagementBox();
     void LogClear();
@@ -190,31 +199,36 @@ protected:
     void DataSetting();
     void AutoKeyHelpText();
     void Frame_FPSBox(ImGuiIO& _io);
+    void WindowZoomCheck();
     void BoxInstance();
 
 
     bool   IsViewMode()   const { return mode_ == UIMode::View; }
-    bool   IsFlashMode()  const { return mode_ == UIMode::Flash; }
+    bool   IsFlashESPMode()  const { return mode_ == UIMode::Flash_ESP; }
+    bool   IsExportSTMMode() const { return mode_ == UIMode::Flash_STM; }
     bool   IsExportMode() const { return mode_ == UIMode::Export; }
 private:
     UIMode mode_ = UIMode::View;
 
     const float kPosX[3] = { MINI_PORTVIEWSIZE_X,  NORMAL_PORTVIEWSIZE_X,  NORMAL_PORTVIEWSIZE_X };
     const float kSizeY[3] = { MINI_PORTVIEWSIZE_Y,  MINI_PORTVIEWSIZE_Y,    NORMAL_PORTVIEWSIZE_Y };
-    const MyWinSize WindowMode[3] = {
+    const MyWinSize WindowMode[3] = 
+    {
         { WINDOWSIZE_SMALL_X,  WINDOWSIZE_SMALL_Y,  false },
         { WINDOWSIZE_NORMAL_X, WINDOWSIZE_SMALL_Y,  false },
         { WINDOWSIZE_NORMAL_X, WINDOWSIZE_NORMAL_Y, true  }
     };
 
-    std::vector<LineModePreset> ASCII_Mode = {
+    std::vector<LineModePreset> ASCII_Mode = 
+    {
         {"ASCII 1(1port)",  Line_1, 1},
         {"ASCII 2(6Port)",  Line_3, 6},
         {"ASCII 3(12Port)", Line_4, 12},
         {"ASCII 4(30Port)", Line_6, 30},
         {"ASCII 5(42Port)", Line_6, 42},
     };
-    std::vector<LineModePreset> HEX_Mode = {
+    std::vector<LineModePreset> HEX_Mode = 
+    {
         {"HEX 1(1port)",  Line_1, 1},
         {"HEX 2(6Port)",  Line_3, 6},
         {"HEX 3(12Port)", Line_4, 12},
@@ -272,7 +286,8 @@ private:
     float WinSizeX = 1500.0f;
     float WinSizeY = 820.0f;
 
-    const char* BaudrateArray[18] = {
+    const char* BaudrateArray[18] = 
+    {
         "110","300","600","1200","2400","4800","9600","14400","19200","38400","57600",
         "115200","230400","460800","921600","1000000","1250000","1843200"
     };
@@ -312,5 +327,5 @@ private:
     HWND hwnds;
 
     std::shared_ptr<CLI_Window> CLI_Export_Window;
-
+    std::shared_ptr<STProgrammer> STProgrammers;
 };

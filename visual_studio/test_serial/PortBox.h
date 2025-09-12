@@ -190,5 +190,5 @@ private:
 	void MonitorLoop(std::stop_token st);
 
 
-	inline static int backoffMs = 500; //재연결 시도시간
+	inline static int backoffMs = 300; //재연결 시도시간
 };

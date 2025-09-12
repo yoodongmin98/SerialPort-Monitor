@@ -33,15 +33,15 @@ private:
     inline static char ExportCLIbuffer3[20] = "";
 
     std::string target = "USB";
+    std::string ResultString;
+    std::string SavePaths;
+
     std::vector<std::string> CLIText;
     std::vector<serial::PortInfo> PortName;
     std::vector<std::pair<std::string, std::string>> FullPortName;
 
-    std::string ResultString;
-    std::string SavePaths;
-
+    std::unordered_map<std::string, std::string> resultByPort;
 
     std::shared_ptr<ExportCLI_Record> CLI_Record;
     std::shared_ptr<CsvLogger> CsvLoggers;
-    std::unordered_map<std::string, std::string> resultByPort;
 };

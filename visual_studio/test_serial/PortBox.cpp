@@ -1,4 +1,4 @@
-#include "DataFile.h"
+ï»¿#include "DataFile.h"
 #include "EspUploader.h"
 #include "imgui.h"
 #include "MessageBox.h"
@@ -140,16 +140,16 @@ void PortBox::SerialMonitor()
 	{
 		if (!my_serial.isOpen())
 		{
-			//Æ÷Æ®°¡ ´İÇô ÀÖÀ¸¸é "¼ö½Å ½Ãµµ"´Â °Ç³Ê¶Ù°í ¾Æ·¡ÀÇ Àç¿¬°á ºí·ÏÀ¸·Î ÁøÇà.
+			//í¬íŠ¸ê°€ ë‹«í˜€ ìˆìœ¼ë©´ "ìˆ˜ì‹  ì‹œë„"ëŠ” ê±´ë„ˆë›°ê³  ì•„ë˜ì˜ ì¬ì—°ê²° ë¸”ë¡ìœ¼ë¡œ ì§„í–‰.
 		}
 		else
 		{
 			bool dataReceived = false;
 
-			// µ¥ÀÌÅÍ ÀĞ±â
+			// ë°ì´í„° ì½ê¸°
 			if (my_serial.available())
 			{
-				std::lock_guard<std::mutex> lock(stateMutex); // »óÅÂ °»½Å º¸È£
+				std::lock_guard<std::mutex> lock(stateMutex); // ìƒíƒœ ê°±ì‹  ë³´í˜¸
 
 				if (ASCIIMODE)
 					Dataline = my_serial.readline(); 
@@ -158,14 +158,14 @@ void PortBox::SerialMonitor()
 
 				if (!Dataline.empty())
 				{
-					// µ¿ÀÛ Ç¥½Ã(¡¦)
+					// ë™ì‘ í‘œì‹œ(â€¦)
 					DotCount++;
 					if (DotCount > 7) DotCount = 1;
 					Dots.clear();
 					for (int i = 0; i < DotCount; ++i) Dots += ".";
 				}
 
-				// Raw ·Î±× ÆĞ³Î µ¥ÀÌÅÍ ÀûÀç
+				// Raw ë¡œê·¸ íŒ¨ë„ ë°ì´í„° ì ì¬
 				if (ASCIIMODE)
 				{
 					if (RawDataLog.size() >= 10000) RawDataLog.pop_front();
@@ -192,7 +192,7 @@ void PortBox::SerialMonitor()
 					}
 				}
 
-				// ÆÄÀÏ ·Î±× ±â·Ï
+				// íŒŒì¼ ë¡œê·¸ ê¸°ë¡
 				if (ASCIIMODE)
 				{
 					if (!Dataline.find("\n") || Dataline.empty())
@@ -202,12 +202,12 @@ void PortBox::SerialMonitor()
 				}
 				else if (HEXMODE && HEXLOGRECORD)
 				{
-					// NOTE: HEX ÁÙ ±¸ºĞÀº »óÀ§ ¼³Á¤(HexNumberCount)¿¡ ÀÇÁ¸.
+					// NOTE: HEX ì¤„ êµ¬ë¶„ì€ ìƒìœ„ ì„¤ì •(HexNumberCount)ì— ì˜ì¡´.
 					logFile << "[" << MyTime::Time->GetLocalDay() << MyTime::Time->GetLocalTime() << "] " << RawHexLog.back() << std::endl << std::flush;
 					HEXLOGRECORD = false;
 				}
 
-				// »óÅÂ °»½Å(Working/Missing/Boot)
+				// ìƒíƒœ ê°±ì‹ (Working/Missing/Boot)
 				if (!Dataline.empty())
 				{
 					dataReceived = true;
@@ -219,7 +219,7 @@ void PortBox::SerialMonitor()
 						BootStart = true;
 						BootingTime = std::chrono::steady_clock::now();
 					}
-					else if (!BootStart) // ºÎÆÃ ÁßÀÌ ¾Æ´Ò ¶§¸¸ WorkingÀ¸·Î
+					else if (!BootStart) // ë¶€íŒ… ì¤‘ì´ ì•„ë‹ ë•Œë§Œ Workingìœ¼ë¡œ
 					{
 						WorkingBool = true;
 						MissingBool = false;
@@ -228,7 +228,7 @@ void PortBox::SerialMonitor()
 				}
 			}
 
-			// ÀĞÀ» µ¥ÀÌÅÍ°¡ ¾øÀ» ¶§ "¹Ì¼ö½Å »óÅÂ" Å¸ÀÌ¸Ó
+			// ì½ì„ ë°ì´í„°ê°€ ì—†ì„ ë•Œ "ë¯¸ìˆ˜ì‹  ìƒíƒœ" íƒ€ì´ë¨¸
 			if (!my_serial.available() && !BootStart)
 			{
 				if (!MissingBool)
@@ -238,7 +238,7 @@ void PortBox::SerialMonitor()
 				}
 			}
 
-			// ¹Ì¼ö½Å °æ°ú Ã¼Å©
+			// ë¯¸ìˆ˜ì‹  ê²½ê³¼ ì²´í¬
 			if (MissingBool)
 			{
 				std::lock_guard<std::mutex> lock(stateMutex);
@@ -248,12 +248,12 @@ void PortBox::SerialMonitor()
 					WorkingBool = false;
 					MissingBool = false;
 					BootStart = false;
-					MyGUI_Interface::GUI->LogFlash(String, "ÀÇ µ¥ÀÌÅÍ°¡ ¼³Á¤½Ã°£ ÀÌ»ó ¼ö½ÅµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+					MyGUI_Interface::GUI->LogFlash(String, "ì˜ ë°ì´í„°ê°€ ì„¤ì •ì‹œê°„ ì´ìƒ ìˆ˜ì‹ ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
 					MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " No data received for " + std::to_string(NoDataTime) + " seconds");
 				}
 			}
 
-			// ºÎÆÃ ¿Ï·á °æ°ú Ã¼Å©
+			// ë¶€íŒ… ì™„ë£Œ ê²½ê³¼ ì²´í¬
 			if (BootStart)
 			{
 				std::lock_guard<std::mutex> lock(stateMutex);
@@ -263,7 +263,7 @@ void PortBox::SerialMonitor()
 					WorkingBool = false;
 					MissingBool = false;
 					BootStart = false;
-					MyGUI_Interface::GUI->LogFlash(String, "ÀÌ ºÎÆÃµÇ¾ú½À´Ï´Ù.");
+					MyGUI_Interface::GUI->LogFlash(String, "ì´ ë¶€íŒ…ë˜ì—ˆìŠµë‹ˆë‹¤.");
 					MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Boot completed");
 				}
 			}
@@ -271,11 +271,11 @@ void PortBox::SerialMonitor()
 	}
 	catch (const std::exception& e)
 	{
-		// ²÷±è/¿¹¿Ü ½Ã »óÅÂ ÇÃ·¡±× °»½Å + Æ÷Æ®¸¸ ´İ°í Æ÷Æ®¸í/ÀÇµµ(PortBoxBool)´Â À¯Áö ¡æ ÀÚµ¿ Àç¿¬°á °¡´É
+		// ëŠê¹€/ì˜ˆì™¸ ì‹œ ìƒíƒœ í”Œë˜ê·¸ ê°±ì‹  + í¬íŠ¸ë§Œ ë‹«ê³  í¬íŠ¸ëª…/ì˜ë„(PortBoxBool)ëŠ” ìœ ì§€ â†’ ìë™ ì¬ì—°ê²° ê°€ëŠ¥
 		{
 			std::lock_guard<std::mutex> lock(stateMutex);
 			IsLost = true;
-			MyGUI_Interface::GUI->LogFlash(String, "ÀÇ ½Ã¸®¾ó Åë½ÅÀÌ ²÷°å½À´Ï´Ù.");
+			MyGUI_Interface::GUI->LogFlash(String, "ì˜ ì‹œë¦¬ì–¼ í†µì‹ ì´ ëŠê²¼ìŠµë‹ˆë‹¤.");
 			MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Serial communication was lost");
 		}
 		{
@@ -284,13 +284,13 @@ void PortBox::SerialMonitor()
 			{
 				my_serial.setRTS(true);
 				my_serial.setDTR(true);
-				my_serial.close(); // String/PortBoxBoolÀº °Çµå¸®Áö ¾ÊÀ½(DisConnect()¿Í ±¸ºĞ)
+				my_serial.close(); // String/PortBoxBoolì€ ê±´ë“œë¦¬ì§€ ì•ŠìŒ(DisConnect()ì™€ êµ¬ë¶„)
 			}
 		}
 	}
 
-	// ÀÚµ¿ Àç¿¬°á 
-	// Á¶°Ç: Æ÷Æ®°¡ ´İÇô ÀÖ°í, »ç¿ëÀÚ°¡ ¼öµ¿À¸·Î ²ö °Ô ¾Æ´Ï¶ó(PortBoxBool==true), ²÷±è »óÅÂ(IsLost==true)ÀÏ ¶§¸¸ ½Ãµµ
+	// ìë™ ì¬ì—°ê²° 
+	// ì¡°ê±´: í¬íŠ¸ê°€ ë‹«í˜€ ìˆê³ , ì‚¬ìš©ìê°€ ìˆ˜ë™ìœ¼ë¡œ ëˆ ê²Œ ì•„ë‹ˆë¼(PortBoxBool==true), ëŠê¹€ ìƒíƒœ(IsLost==true)ì¼ ë•Œë§Œ ì‹œë„
 	if (!my_serial.isOpen() && PortBoxBool && IsLost)
 	{
 		auto now = std::chrono::steady_clock::now();
@@ -301,7 +301,7 @@ void PortBox::SerialMonitor()
 				std::lock_guard<std::mutex> lock(serialMutex);
 				try
 				{
-					// Connect()¿Í µ¿ÀÏ ÆÄ¶ó¹ÌÅÍ ÀçÀû¿ë(PortCheck¸¦ ¾²¸é ³»ºÎ¿¡¼­ PortBoxBoolÀ» false·Î ¸¸µé ¼ö ÀÖ¾î Á÷Á¢ Ã³¸®)
+					// Connect()ì™€ ë™ì¼ íŒŒë¼ë¯¸í„° ì¬ì ìš©(PortCheckë¥¼ ì“°ë©´ ë‚´ë¶€ì—ì„œ PortBoxBoolì„ falseë¡œ ë§Œë“¤ ìˆ˜ ìˆì–´ ì§ì ‘ ì²˜ë¦¬)
 					my_serial.setPort(String);
 					my_serial.setBaudrate(BaudRate);
 					my_serial.setBytesize(serial::bytesize_t::eightbits);
@@ -312,6 +312,9 @@ void PortBox::SerialMonitor()
 					my_serial.setRTS(false);
 					my_serial.setDTR(false);
 
+					RawDataLog.push_back("\n");
+
+					scrollToBottom = true;
 					ok = my_serial.isOpen();
 				}
 				catch (...) { ok = false; }
@@ -319,7 +322,7 @@ void PortBox::SerialMonitor()
 
 			if (ok)
 			{
-				// »óÅÂ ÃÊ±âÈ­ ¹× ¾Ë¸²
+				// ìƒíƒœ ì´ˆê¸°í™” ë° ì•Œë¦¼
 				{
 					std::lock_guard<std::mutex> lock(stateMutex);
 					WorkingBool = false;
@@ -329,7 +332,7 @@ void PortBox::SerialMonitor()
 				}
 				MyGUI_Interface::GUI->AddLogBoxString("[" + MyTime::Time->GetLocalDay() + MyTime::Time->GetLocalTime() + "] " + String + " Auto-reconnected");
 
-				// ÃÊ±â ¸í·É ÀÚµ¿ Àü¼Û ¿É¼Ç(±âÁ¸ µ¿ÀÛ À¯Áö)
+				// ì´ˆê¸° ëª…ë ¹ ìë™ ì „ì†¡ ì˜µì…˜(ê¸°ì¡´ ë™ì‘ ìœ ì§€)
 				AutoCliCheck();
 
 				nextAttempt = now;
@@ -342,7 +345,7 @@ void PortBox::SerialMonitor()
 	}
 	else
 	{
-		//µüÈ÷ ÇÊ¿ä¾ø´Âµ¥ ÀÏ´Ü ³öµÎ±â
+		//ë”±íˆ í•„ìš”ì—†ëŠ”ë° ì¼ë‹¨ ë†”ë‘ê¸°
 	}
 }
 
@@ -365,13 +368,13 @@ void PortBox::PortCheck()
 	}
 	catch (const std::invalid_argument& e)
 	{
-		MsgBox::Msg->ShowWarningMessageBox("¼ıÀÚ Çü½ÄÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.");
+		MsgBox::Msg->ShowWarningMessageBox("ìˆ«ì í˜•ì‹ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		PortBoxBool = false;
 		return;
 	}
 	catch (const std::out_of_range& e)
 	{
-		MsgBox::Msg->ShowWarningMessageBox("ÀÔ·ÂÇÑ ¼ıÀÚ°¡ ³Ê¹« Å®´Ï´Ù.");
+		MsgBox::Msg->ShowWarningMessageBox("ì…ë ¥í•œ ìˆ«ìê°€ ë„ˆë¬´ í½ë‹ˆë‹¤.");
 		PortBoxBool = false;
 		return;
 	}
@@ -441,7 +444,7 @@ bool PortBox::TryReconnect()
 	}
 	catch (...)
 	{
-		return false; //Æ÷Æ®°¡ »ç¶óÁ³°Å³ª Á¢±Ù °ÅºÎ µî. ´ÙÀ½ ¹é¿ÀÇÁ ÁÖ±â¿¡ Àç½Ãµµ.
+		return false; //í¬íŠ¸ê°€ ì‚¬ë¼ì¡Œê±°ë‚˜ ì ‘ê·¼ ê±°ë¶€ ë“±. ë‹¤ìŒ ë°±ì˜¤í”„ ì£¼ê¸°ì— ì¬ì‹œë„.
 	}
 	return false;
 }
@@ -487,12 +490,12 @@ void PortBox::CloseSerialPortOnError()
 	std::lock_guard<std::mutex> lock(serialMutex);
 	if (my_serial.isOpen())
 	{
-		// NOTE: ¾î´ğÅÍ¿¡ µû¶ó RTS/DTR Åä±ÛÀÌ Àç¿¬°á¿¡ ¿µÇâÀ» ÁÙ ¼ö ÀÖÀ½(Àåºñ ½ºÆå ±âÁØ). À¯Áö.
+		// NOTE: ì–´ëŒ‘í„°ì— ë”°ë¼ RTS/DTR í† ê¸€ì´ ì¬ì—°ê²°ì— ì˜í–¥ì„ ì¤„ ìˆ˜ ìˆìŒ(ì¥ë¹„ ìŠ¤í™ ê¸°ì¤€). ìœ ì§€.
 		my_serial.setRTS(true);
 		my_serial.setDTR(true);
 		my_serial.close();
 	}
-	// PortBoxBool, String, IsLost À¯Áö ¡æ MonitorLoop¿¡¼­ ÀÚµ¿ Àç¿¬°á ±âÁØÀ¸·Î »ç¿ë.
+	// PortBoxBool, String, IsLost ìœ ì§€ â†’ MonitorLoopì—ì„œ ìë™ ì¬ì—°ê²° ê¸°ì¤€ìœ¼ë¡œ ì‚¬ìš©.
 }
 
 
@@ -520,15 +523,15 @@ void PortBox::CreateRowDataBox()
 				}
 				catch (const std::exception e)
 				{
-					std::cout << "Hex ¹®ÀÚ¿­À» ÀĞ´Â µµÁß ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. error : " << e.what() << std::endl;
+					std::cout << "Hex ë¬¸ìì—´ì„ ì½ëŠ” ë„ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤. error : " << e.what() << std::endl;
 					return;
 				}
 			}
 		}
 
-		float scrollY = ImGui::GetScrollY();      // ÇöÀç ½ºÅ©·Ñ À§Ä¡
-		float scrollMaxY = ImGui::GetScrollMaxY();// ½ºÅ©·Ñ °¡´ÉÇÑ ÃÖ´ë À§Ä¡
-		bool isAtBottom = (scrollY >= scrollMaxY-25);// ÇöÀç ½ºÅ©·ÑÀÌ ¸Ç ¾Æ·¡ÀÎÁö È®ÀÎ
+		float scrollY = ImGui::GetScrollY();      // í˜„ì¬ ìŠ¤í¬ë¡¤ ìœ„ì¹˜
+		float scrollMaxY = ImGui::GetScrollMaxY();// ìŠ¤í¬ë¡¤ ê°€ëŠ¥í•œ ìµœëŒ€ ìœ„ì¹˜
+		bool isAtBottom = (scrollY >= scrollMaxY-25);// í˜„ì¬ ìŠ¤í¬ë¡¤ì´ ë§¨ ì•„ë˜ì¸ì§€ í™•ì¸
 
 	
 		if ((scrollToBottom && isAtBottom) || (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_Enter)))
@@ -658,7 +661,7 @@ std::string PortBox::GetFileNameFromPath(const std::string& path)
 void PortBox::MonitorLoop(std::stop_token st)
 {
 	while (!st.stop_requested()) {
-		SerialMonitor(); // ³»ºÎ¿¡¼­ isOpen() ¾Æ´Ï¸é ¹Ù·Î returnÇÔ
+		SerialMonitor(); // ë‚´ë¶€ì—ì„œ isOpen() ì•„ë‹ˆë©´ ë°”ë¡œ returní•¨
 
 		if (!my_serial.isOpen()) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));

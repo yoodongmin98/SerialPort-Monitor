@@ -84,7 +84,8 @@ void ThreadPool::AddWork(std::function<void()> _function)
 	condition.notify_one();
 }
 
-void ThreadPool::Resize(size_t numThreads) {
+void ThreadPool::Resize(size_t numThreads) 
+{
     std::lock_guard<std::mutex> lock(QueueMutex);
 
     // 쓰레드 추가
@@ -101,6 +102,7 @@ void ThreadPool::Resize(size_t numThreads) {
         Worker.pop_back();
     }
 }
+
 void ThreadPool::ClearWork()
 {
 	/*

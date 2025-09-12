@@ -16,6 +16,7 @@
 #include <ranges>
 #include "Windows.h"
 #include "CLI_Window.h"
+#include "STProgrammer.h"
 
 
 
@@ -32,6 +33,8 @@ MyGUI_Interface::MyGUI_Interface()
 	FlashFileName.resize(4);
 	//CLI Mode Instance
 	CLI_Export_Window = std::make_shared<CLI_Window>();
+	//STM FlashMode Instance
+	STProgrammers = std::make_shared<STProgrammer>();
 }
 
 MyGUI_Interface::~MyGUI_Interface()
@@ -334,7 +337,7 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	ImGui::EndDisabled();
 	////////////////////////////////////////////////////////
 
-	if(Window_Button == 0 || Window_Button == 1)
+	if(Window_Button != static_cast<int>(WinMode::_1800x1050))
 		LogBoxOnOff();
 
 	ComPortDataSetting();
@@ -351,9 +354,13 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 		HEXLineMode();
 		break;
 
-	case UIMode::Flash:
-		FlashBox();
+	case UIMode::Flash_ESP:
+		FlashBox_ESP();
 		ComportReset();
+		break;
+
+	case UIMode::Flash_STM:
+		FlashBox_STM();
 		break;
 
 	case UIMode::Export:
@@ -364,40 +371,8 @@ void MyGUI_Interface::AllConnectBox(ImGuiIO& _io)
 	
 	ImGui::EndDisabled();
 	Frame_FPSBox(_io);
-
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
-	{
-		if (!SmallZoomDrawLine && FrameCounter)
-		{
-			UIVisible = true;
-			IsWindowZoom = true;
-			cellSizeX = (MyImGui::MyImGuis->GetWindowSize_X() * 0.8) / LineSwapSize;
-			cellSizeY = (MyImGui::MyImGuis->GetWindowSize_Y() * 0.8) / (MaxPortCount / LineSwapSize);
-
-			for (std::shared_ptr<PortBox> obj : ObjectBox)
-			{
-				obj->DisConnect();
-				obj->RawMonitorClear();
-			}
-			ScreenRelease();
-			SmallZoomDrawLine = true;
-		}
-		FrameCounter = true;
-	}
-	else
-	{
-		IsWindowZoom = false;
-		if (SmallZoomDrawLine)
-		{
-			FrameCounter = false;
-			if(Window_Button!=2)
-				UIVisible = false;
-			CreateBool = true;
-			WindowSizeSet();
-			WindowDrawLineSet();
-			SmallZoomDrawLine = false;
-		}
-	}
+	WindowZoomCheck();
+	
 	ImGui::End();
 }
 
@@ -486,7 +461,8 @@ UIMode MyGUI_Interface::SelectMode()
 	const int prev = m;
 
 	ImGui::RadioButton("View Mode", &m, static_cast<int>(UIMode::View));
-	ImGui::RadioButton("Flash Mode", &m, static_cast<int>(UIMode::Flash));
+	ImGui::RadioButton("Flash Mode(ESP)", &m, static_cast<int>(UIMode::Flash_ESP));
+	ImGui::RadioButton("Flash Mode(STM)", &m, static_cast<int>(UIMode::Flash_STM));
 	ImGui::RadioButton("Export Mode", &m, static_cast<int>(UIMode::Export));
 
 	if (m != prev)
@@ -643,7 +619,7 @@ void MyGUI_Interface::HEXLineMode()
 }
 
 //FlashMode Python설치여부 및 esptool설치여부 확인
-void MyGUI_Interface::FlashBox()
+void MyGUI_Interface::FlashBox_ESP()
 {
 	ImGui::SeparatorText("Flash Setting");
 
@@ -776,34 +752,48 @@ std::string MyGUI_Interface::ExtractFileName(std::string _FileName)
 	return filenames;
 }
 
+//STM FlashMode 창 Instance 함수
+void MyGUI_Interface::FlashBox_STM()
+{
+	std::pair<float, float> Size = GetDisplaySize();
+	STProgrammers->Instance(Size.first, Size.second);
+}
+
 //CLI Mode 창 instance 함수
 void MyGUI_Interface::ExportCLIMode()
 {
+	std::pair<float, float> Size = GetDisplaySize();
+	CLI_Export_Window->Instance(Size.first, Size.second);
+}
+
+//UI를 제외한 디스플레이 화면의 크기를 반환하는 함수
+std::pair<float , float> MyGUI_Interface::GetDisplaySize()
+{
 	float CLIWinSizeX = 0.0f;
 	float CLIWinSizeY = 0.0f;
-	if (IsZoomed(MyImGui::MyImGuis->GetWindowHandle()))
+	if (zoomed)
 	{
 		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8f;
 		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.8f;
 	}
-	else if (Window_Button == 0)
+	else if (Window_Button == static_cast<int>(WinMode::_1500x820))
 	{
 		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8095f;
 		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
 	}
-	else if (Window_Button == 1)
+	else if (Window_Button == static_cast<int>(WinMode::_1800x820))
 	{
 		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
 		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y();
 	}
-	else if (Window_Button == 2)
+	else if (Window_Button == static_cast<int>(WinMode::_1800x1050))
 	{
 		CLIWinSizeX = MyImGui::MyImGuis->GetWindowSize_X() * 0.8415f;
 		CLIWinSizeY = MyImGui::MyImGuis->GetWindowSize_Y() * 0.775f;
 	}
-
-	CLI_Export_Window->Instance(CLIWinSizeX, CLIWinSizeY);
+	return std::make_pair(CLIWinSizeX, CLIWinSizeY);
 }
+
 
 //하단 로그박스 instance함수
 void MyGUI_Interface::LogBox()
@@ -984,6 +974,44 @@ void MyGUI_Interface::Frame_FPSBox(ImGuiIO& _io)
 	ImGui::SeparatorText("Frame / FPS");
 	ImGui::Text("Frame : %.3f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
 	ImGui::Text("FPS : %.1f", ImGui::GetIO().Framerate);
+}
+
+//창이 Zoom되어있는지 확인하는 함수
+void MyGUI_Interface::WindowZoomCheck()
+{
+	if (zoomed)
+	{
+		if (!SmallZoomDrawLine && FrameCounter)
+		{
+			UIVisible = true;
+			IsWindowZoom = true;
+			cellSizeX = (WinSizeX * 0.8) / LineSwapSize;
+			cellSizeY = (WinSizeY * 0.8) / (MaxPortCount / LineSwapSize);
+
+			for (std::shared_ptr<PortBox> obj : ObjectBox)
+			{
+				obj->DisConnect();
+				obj->RawMonitorClear();
+			}
+			ScreenRelease();
+			SmallZoomDrawLine = true;
+		}
+		FrameCounter = true;
+	}
+	else
+	{
+		IsWindowZoom = false;
+		if (SmallZoomDrawLine)
+		{
+			FrameCounter = false;
+			if (Window_Button != static_cast<int>(WinMode::_1800x1050))
+				UIVisible = false;
+			CreateBool = true;
+			WindowSizeSet();
+			WindowDrawLineSet();
+			SmallZoomDrawLine = false;
+		}
+	}
 }
 
 
