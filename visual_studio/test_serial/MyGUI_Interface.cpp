@@ -46,6 +46,7 @@ MyGUI_Interface::~MyGUI_Interface()
 	}
 }
 
+// 야야야
 
 //Loop Instance
 void MyGUI_Interface::Instance(ImGuiIO& _io)
@@ -63,7 +64,7 @@ void MyGUI_Interface::Instance(ImGuiIO& _io)
 	AutoKeySetting(_io);
 
 	//CLI exportMode가 아닐때 PortBox생성 Setting ( 생성 x )
-	if(!ExportBool)
+	if((mode_ == UIMode::View) || (mode_ == UIMode::Flash_ESP))
 		PortBoxCreate();
 
 	//Window GridLine생성 ( ASCII , HEX 포트 개수에 따른 라인 그리기 )
